@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAF5EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap" rel="stylesheet">
+<title>清邁 30 天</title>
+<style>
+:root {
+  --cream: #FAF5EA;
+  --card: #FFFDF8;
+  --ink: #4A3A2A;
+  --muted: #8C7B68;
+  --line: #E8DCC6;
+  --mustard: #D9A43A;
+  --mustard-soft: #F6EACB;
+  --brick: #C25B43;
+  --brick-soft: #F5E1DA;
+  --olive: #7F9157;
+  --olive-soft: #E8EDDC;
+  --slate: #5B6C8F;
+  --slate-soft: #E3E7EF;
+  --teal: #5E9C94;
+  --teal-soft: #DDEDEA;
+  --radius: 18px;
+  --hand: "LXGW WenKai TC", "Klee One", "PingFang TC", serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(140, 123, 104, .10) 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 80%, rgba(194, 91, 67, .08) 1px, transparent 1.5px),
+    radial-gradient(circle at 40% 60%, rgba(217, 164, 58, .12) 1.2px, transparent 1.8px);
+  background-size: 37px 41px, 53px 47px, 71px 67px;
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC",
+    "Microsoft JhengHei", sans-serif;
+  line-height: 1.6;
+}
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+
+/* ---------- 封面 ---------- */
+.cover {
+  position: relative;
+  overflow: hidden;
+  color: var(--ink);
+  border-bottom: 2px dashed var(--line);
+  padding: 44px 0 40px;
+}
+.cover svg.deco { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.cover .wrap { position: relative; }
+.eyebrow { font-size: 12px; letter-spacing: .22em; font-weight: 700; color: var(--brick); }
+.cover h1 {
+  font-size: clamp(40px, 12vw, 64px);
+  line-height: 1.05;
+  margin: 10px 0 12px;
+  font-family: var(--hand);
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.cover p { margin: 0; max-width: 22em; font-size: 15px; color: var(--muted); }
+
+/* ---------- 星期篩選 ---------- */
+.daybar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(250, 245, 234, .95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.daybar .wrap { padding-top: 10px; padding-bottom: 10px; }
+.daybar-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.days { display: flex; gap: 6px; }
+.day {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  border-radius: 12px;
+  padding: 7px 0;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.day.any { flex: 1.6 1 0; }
+.day.today::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brick);
+}
+.day[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+/* ---------- 首頁分類入口 ---------- */
+.home { padding: 18px 0 40px; }
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tile {
+  text-align: left;
+  border: 0;
+  border-radius: var(--radius);
+  padding: 16px 16px 14px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  border: 1.5px solid rgba(74, 58, 42, .08);
+  transition: transform .15s;
+}
+.tile:active { transform: scale(.98); }
+.tile.wide { grid-column: span 2; min-height: 110px; }
+.tile-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--tile-accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  line-height: 1;
+}
+.tile-name { font-family: var(--hand); font-size: 23px; font-weight: 700; margin-top: 10px; }
+.tile-en { font-size: 10px; letter-spacing: .18em; font-weight: 700; color: var(--tile-accent); }
+.tile-intro { font-size: 12px; margin-top: 6px; color: var(--muted); flex: 1; }
+.tile-count { font-size: 12px; font-weight: 800; margin-top: 8px; }
+.tile-count b { font-size: 20px; margin-right: 2px; color: var(--tile-accent); }
+
+.tips {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1.5px dashed var(--line);
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- 分類頁 ---------- */
+.cat-head { padding: 18px 0 20px; }
+.back {
+  border: 0;
+  background: rgba(255,255,255,.7);
+  border-radius: 99px;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.cat-head h2 { margin: 12px 0 2px; font-family: var(--hand); font-size: 32px; font-weight: 700; line-height: 1.2; }
+.cat-head p { margin: 0; font-size: 13px; color: var(--muted); }
+
+.chips { display: flex; gap: 7px; overflow-x: auto; padding: 14px 0 4px; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  border-radius: 99px;
+  padding: 6px 13px;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.chip[aria-pressed="true"] { font-weight: 800; }
+.cuisine-chips { padding-top: 6px; }
+.cuisine-chips .chip { font-size: 12px; padding: 4px 11px; }
+
+.result { font-size: 12px; color: var(--muted); margin: 10px 2px; }
+.cards { display: grid; gap: 10px; padding-bottom: 16px; }
+.card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--card);
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 14px 12px 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(74, 58, 42, .06);
+}
+.card { display: flex; gap: 12px; align-items: stretch; }
+.card-body { flex: 1; min-width: 0; }
+.thumb {
+  flex: none;
+  width: 112px;
+  min-height: 112px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card-title { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.card h3 { margin: 0; font-size: 15px; line-height: 1.4; color: var(--ink); }
+.card h3 .en { margin-left: 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.card .arrow { color: var(--muted); font-size: 18px; flex: none; }
+.card .thai { font-size: 12px; color: var(--muted); }
+.card .one {
+  margin: 6px 0 8px;
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.tag {
+  font-size: 11px;
+  border-radius: 6px;
+  padding: 2px 7px;
+  background: var(--soft);
+  color: var(--ink);
+  font-weight: 600;
+}
+.tag.bib { background: var(--brick); color: #fff; }
+.tag.selected { background: var(--mustard); color: #fff; }
+.tag.extra { background: #EFE7DA; color: var(--muted); }
+
+.foot-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.price-level { font-style: normal; font-weight: 800; font-size: 14px; color: var(--accent); letter-spacing: 1px; white-space: nowrap; }
+.price-level i { font-style: normal; }
+.price-level i.off { color: var(--line); }
+.head-bar { display: flex; justify-content: space-between; align-items: center; }
+.price-legend { display: grid; gap: 8px; font-size: 14px; }
+.legend-dialog {
+  border: 0;
+  border-radius: 18px;
+  padding: 18px 20px;
+  width: min(92vw, 380px);
+  background: var(--card);
+  color: var(--ink);
+}
+.legend-dialog::backdrop { background: rgba(74, 58, 42, .45); }
+.legend-title { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 16px; margin-bottom: 12px; }
+.legend-close { border: 0; background: var(--cream); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; }
+.legend-close:focus { outline: none; }
+.legend-note { margin: 12px 0 0; font-size: 12px; color: var(--muted); }
+.legend-row { display: grid; grid-template-columns: 44px 52px 1fr; align-items: center; gap: 6px; }
+.legend-row span:last-child { color: var(--muted); }
+.day-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 6px;
+  padding: 1px 8px;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  background: var(--card);
+  white-space: nowrap;
+}
+.week-tag {
+  display: inline-flex;
+  gap: 4px;
+  vertical-align: middle;
+}
+.week-tag span {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  background: #F1EADF;
+  color: #C4B6A3;
+}
+.week-tag span.on { background: var(--accent); color: #fff; }
+.day-tag.unknown { border-color: var(--line); color: var(--muted); font-weight: 600; }
+
+.empty {
+  text-align: center;
+  padding: 36px 16px;
+  color: var(--muted);
+  font-size: 14px;
+  background: var(--card);
+  border-radius: var(--radius);
+}
+.empty .big { font-size: 36px; }
+.notice {
+  margin: 6px 0 40px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--mustard-soft);
+  font-size: 12px;
+  color: #6E5626;
+}
+
+/* ---------- 地點頁 ---------- */
+.hero {
+  position: relative;
+  height: 260px;
+  background: var(--soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero .hero-icon { font-size: 72px; opacity: .8; }
+.hero .back {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255, 253, 248, .92);
+  box-shadow: 0 2px 8px rgba(74, 58, 42, .15);
+}
+.hero-credit {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  font-size: 10px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.6);
+}
+.place { padding-top: 18px; padding-bottom: 40px; }
+.place h1 { margin: 10px 0 2px; font-size: 21px; line-height: 1.35; }
+.place h1 .en { margin-left: 6px; font-size: 15px; font-weight: 600; color: var(--muted); }
+.place .thai { font-size: 13px; color: var(--muted); }
+.place .desc { margin: 14px 0 0; font-size: 15px; }
+.block { margin-top: 18px; }
+.block-title { font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--accent); margin-bottom: 7px; }
+.pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.pill {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: var(--soft);
+  color: var(--ink);
+}
+.pill.dish { background: var(--card); border: 1.5px solid var(--accent); color: var(--accent); }
+.friend-note {
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--mustard-soft);
+  font-size: 14px;
+}
+.friend-note b { margin: 0 6px 0 4px; }
+.info {
+  margin-top: 20px;
+  padding: 14px 16px;
+  background: var(--card);
+  border-radius: 14px;
+  display: grid;
+  gap: 10px;
+  font-size: 14px;
+}
+.info-row { display: grid; grid-template-columns: 24px 1fr; gap: 8px; align-items: center; }
+.info-row > span:first-child { text-align: center; }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+.btn {
+  flex: 1 1 140px;
+  text-align: center;
+  text-decoration: none;
+  padding: 13px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 14px;
+  background: var(--accent);
+  color: #fff;
+}
+.btn.ghost { background: var(--card); color: var(--ink); border: 1.5px solid var(--line); }
+
+footer { text-align: center; font-size: 11px; color: var(--muted); padding: 0 16px 32px; }
+
+@media (min-width: 700px) {
+  .cards { grid-template-columns: 1fr 1fr; }
+  .tile { min-height: 170px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ==================== 首頁 ==================== -->
+<div id="view-home">
+  <header class="cover">
+    <svg class="deco" viewBox="0 0 400 260" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+      <circle cx="335" cy="68" r="40" fill="#D9A43A" opacity=".85"/>
+      <circle cx="335" cy="68" r="54" fill="none" stroke="#D9A43A" stroke-width="2" stroke-dasharray="4 6" opacity=".6"/>
+      <g fill="#7F9157" opacity=".55">
+        <path d="M400 160 C365 150 335 168 310 205 C345 192 372 188 400 192 Z"/>
+        <path d="M400 200 C355 200 328 228 312 260 L400 260 Z"/>
+        <path d="M382 260 C382 222 364 194 336 176 C350 208 355 236 350 260 Z"/>
+      </g>
+      <g fill="#C25B43" opacity=".55">
+        <path d="M222 260 L222 224 L242 210 L262 224 L262 260 Z"/>
+        <path d="M212 228 L242 200 L272 228 L264 228 L242 208 L220 228 Z"/>
+        <path d="M238 200 L242 182 L246 200 Z"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <div class="eyebrow">CHIANG MAI · POCKET GUIDE</div>
+      <h1>清邁 30 天</h1>
+      <p>不排行程，想出門的時候打開，挑一個今天想去的地方。</p>
+    </div>
+  </header>
+</div>
+
+<!-- ==================== 分類頁 ==================== -->
+<div id="view-cat" hidden>
+  <header class="cat-head" id="cat-head">
+    <div class="wrap">
+      <div class="head-bar">
+        <button class="back" id="back">← 回首頁</button>
+        <button class="back" id="legend-btn" hidden>฿ 價位說明</button>
+      </div>
+      <h2 id="cat-title"></h2>
+      <p id="cat-intro"></p>
+    </div>
+  </header>
+</div>
+
+<!-- ==================== 地點頁 ==================== -->
+<article id="view-place" hidden></article>
+
+<!-- 共用：星期篩選 -->
+<div class="daybar" id="daybar">
+  <div class="wrap">
+    <div class="daybar-label" id="day-label">哪天出門？</div>
+    <div class="days" id="days"></div>
+  </div>
+</div>
+
+<main>
+  <section class="home" id="home-body">
+    <div class="wrap">
+      <div class="tiles" id="tiles"></div>
+      <div class="tips">💡 點分類進去挑地點，再點卡片看營業時間和導航。紅色小圓點是今天。</div>
+    </div>
+  </section>
+
+  <section id="cat-body" hidden>
+    <div class="wrap">
+      <div class="chips" id="chips"></div>
+      <div class="chips cuisine-chips" id="cuisine-chips" hidden></div>
+      <div class="result" id="result"></div>
+      <div class="cards" id="cards"></div>
+      <p class="notice" id="notice" hidden></p>
+    </div>
+  </section>
+</main>
+
+
+<dialog class="legend-dialog" id="legend-dialog">
+  <div class="legend-title">價位說明 <button class="legend-close" id="legend-close" aria-label="關閉">✕</button></div>
+  <div class="price-legend" id="price-legend"></div>
+  <p class="legend-note">依米其林 ฿ 分級，฿฿฿ 以上都算高價位。</p>
+</dialog>
+
+<script>
+const DAY_LABELS = ['日', '一', '二', '三', '四', '五', '六'];
+const WEEK_ORDER = [1, 2, 3, 4, 5, 6, 0];
+const EVERYDAY = [0, 1, 2, 3, 4, 5, 6];
+const MON_TO_SAT = [1, 2, 3, 4, 5, 6];
+const BIB_URL = 'https://guide.michelin.com/th/en/chiang-mai-region/chiang-mai/restaurants/bib-gourmand';
+
+const CATEGORIES = {
+  market: {
+    name: '市集', en: 'MARKETS', icon: '🧺',
+    accent: '#B8862A', soft: 'var(--mustard-soft)',
+    intro: '週末限定居多，文創手作、農夫市集、生活選物',
+    groups: ['市集・文創', '商場・街區'],
+    notice: '市集時間可能因季節、天候或活動變動，出發當天請以主辦方最新公告為準。',
+  },
+  night: {
+    name: '夜市 & 市場', en: 'NIGHT & LOCAL MARKETS', icon: '🌙',
+    accent: '#5B6C8F', soft: 'var(--slate-soft)',
+    intro: '傍晚逛夜市邊走邊吃，早起逛傳統市場買伴手禮',
+    groups: ['夜市', '傳統市場'],
+    notice: '夜市攤位開收時間不一，下雨天可能提早收攤；傳統市場越早越熱鬧，中午後很多攤位就收了。',
+  },
+  food: {
+    name: '美食', en: 'MICHELIN & MORE', icon: '🍜',
+    accent: '#C25B43', soft: 'var(--brick-soft)',
+    intro: '米其林必比登、入選推薦，加上幾間口袋名單',
+    groups: ['必比登', '米其林推薦', '其他推薦'],
+    cuisines: ['泰北菜', '泰式料理', '麵食・米線', '小吃・甜點', '咖啡・早午餐', '甜點・飲品', '西式・異國', '創意・精緻', '南泰・東南亞'],
+    notice: '名單依 MICHELIN Guide Thailand 2026。清邁目前沒有星級餐廳；入選推薦共 36 間，這裡精選 13 間。其他推薦是朋友口袋名單，不在米其林名單內。價格為預算估算，營業時間建議出發前確認。',
+  },
+  activity: {
+    name: '活動', en: 'THINGS TO DO', icon: '🎉',
+    accent: '#4F8A82', soft: 'var(--teal-soft)',
+    intro: '課程、體驗、展覽、節慶，之後陸續補上',
+    groups: [],
+    notice: '',
+  },
+};
+
+const PRICE_LEVELS = [
+  { label: '低價位', note: '路邊攤、小吃、麵店' },
+  { label: '中價位', note: '一般餐廳，適合坐下來吃一餐' },
+  { label: '高價位', note: '套餐、精緻餐廳，通常要訂位' },
+];
+
+// ===== 圖片：在 url 填圖片網址，credit 可留空（會顯示在圖片右下角）；url 空白就顯示分類圖示 =====
+const IMAGES = {
+  // ---------- 市集 ----------
+  "Baan Kang Wat": { url: "https://cdn.getyourguide.com/image/format=auto%2Cfit=crop%2Cgravity=auto%2Cquality=60%2Cwidth=400%2Cheight=265%2Cdpr=2/tour_img/b20f901f104ad23404ff823c6941d2ee2fd75d8e45d304f3e4a12c827fc84f77.jpg", credit: "Aleah Phils / CC BY-NC 2.0 · Flickr" }, // 寺邊藝術村
+  "Coconut Market": { url: "https://live.staticflickr.com/65535/54931501409_7abf40a706_b.jpg", credit: "" }, // 椰林市集
+  "Jing Jai Market": { url: "https://www.wendyjourney.com/wp-content/uploads/2026/03/JJ-marketing.jpg", credit: "" }, // 真心市集
+  "Chamcha Market": { url: "https://i0.wp.com/journey.tw/wp-content/uploads/2026/07/20260703154329_0_424280.jpg?resize=1100%2C732&quality=99&ssl=1", credit: "" }, // 雨豆樹市集
+  "One Nimman": { url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBkGv8PDFpDvwR-e0nBTi9NwICW97ew6zerltjIJoBId4weHKxYpiNzDGC&s=10", credit: "F.Borromini / CC BY-SA 4.0 · Wikimedia" }, // 尼曼一號
+  // ---------- 夜市・市場 ----------
+  "Sunday Walking Street": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Chiang_Mai_sunday_evening_walking_street.jpg/1280px-Chiang_Mai_sunday_evening_walking_street.jpg", credit: "Takeaway / CC BY-SA 4.0 · Wikimedia" }, // 週日步行街夜市
+  "Saturday Walking Street": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Saturday_Evening_Market_Chiang_Mai_2016-04-02.jpg/1280px-Saturday_Evening_Market_Chiang_Mai_2016-04-02.jpg", credit: "Albert Labermeier / CC BY 3.0 · Wikimedia" }, // 週六步行街夜市
+  "Chiang Mai Night Bazaar": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Chiang_Mai_Night_Bazaar_in_2018.jpg/1280px-Chiang_Mai_Night_Bazaar_in_2018.jpg", credit: "Christophe95 / CC BY-SA 4.0 · Wikimedia" }, // 清邁長康夜市
+  "Chiang Mai University Night Market": { url: "https://upload.wikimedia.org/wikipedia/commons/1/17/Chiang_Mai_University_Front_Gate.jpg", credit: "Ariellegross / CC BY-SA 4.0 · Wikimedia" }, // 清邁大學夜市
+  "Warorot Market": { url: "https://upload.wikimedia.org/wikipedia/commons/5/50/Warorot_Market_01.jpg", credit: "Department of Tourism Thailand: LannaPhoto / CC BY-SA 3.0 · Wikimedia" }, // 瓦洛洛市場
+  "Chiang Mai Morning Market": { url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Thai_market_vegetables_01.jpg", credit: "Takeaway / CC BY-SA 3.0 · Wikimedia" }, // 清邁早市
+  // ---------- 美食 ----------
+  "Khao Soi Mae Sai": { url: "https://prod-pics.guide.michelin.com/api/public/content/47168a2ec6df46f9998943338efe4342.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 美賽咖哩麵
+  "Guay Jub Chang Moi Tat Mai": { url: "https://prod-pics.guide.michelin.com/api/public/content/dd87496acec64bbf9435caa2db151213.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 張莫新路粿汁
+  "Sanpakoi Kanomjeen": { url: "https://prod-pics.guide.michelin.com/api/public/content/cb918c7f7fff4830a50e2d64a167b3b1.jpg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 山巴蓋米線
+  "Huen Muan Jai": { url: "https://prod-pics.guide.michelin.com/api/public/content/0080cc764abe4d81b7e74fd622d5e995.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 歡心之家泰北菜
+  "Huan Soontaree": { url: "https://prod-pics.guide.michelin.com/api/public/content/fdfe7cb1ee5d4cec8263869f21b02a0e.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 順達莉之家
+  "Euang Kam Sai": { url: "https://prod-pics.guide.michelin.com/api/public/content/5876a32337bd4b1596b02024c6c157f5.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 金蘭花泰北料理
+  "Saiyut and Doctor Sai Kitchen": { url: "https://prod-pics.guide.michelin.com/api/public/content/29b45ff8b4bd4f42b67f74f728fed462.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 賽玉與賽醫師廚房
+  "Roti Pa Day": { url: "https://prod-pics.guide.michelin.com/api/public/content/a8c4505f613e462f9ee72fcda523930d.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 黛阿姨煎餅
+  "Lung Khajohn Wat Ket": { url: "https://prod-pics.guide.michelin.com/api/public/content/3473b140e369403bb6180aa0a750f455.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 卡宗伯傳統點心
+  "Tue Ka Ko Na Prince": { url: "https://prod-pics.guide.michelin.com/api/public/content/d3b0bdd168ca441895efcecc657e7540.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 王子學院前炸豆腐
+  "Meena Rice Based Cuisine": { url: "https://prod-pics.guide.michelin.com/api/public/content/b8e8be83dbdf455fbd599b42b5362896.jpg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 米娜米飯料理
+  "RASIK LOCAL KITCHEN": { url: "https://prod-pics.guide.michelin.com/api/public/content/e89b58516b524726901fff75c4295b45.jpg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 拉希在地廚房
+  "Magnolia Café": { url: "https://prod-pics.guide.michelin.com/api/public/content/19a8f8062a6348689c2e194a11874929.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 木蘭咖啡
+  "CHAWEE": { url: "https://prod-pics.guide.michelin.com/api/public/content/57d21585e9604429a57f6bd3454a7f6f.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 查薇阿嬤菜
+  "Sanae": { url: "https://prod-pics.guide.michelin.com/api/public/content/06bf9e691e87439586b6b16663bf3953.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 迷人牛肉館
+  "Dan Chicken Rice (San Sai)": { url: "https://prod-pics.guide.michelin.com/api/public/content/40cd26d2e505428cbdfc7f54f103d11e.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 丹海南雞飯（山賽本店）
+  "Gongkham": { url: "https://prod-pics.guide.michelin.com/api/public/content/994b2aa4324b4629828283c298ddfb0a.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 金鼓泰北菜
+  "Lhongkhao Kitchen": { url: "https://prod-pics.guide.michelin.com/api/public/content/9c0d45bd1cd641a9a01ce4fb617f04ab.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 米倉廚房
+  "Khao": { url: "https://prod-pics.guide.michelin.com/api/public/content/e62027a79e2f4020bc3b781267a9e7c4.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 稻（四季酒店）
+  "Blackitch": { url: "https://prod-pics.guide.michelin.com/api/public/content/5566c39a11e546e6b9e24a3f6435c2f4.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 黑廚
+  "Baan Landai (Phra Pok Klao Road)": { url: "https://prod-pics.guide.michelin.com/api/public/content/12d8887a6e4d482ba84291863e381551.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 蘭黛之家
+  "Kinlum Kindee": { url: "https://prod-pics.guide.michelin.com/api/public/content/a92d4e8a319c4edbbec83acd4db7bf7f.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 好吃好食泰北菜
+  "Lumdee Te Khuadang": { url: "https://prod-pics.guide.michelin.com/api/public/content/5676b8d35d42410aa4fab966fc6c8f47.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 紅橋好味
+  "Huen Jai Yong": { url: "https://prod-pics.guide.michelin.com/api/public/content/6e5c31f4a17e4d809b2152c1bdbe876a.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 庸族之家
+  "Baan Nam Ngiew Wieng Kao": { url: "https://prod-pics.guide.michelin.com/api/public/content/c9feaad00bf04be0bd8ed670b53bda19.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 古城番茄米線
+  "Withee Laab Charoen Muang": { url: "https://prod-pics.guide.michelin.com/api/public/content/6763a23e954e43c8976d0f9eb50aadf2.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 昌盛路拉布
+  "Nam Ngiao Yong": { url: "https://prod-pics.guide.michelin.com/api/public/content/67c94cfcb8e840db889bb5cfee46fc58.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 庸族番茄米線
+  "Talung": { url: "https://prod-pics.guide.michelin.com/api/public/content/ae288bf03ab24d6880b794d42c6da37f.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 達隆南泰菜
+  "Kang Jing Jai": { url: "https://prod-pics.guide.michelin.com/api/public/content/a37494d06687423b88e442359d289742.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 真心咖哩
+  "Aunt Aoy Kitchen": { url: "https://prod-pics.guide.michelin.com/api/public/content/e60fb6b7745c4a8893c826b6157421a3.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 阿愛阿姨廚房
+  "Kiti Panit": { url: "https://prod-pics.guide.michelin.com/api/public/content/8019dae81bfb4bb58088dcd21ef70dff.jpg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 吉帝商行
+  "Khao Soi Khun Yai": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Khao_soi_Chiang_Mai.jpg/1280px-Khao_soi_Chiang_Mai.jpg", credit: "Takeaway / CC BY-SA 3.0 · Wikimedia" }, // 外婆咖哩麵
+  // ---------- 朋友推薦 ----------
+  "Lux to eat": { url: "", credit: "" }, // 愛吃小館
+  "FOOD BAR 29 Suk Kasame": { url: "", credit: "" }, // Food Bar 29 快餐小館
+  "Khao-Sō-i": { url: "", credit: "" }, // Khao-Sō-i 咖哩麵
+  "Heuannaow": { url: "", credit: "" }, // 寒屋（Heuannaow）
+  "Cafe Rosemary": { url: "", credit: "" }, // 迷迭香咖啡
+  "Zohng Coffee": { url: "", credit: "" }, // Zohng 咖啡
+  "SMOO! House": { url: "", credit: "" }, // SMOO! 果昔屋
+  "Joost Smoothies (Nimman Soi 13)": { url: "", credit: "" }, // Joost 果昔
+  "Adirak Pizza": { url: "", credit: "" }, // Adirak 柴燒披薩
+  "Pasta Ama Chiang Mai": { url: "", credit: "" }, // 阿嬤義大利麵
+  "Lot of Taste": { url: "", credit: "" }, // Lot of Taste 咖啡
+  "Baan Pie Charin Cafe & Bistro": { url: "", credit: "" }, // Charin 派之家
+  "Baan Bakery": { url: "", credit: "" }, // Baan 麵包坊
+  "RAWtruckr Nimman": { url: "", credit: "" }, // RAWtruckr 韓式炸雞
+  "phithi": { url: "", credit: "" }, // Phithi 冬陰牛肉麵
+  "Salsa Kitchen": { url: "", credit: "" }, // Salsa 墨西哥廚房
+  "MINTNIMAL": { url: "", credit: "" }, // Mintnimal 薄荷冰淇淋
+  "Roti Pa Dae (Loi Kroh branch)": { url: "", credit: "" }, // Pa Dae 香蕉煎餅（Loi Kroh 分店）
+};
+
+const PLACES = [
+  // ---------- 市集 ----------
+  {
+    cat: 'market', group: '市集・文創', name: 'Baan Kang Wat', zh: '寺邊藝術村', thai: 'บ้านข้างวัด',
+    fit: ['文創手作', '咖啡廳', '陶藝', '拍照'], dishes: [],
+    tags: ['文創聚落', '手作・咖啡'],
+    desc: '藏在綠意裡的小型藝術聚落，木造小屋、手作店與咖啡館交錯，氣氛悠閒，很適合慢慢逛。',
+    location: '191 ถ.บ้านร่ำเปิง ต.สุเทพ อ.เมือง',
+    time: '週二至週日 10:00–18:00，週一休息',
+    days: [0, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Baan+Kang+Wat+Chiang+Mai',
+  },
+  {
+    cat: 'market', group: '市集・文創', name: 'Coconut Market', zh: '椰林市集', thai: 'ตลาดมะพร้าว',
+    fit: ['拍照', '小吃', '戶外散步'], dishes: [],
+    tags: ['週末市集', '拍照・小吃'],
+    desc: '以椰子樹與戶外場景聞名的週末市集，攤位、食物與自然景色組合在一起，適合邊走邊吃、輕鬆拍照。',
+    location: '94 ม.3 ซ.บ้านโต้ง 2 ต.ฟ้าฮ่าม อ.เมือง',
+    time: '週五至週日 08:00–15:00，可能因活動調整',
+    days: [0, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Coconut+Market+Chiang+Mai',
+  },
+  {
+    cat: 'market', group: '市集・文創', name: 'Jing Jai Market', zh: '真心市集', thai: 'จริงใจมาร์เก็ต',
+    fit: ['農產品', '設計選物', '早午餐', '週末早上'], dishes: [],
+    tags: ['農夫市集', '在地設計'],
+    desc: '清邁很受歡迎的生活風格市集，結合農產品、咖啡、食物、手作與設計選物，週末最有市集氣氛。',
+    location: '45 ถ.อัษฎาธร ต.ป่าตัน อ.เมือง',
+    time: '週末 Farmers Market 06:30–15:00；園區其他店家時間不同',
+    days: [0, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Jing+Jai+Market+Chiang+Mai',
+  },
+  {
+    cat: 'market', group: '市集・文創', name: 'Chamcha Market', zh: '雨豆樹市集', thai: 'ฉำฉา มาร์เก็ต',
+    fit: ['手作', '生活雜貨', '人少慢逛'], dishes: [],
+    tags: ['週末市集', '手作・慢逛'],
+    desc: '規模較親切、帶有綠意的週末小市集，攤位以手作、生活雜貨與小吃為主，步調不急。',
+    location: '13, 16 ม.2 ซ.11 บ้านมอญ ต.สันกลาง อ.สันกำแพง',
+    time: '週六、週日 09:00–14:30，建議確認當週公告',
+    days: [0, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Chamcha+Market+Chiang+Mai',
+  },
+  {
+    cat: 'market', group: '商場・街區', name: 'One Nimman', zh: '尼曼一號', thai: 'วันนิมมาน',
+    fit: ['吹冷氣', '伴手禮', '選物', '餐廳'], dishes: [],
+    tags: ['商場街區', '選物・餐飲'],
+    desc: '紅磚拱廊與歐風建築是這裡的特色，集合選物店、餐廳、咖啡館和不定期活動，適合逛街與吃飯一起安排。',
+    location: '1 ถ.นิมมานเหมินท์ ซ.1 ต.สุเทพ อ.เมือง',
+    time: '每日 11:00–21:00，部分餐飲或活動區到 22:00',
+    days: EVERYDAY,
+    map: 'https://www.google.com/maps/search/?api=1&query=One+Nimman+Chiang+Mai',
+  },
+
+  // ---------- 夜市 ----------
+  {
+    cat: 'night', group: '夜市', name: 'Sunday Walking Street', zh: '週日步行街夜市', thai: 'ถนนคนเดินวันอาทิตย์',
+    fit: ['首次來清邁', '紀念品', '小吃', '手作'], dishes: [],
+    tags: ['週日限定', '手作・小吃'],
+    desc: '從古城中心延伸的大型週日夜市，街道變成步行區，手作、紀念品、服飾與小吃攤一路展開，熱鬧又有節慶感。',
+    location: 'ถ.ราชดำเนิน (ประตูท่าแพ) ต.ศรีภูมิ อ.เมือง',
+    time: '週日 17:00 起，到 22:00 左右，部分攤位更晚',
+    days: [0],
+    map: 'https://maps.app.goo.gl/8x7A3rKqWgTA7KaL7',
+  },
+  {
+    cat: 'night', group: '夜市', name: 'Saturday Walking Street', zh: '週六步行街夜市', thai: 'ถนนคนเดินวัวลาย',
+    fit: ['銀飾', '手作', '小吃'], dishes: [],
+    tags: ['週六限定', '銀飾・手作'],
+    desc: '位於古城南側的週六夜市，以銀飾、手工藝、服飾與街頭小吃吸引旅人，規模大但沿路可慢慢挑選。',
+    location: 'ถ.วัวลาย ต.หายยา อ.เมือง',
+    time: '週六 17:00–22:00，依攤位而異',
+    days: [6],
+    map: 'https://maps.app.goo.gl/M31U7NgA7pFMYkkZ7',
+  },
+  {
+    cat: 'night', group: '夜市', name: 'Chiang Mai Night Bazaar', zh: '清邁長康夜市', thai: 'ไนท์บาซาร์ เชียงใหม่',
+    fit: ['紀念品', '衣服包包', '按摩', '每天都開'], dishes: [],
+    tags: ['每日夜市', '紀念品・購物'],
+    desc: '清邁經典觀光夜市，攤位集中、晚上氣氛熱鬧，適合不想等特定星期、臨時想出門逛街時安排。',
+    location: 'ถ.ช้างคลาน อ.เมือง',
+    time: '每日 16:00–23:30，攤位開收時間不一',
+    days: EVERYDAY,
+    map: 'https://maps.app.goo.gl/SVX8ZdYU46hie9cV8',
+  },
+  {
+    cat: 'night', group: '夜市', name: 'Chiang Mai University Night Market', zh: '清邁大學夜市', thai: 'ตลาดหน้ามอ มช.',
+    fit: ['平價晚餐', '衣服', '學生氣氛'], dishes: [],
+    tags: ['學生夜市', '平價小吃'],
+    desc: '大學周邊的生活型夜市，衣服、配件和小吃選擇多，價格通常比觀光核心區親民。',
+    location: 'ถ.ห้วยแก้ว (ตรงข้าม มช.) ต.ช้างเผือก อ.เมือง',
+    time: '多數攤位 17:00–22:30，依攤位而異',
+    days: EVERYDAY,
+    map: 'https://maps.app.goo.gl/JetTErFiiMnvHRUYA',
+  },
+
+  // ---------- 傳統市場 ----------
+  {
+    cat: 'night', group: '傳統市場', name: 'Warorot Market', zh: '瓦洛洛市場', thai: 'กาดหลวง (ตลาดวโรรส)',
+    fit: ['伴手禮', '泰北零食', '乾貨香料', '花市'], dishes: [],
+    tags: ['老牌市場', '伴手禮・乾貨'],
+    desc: '清邁老牌大型市場，室內外攤位密集，從乾貨、香料、零食到衣物與日用品都有，是感受在地採買文化的好地方。',
+    location: '90 ถ.วิชยานนท์ ต.ช้างม่อย อ.เมือง',
+    time: '多數攤位白天營業，約 06:00–18:00',
+    days: EVERYDAY,
+    map: 'https://maps.app.goo.gl/MNXAc8zjdtcsQW3C8',
+  },
+  {
+    cat: 'night', group: '傳統市場', name: 'Chiang Mai Morning Market', zh: '清邁早市', thai: 'ตลาดเช้า',
+    fit: ['在地早餐', '早起', '日常風景'], dishes: [],
+    tags: ['早市', '在地早餐'],
+    desc: '適合早起探索的傳統市場，可以觀察當地人的日常採買，也能找泰式早餐、熟食和新鮮食材。',
+    location: '以收藏的 Google Maps 標記為準',
+    time: '約 04:00–11:00，實際範圍以地圖確認',
+    days: EVERYDAY,
+    map: 'https://maps.app.goo.gl/moDKWmVQU6NuwcAY6',
+  },
+
+  // ---------- 美食 ----------
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Khao Soi Mae Sai', zh: '美賽咖哩麵', thai: 'ข้าวซอยแม่สาย',
+    cuisine: '麵食・米線',
+    level: 1,
+    fit: ['首次來清邁', '午餐'], dishes: ['雞肉咖哩麵', '牛肉咖哩麵'],
+    note: '朋友的咖哩麵口袋名單之一',
+    tags: ['咖哩麵'],
+    desc: '以泰北代表性的咖哩蛋麵聞名，湯頭濃郁、搭配酥脆炸麵，是初訪清邁很值得安排的一碗。',
+    price: '約 ฿50–100／碗',
+    location: '29/1 ถ.ราชพฤกษ์ ต.ช้างเผือก อ.เมือง',
+    time: '週一至週六 08:00–16:00，週日休息',
+    days: MON_TO_SAT,
+    map: 'https://www.google.com/maps/search/?api=1&query=Khao+Soi+Mae+Sai+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Guay Jub Chang Moi Tat Mai', zh: '張莫新路粿汁', thai: 'ก๋วยจั๊บช้างม่อยตัดใหม่',
+    cuisine: '麵食・米線',
+    level: 1,
+    fit: ['簡單一餐'], dishes: ['粿汁湯', '豬肉配料'],
+    tags: ['米卷湯'],
+    desc: '以米製卷粉搭配熱湯與豬肉配料的小吃店，口味偏家常，適合當作簡單一餐或逛街中途補充體力。',
+    price: '約 ฿50–100／碗',
+    location: '99/11-12 ถ.ช้างม่อยตัดใหม่ ต.ช้างม่อย อ.เมือง',
+    time: '10:00–15:00',
+    days: [6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Guay+Jub+Chang+Moi+Tat+Mai+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Sanpakoi Kanomjeen', zh: '山巴蓋米線', thai: 'ขนมจีนสันป่าข่อย',
+    cuisine: '麵食・米線',
+    level: 1,
+    fit: ['在地早午餐'], dishes: ['泰北番茄豬肉米線'],
+    tags: ['泰式米線'],
+    desc: '以泰式米線搭配多種咖哩醬汁的在地小吃，適合想嘗試清邁日常飲食的人。',
+    price: '約 ฿30–80／份',
+    location: 'ตลาดทองคำ 11 ซ.ท่าสะต๋อย ต.ช้างม่อย อ.เมือง',
+    time: '11:00–23:00',
+    days: [1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Sanpakoi+Kanomjeen+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Huen Muan Jai', zh: '歡心之家泰北菜', thai: 'เฮือนม่วนใจ๋',
+    cuisine: '泰北菜',
+    level: 2,
+    fit: ['泰北菜入門', '多人分享'], dishes: ['泰北香腸', 'Hang Lay 咖哩豬', '番茄肉醬'],
+    tags: ['泰北菜'],
+    desc: '以泰北家常菜與傳統風味為主，適合用一桌菜認識泰北飲食。',
+    price: '約 ฿100–300／道',
+    location: '24 ถ.ราชพฤกษ์ ต.ช้างเผือก อ.เมือง',
+    time: '11:00–21:00',
+    days: [0, 1, 2, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Huen+Muan+Jai+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Huan Soontaree', zh: '順達莉之家', thai: 'เฮือนสุนทรี',
+    cuisine: '泰北菜',
+    level: 2,
+    fit: ['晚餐', '多人分享'], dishes: ['泰北香腸', 'Hang Lay 咖哩豬', 'Nam Prik 沾醬'],
+    tags: ['泰北菜・晚餐'],
+    desc: '主打泰北料理與較有氣氛的用餐體驗，適合把晚餐當成一個目的地，和朋友慢慢分享多道菜。',
+    price: '約 ฿120–350／道',
+    location: '208 ถ.ป่าตัน ต.ป่าตัน อ.เมือง',
+    time: '16:30–23:00',
+    days: [1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Huan+Soontaree+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Euang Kam Sai', zh: '金蘭花泰北料理', thai: 'เอื้องคำสาย',
+    cuisine: '泰北菜',
+    level: 2,
+    fit: ['泰北菜'], dishes: ['泰北咖哩', '泰北香腸'],
+    tags: ['泰北料理'],
+    desc: '列於米其林必比登清單的清邁在地餐廳，可作為探索泰北菜的候選之一。',
+    price: '約 ฿100–300／道',
+    location: '185/3 ถ.วัวลาย ต.หายยา อ.เมือง',
+    time: '11:00–21:00',
+    days: [0, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Euang+Kam+Sai+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Saiyut and Doctor Sai Kitchen', zh: '賽玉與賽醫師廚房', thai: 'ร้านสายหยุดและหมอทราย',
+    cuisine: '泰式料理',
+    level: 2,
+    fit: ['特色料理', '晚餐'], dishes: [],
+    tags: ['泰菜・特色料理'],
+    desc: '以有特色的泰式料理呈現方式受到關注，適合想把用餐當作旅遊體驗、試試較有個性的地方菜的人。',
+    price: '約 ฿150–350／道',
+    location: '32 ถ.โชตนา ซ.12 ต.ป่าตัน อ.เมือง',
+    time: '10:00–21:00',
+    days: [0, 1, 2, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Saiyut+and+Doctor+Sai+Kitchen+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Roti Pa Day', zh: '黛阿姨煎餅', thai: 'โรตีป้าเด',
+    cuisine: '小吃・甜點',
+    level: 1,
+    fit: ['夜晚散步', '甜點'], dishes: ['香蕉煉乳 Roti', '蛋 Roti'],
+    note: '很紅的老奶奶攤，朋友覺得很好吃；人多可以改去 Loi Kroh 路的分店',
+    tags: ['街頭甜點'],
+    desc: '以現煎 Roti 印度煎餅聞名，外層煎得酥香，常搭配香蕉、蛋、煉乳，是夜間散步時適合分享的小甜點。',
+    price: '約 ฿30–80／份',
+    location: 'หน้าวัดมหาวัน ถ.ท่าแพ ซ.4 ต.ช้างม่อย อ.เมือง',
+    time: '18:30–00:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Roti+Pa+Day+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Lung Khajohn Wat Ket', zh: '卡宗伯傳統點心', thai: 'ลุงขจร วัดเกต',
+    cuisine: '小吃・甜點',
+    level: 1,
+    fit: ['早餐', '傳統點心'], dishes: [],
+    tags: ['傳統點心'],
+    desc: '在地傳統點心攤，適合早上到河岸附近走走時順道品嘗，能吃到和一般餐廳不同的泰式小點。',
+    price: '約 ฿20–80／份',
+    location: '109 ถ.เจริญราษฎร์ ต.ช้างม่อย อ.เมือง',
+    time: '週一至週六 06:00–14:30，週日休息',
+    days: MON_TO_SAT,
+    map: 'https://www.google.com/maps/search/?api=1&query=Lung+Khajohn+Wat+Ket+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Tue Ka Ko Na Prince', zh: '王子學院前炸豆腐', thai: 'เต้าหู้ทอดหน้าปริ๊นซ์',
+    cuisine: '小吃・甜點',
+    level: 1,
+    fit: ['街頭零嘴'], dishes: ['炸豆腐', '芋頭糕'],
+    tags: ['炸點心'],
+    desc: '以炸豆類、芋頭類點心為主的小吃，適合想試試當地街頭零嘴、又不需要坐下來吃一整餐的時候。',
+    price: '約 ฿20–60／份',
+    location: 'ถ.แก้วนวรัฐ ต.วัดเกต อ.เมือง',
+    time: '09:00–16:00',
+    days: [1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Tue+Ka+Ko+Na+Prince+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Meena Rice Based Cuisine', zh: '米娜米飯料理', thai: 'มีนา มีข้าว',
+    cuisine: '泰式料理',
+    level: 2,
+    fit: ['悠閒午餐', '多人分享'], dishes: ['五色米飯', '泰式咖哩'],
+    tags: ['米飯料理'],
+    desc: '以米飯與泰式料理為主題的餐廳，適合安排一頓悠閒的午餐。',
+    price: '約 ฿100–300／道',
+    location: '13/5 ม.2 ต.สันกลาง อ.สันกำแพง',
+    time: '10:00–20:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Meena+Rice+Based+Cuisine+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'RASIK LOCAL KITCHEN', zh: '拉希在地廚房', thai: 'รสิก',
+    cuisine: '創意・精緻',
+    level: 2,
+    fit: ['特別晚餐', '需預約'], dishes: ['主廚套餐'],
+    tags: ['需預約'],
+    desc: '以當代方式詮釋泰國風味，和傳統市場小吃很不一樣，適合想安排一頓完整用餐體驗的晚餐。',
+    price: '比街頭小吃高，以當期套餐價格為準',
+    location: '44/3 ถ.ศรีดอนไชย ต.ช้างคลาน อ.เมือง',
+    time: '週一、週三至週日 17:00–21:00，週二休息；請先預約',
+    days: [0, 1, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Rasik+Local+Kitchen+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Magnolia Café', zh: '木蘭咖啡', thai: 'แมกโนเลีย คาเฟ่',
+    cuisine: '泰式料理',
+    level: 2,
+    fit: ['晚餐', '復古空間'], dishes: ['炸魷魚乾佐花生醬', '西瓜配鮭魚鬆'],
+    tags: ['泰式料理', '只開晚餐'],
+    desc: '只有 4 張大長桌的小店，女主廚把自己的古董收藏擺滿整間，色彩鮮豔又有吊燈。單點菜單橫跨泰國各地，味道大膽鮮明，飯後還會送一份班蘭布丁。',
+    price: '中等價位（米其林 ฿฿）',
+    location: '131/70, 131/82 ถ.รัตนโกสินทร์ ต.ช้างม่อย อ.เมือง',
+    time: '週一至週六 17:00–22:00，週日公休',
+    days: [1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Magnolia+Caf%C3%A9+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/magnolia-cafe',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'CHAWEE', zh: '查薇阿嬤菜', thai: 'ฉวี',
+    cuisine: '泰式料理',
+    level: 2,
+    fit: ['晚餐', '季節菜單'], dishes: ['每月套餐', 'Samrap 共享菜'],
+    tags: ['泰式料理', '每月換菜單'],
+    desc: '以主廚阿嬤命名，鼠尾草綠牆面配復古擺設，氣氛很私密。菜單每月依季節更換，菜色來自童年記憶和老食譜，先上幾道前菜，最後以一桌配白飯的 samrap 共享菜收尾。',
+    price: '中等價位（米其林 ฿฿）',
+    location: '84/20 ต.ช้างเผือก อ.เมือง',
+    time: '11:00–15:00、17:00–21:00，週二公休',
+    days: [0, 1, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=CHAWEE+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/chawee',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Sanae', zh: '迷人牛肉館', thai: 'เสน่ห์',
+    cuisine: '泰式料理',
+    level: 1,
+    fit: ['牛肉控', '清真'], dishes: ['牛油炒飯', '酸辣牛小排湯'],
+    tags: ['牛肉料理', '清真'],
+    desc: '牛肉控必訪，門口有牛頭雕塑，空間通往大樹遮蔭的庭院。創意單點菜單把菲力、牛小排、牛舌、牛蹄各用不同手法料理。',
+    price: '約 USD 10–20／人',
+    location: '68 ซ.บ้านข้างวัดร่ำเปิง ต.สุเทพ อ.เมือง',
+    time: '11:30–21:00，週一公休',
+    days: [0, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Sanae+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/sanae-thai-cuisine',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Dan Chicken Rice (San Sai)', zh: '丹海南雞飯（山賽本店）', thai: 'แดนข้าวมันไก่ (สาขาสันทราย)',
+    cuisine: '小吃・甜點',
+    level: 1,
+    fit: ['早午餐', '平價'], dishes: ['海南雞飯', '雞肝'],
+    tags: ['海南雞飯', '早午餐'],
+    desc: '在地人吃了 20 多年的平價海南雞飯，雖然開了好幾間分店，米其林推薦去 San Sai 路上這間創始店。',
+    price: '平價（米其林 ฿）',
+    location: '45 ม.3 ถ.สันทรายสายเก่า ต.สันทรายน้อย อ.สันทราย',
+    time: '每天 07:30–14:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Dan+Chicken+Rice+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/dan-chicken-rice-san-sai',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Gongkham', zh: '金鼓泰北菜', thai: 'ก๋องคำ',
+    cuisine: '泰北菜',
+    level: 1,
+    fit: ['郊區兜風', '泰北菜'], dishes: ['泰北蔬菜咖哩', '青辣椒醬', '芥菜湯'],
+    tags: ['泰北菜', '郊區'],
+    desc: '離市區約 30 分鐘的蘭納風木屋，像到在地朋友家吃飯一樣放鬆，戶外座位沒冷氣但很涼爽。菜單都是泰北經典菜，現點現做、擺盤樸實。',
+    price: '平價（米其林 ฿）',
+    location: '259/22-23 ม.1 ต.ริมใต้ อ.แม่ริม',
+    time: '09:00–21:00，週六到 22:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Gongkham+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/gongkham',
+  },
+  {
+    cat: 'food', group: '必比登', bib: true, name: 'Lhongkhao Kitchen', zh: '米倉廚房', thai: 'ครัวหลองข้าว',
+    cuisine: '泰北菜',
+    level: 1,
+    fit: ['稻田景觀', '郊區兜風'], dishes: ['山陀兒沙拉', '辣炒田雞腿'],
+    tags: ['泰北菜', '稻田景觀'],
+    desc: 'Mae Rim 的人氣泰北餐廳，開在面對稻田的兩層傳統木屋裡，可以吹自然風吃飯。單點菜單依季節變化，主打在地特色菜。',
+    price: '平價（米其林 ฿）',
+    location: '18 ม.2 ซ.สุขาภิบาลแม่ริม บ้านดวงดี 1 ต.ริมใต้ อ.แม่ริม',
+    time: '10:30–19:00，週一公休',
+    days: [0, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Lhongkhao+Kitchen+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/krua-lawng-khao',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Khao', zh: '稻（四季酒店）', thai: 'ข้าว',
+    cuisine: '創意・精緻',
+    level: 3,
+    fit: ['紀念日', '酒店景觀', '需預約'], dishes: [],
+    tags: ['泰北菜', '酒店餐廳'],
+    desc: '四季酒店裡的泰菜餐廳，以泰北菜為主也有其他地區菜色，主廚有 10 年奢華酒店資歷，把傳統泰菜做出現代感。水晶吊燈配柚木雕刻，露台看得到稻田和山景。',
+    price: 'THB 1,000 以上／人',
+    location: 'โฟร์ซีซั่น รีสอร์ต 502 ม.1 ถ.แม่ริม-สะเมิง สายเก่า ต.ริมใต้ อ.แม่ริม',
+    time: '每天 07:00–22:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Khao+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/khao1183932',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Blackitch', zh: '黑廚', thai: 'แบล็คคิช',
+    cuisine: '創意・精緻',
+    level: 3,
+    fit: ['特別晚餐', '主廚餐桌', '需預約'], dishes: ['季節 Tasting Menu', '自釀發酵飲'],
+    tags: ['創意料理', '需預約'],
+    desc: '只有 16 個座位的主廚餐桌，提供 10 道以上的季節 tasting menu，食材來自泰國各地。所有發酵元素都是廚房自製，主廚跟阿嬤學的手藝讓菜單很有個人味。',
+    price: 'THB 2,590++／人 tasting menu',
+    location: '27/1 ถ.นิมมานเหมินท์ ซ.7 ต.สุเทพ อ.เมือง',
+    time: '11:30–14:00、17:00–22:00，週三公休',
+    days: [0, 1, 2, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Blackitch+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/blackitch-artisan-kitchen',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Baan Landai (Phra Pok Klao Road)', zh: '蘭黛之家', thai: 'บ้านลันได (สาขา ถ.พระปกเกล้า)',
+    cuisine: '泰式料理',
+    level: 2,
+    fit: ['朋友聚餐'], dishes: ['紅酒醬豬肋排', '泰式甜點'],
+    tags: ['泰式料理', '適合聚餐'],
+    desc: '外觀有點雜亂但別被騙了，室內擺設很有個性，還能透過窗戶看廚房做泛泰式料理。份量適合朋友分食，記得留胃吃傳統泰式甜點。',
+    price: '中等價位（米其林 ฿฿）',
+    location: '252/13 ถ.พระปกเกล้า ต.ศรีภูมิ อ.เมือง',
+    time: '11:00–14:30、17:00–20:30，週一公休',
+    days: [0, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Baan+Landai+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/baan-landai',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Kinlum Kindee', zh: '好吃好食泰北菜', thai: 'กิ๋นลำกิ๋นดี',
+    cuisine: '泰北菜',
+    level: 2,
+    fit: ['農場餐桌', '郊區兜風'], dishes: ['青辣椒醬配發酵魚', '炒田雞', '螞蟻蛋湯'],
+    tags: ['泰北菜', '農場餐桌'],
+    desc: '在 San Sai 被自然環繞的泰北餐廳，蔬果香草都是自家菜園種的。味道濃郁大膽，很有在地感。',
+    price: '中等價位（米其林 ฿฿）',
+    location: '172 ม.3 ต.เมืองเล็น อ.สันทราย',
+    time: '週一至週四 10:00–19:00，週五至週日 10:00–21:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Kinlum+Kindee+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/kinlum-kindee',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Lumdee Te Khuadang', zh: '紅橋好味', thai: 'ลำดีตี้ขัวแดง',
+    cuisine: '泰北菜',
+    level: 2,
+    fit: ['家庭團體', '吹冷氣'], dishes: ['炒雞樅菇', 'Saep 豬肋排'],
+    tags: ['泰北菜', '適合團體'],
+    desc: '可容納 200 人的大型蘭納風木造餐廳，有冷氣室、VIP 包廂和露台，出菜效率高。家常泰北菜現點現做、熱騰騰上桌，適合家庭和團體。',
+    price: '中等價位（米其林 ฿฿）',
+    location: 'โครงการวีคอมมูนิตี้ 345/9 ม.3 ถ.วงแหวนรอบ 2 ต.สันพระเนตร อ.สันทราย',
+    time: '每天 10:30–21:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Lumdee+Te+Khuadang+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/lumdee-te-khuadang',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Huen Jai Yong', zh: '庸族之家', thai: 'เฮือนใจ๋ยอง',
+    cuisine: '泰北菜',
+    level: 1,
+    fit: ['老屋氣氛', '郊區兜風'], dishes: ['香草蒸雞', '螞蟻蛋湯', '泰北香腸'],
+    tags: ['泰北菜', '郊區'],
+    desc: '2002 年開業，在擺滿柚木家具和手工藝品的泰式老屋裡專做泰北菜。從香腸到辣椒醬都是自製，蘭納香料用得溫和，很道地。',
+    price: '平價（米其林 ฿）',
+    location: '65 ม.4 ต.บวกค้าง อ.สันกำแพง',
+    time: '09:00–17:00，週二公休',
+    days: [0, 1, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Huen+Jai+Yong+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/huen-jai-yong',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Baan Nam Ngiew Wieng Kao', zh: '古城番茄米線', thai: 'บ้านน้ำเงี้ยวเวียงเก่า',
+    cuisine: '麵食・米線',
+    level: 1,
+    fit: ['平價午餐'], dishes: ['清萊式番茄米線'],
+    tags: ['米線', '泰北麵食'],
+    desc: '樹蔭下的悠閒小店，招牌是清萊式 nam ngiao，濃郁酸香的湯頭加了新鮮椰奶，可選豬肉或牛肉。午餐時段人多，要有排隊心理準備。',
+    price: '豬肉米線約 THB 45／碗，人均 THB 100 以下',
+    location: '99/4 ม.5 ต.หนองป่าครั่ง อ.เมือง',
+    time: '週一至週五 09:00–17:00，週末未確認',
+    days: null,
+    map: 'https://www.google.com/maps/search/?api=1&query=Baan+Nam+Ngiew+Wieng+Kao+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/baan-nam-ngiew-wieng-kao',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Withee Laab Charoen Muang', zh: '昌盛路拉布', thai: 'วิถีลาบ เจริญเมือง',
+    cuisine: '泰北菜',
+    level: 1,
+    fit: ['平價', '在地人愛店'], dishes: ['生水牛肉 Laab', '熟豬肉 Laab'],
+    tags: ['泰北菜', 'Laab'],
+    desc: '藏在窄巷裡的可愛木屋，賣 laab 好多年了，價格出乎意料地便宜，值得特地找。',
+    price: '平價（米其林 ฿）',
+    location: '94-120 ถ.เจริญเมือง ต.วัดเกต อ.เมือง',
+    time: '11:00–22:00，週一公休',
+    days: [0, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Withee+Laab+Charoen+Muang+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/withee-laab',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Nam Ngiao Yong', zh: '庸族番茄米線', thai: 'น้ำเงี้ยวยอง',
+    cuisine: '麵食・米線',
+    level: 1,
+    fit: ['市場小吃', '排隊名店'], dishes: ['番茄湯米線', '紅咖哩雞米線'],
+    tags: ['米線', '市場小吃'],
+    desc: '座位不多的市場小攤，只賣兩道菜卻總是大排長龍，值得專程跑一趟 Siri Wattana 市場。',
+    price: '平價（米其林 ฿）',
+    location: 'ยูนิต 19 ตลาดศิริวัฒนา 193 ถ.ช้างเผือก ต.ช้างเผือก อ.เมือง',
+    time: '每天 08:00–17:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Nam+Ngiao+Yong+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/nam-ngiao-yong',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Talung', zh: '達隆南泰菜', thai: 'ตะลุง',
+    cuisine: '南泰・東南亞',
+    level: 2,
+    fit: ['南泰菜', '吹冷氣'], dishes: ['墨魚汁炒魷魚', '南泰蝦醬炒臭豆'],
+    tags: ['南泰菜', '剛搬新址'],
+    desc: '最近搬到公寓一樓的南泰菜館，有冷氣和熱鬧的吧台，是家族經營的小店，店員親切又互相支援。',
+    price: '中等價位（米其林 ฿฿）',
+    location: 'อาคาร เจมทรี พรีเมียม 8 ถ.โชตนา ซ.12 ต.ช้างเผือก อ.เมือง',
+    time: '10:30–21:00，週一公休',
+    days: [0, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Talung+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/talung',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Kang Jing Jai', zh: '真心咖哩', thai: 'แกง จริงใจ',
+    cuisine: '南泰・東南亞',
+    level: 2,
+    fit: ['逛真心市集順路', '多人分享'], dishes: ['椰漿飯', '香料咖哩'],
+    tags: ['東南亞菜', '咖哩'],
+    desc: '2023 年在 Jing Jai 市集開的新店，氣氛輕鬆，菜單集結印尼、馬來西亞和泰國料理，很適合朋友分食。全部現點現做，要稍微耐心等。',
+    price: '中等價位（米其林 ฿฿）',
+    location: 'โครงการจริงใจมาร์เก็ต 46 ถ.อัษฎาธร ต.ป่าตัน อ.เมือง',
+    time: '週一至週五 11:00–21:00，週六日 10:00–21:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Kang+Jing+Jai+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/kang',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Aunt Aoy Kitchen', zh: '阿愛阿姨廚房', thai: 'ครัวป้าอ้อย',
+    cuisine: '泰式料理',
+    level: 1,
+    fit: ['平價家常'], dishes: ['招牌歐姆蛋', '咖哩蟹飯'],
+    note: '咖哩蟹飯是朋友推薦的必吃',
+    tags: ['泰式家常菜', '歐姆蛋'],
+    desc: '裝潢簡單，牆上貼滿客人的照片和便利貼留言。阿姨大半輩子在飯店廚房掌勺，手藝都展現在招牌歐姆蛋上。',
+    price: '平價（米其林 ฿）',
+    location: '377 2 ถ.เชียงราย ต.สุเทพ อ.เมือง',
+    time: '10:00–19:00，週一公休',
+    days: [0, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Aunt+Aoy+Kitchen+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/aunt-aoy-kitchen-1202594',
+  },
+  {
+    cat: 'food', group: '米其林推薦', name: 'Kiti Panit', zh: '吉帝商行', thai: 'กิติพานิช',
+    cuisine: '泰北菜',
+    level: 2,
+    fit: ['老宅氣氛', '古城散步'], dishes: ['Hang Le 咖哩', '香菜烤雞沙拉', '花椒炒牛肉'],
+    tags: ['泰北菜', '百年老宅'],
+    desc: '把高祖父母 1880 年代的老宅改成餐廳，用現代手法詮釋傳統蘭納菜，味道濃郁有層次。',
+    price: '中等價位（米其林 ฿฿）',
+    location: '19 ถ.ท่าแพ ต.ช้างคลาน อ.เมือง',
+    time: '11:30–15:00、17:00–22:00，週二公休',
+    days: [0, 1, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Kiti+Panit+Chiang+Mai',
+    michelin: 'https://guide.michelin.com/us/en/chiang-mai-region/chiang-mai/restaurant/kiti-panit',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Khao Soi Khun Yai', zh: '外婆咖哩麵', thai: 'ข้าวซอยคุณยาย',
+    cuisine: '麵食・米線',
+    level: 1,
+    fit: ['午餐', '咖哩麵比較'], dishes: ['雞肉咖哩麵'],
+    tags: ['咖哩麵'],
+    desc: '知名的清邁咖哩麵店，常被旅人列入 Khao Soi 比較清單。',
+    price: '約 ฿50–100／碗',
+    location: 'หน้าวัดควรค่าม้า ถ.ศรีภูมิ อ.เมือง',
+    time: '週一至週六 10:00–14:00，週日休息',
+    days: MON_TO_SAT,
+    map: 'https://www.google.com/maps/search/?api=1&query=Khao+Soi+Khun+Yai+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Lux to eat', zh: '愛吃小館',
+    cuisine: '泰式料理',
+    level: 1,
+    fit: ['午餐', '晚餐', '尼曼'], dishes: ['打拋豬飯（Pad Kra Pao）', '咖哩蟹飯', '冬陰功湯'],
+    note: '打拋豬和咖哩蟹飯都是朋友推薦',
+    thai: 'รัก-ทู-อีท',
+    tags: ['打拋豬', '咖哩蟹飯'],
+    desc: '尼曼 Soi 13 的家常泰菜小館，有英文菜單、免費自助水，打拋豬和咖哩蟹都是熟客必點。',
+    price: '約 ฿200 以內／人',
+    location: '42/3 ซ.นิมมานเหมินท์ 13 ต.สุเทพ อ.เมือง',
+    time: '11:00–19:30',
+    days: [1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Lux+to+eat+Nimman+Soi+13+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'FOOD BAR 29 Suk Kasame', zh: 'Food Bar 29 快餐小館',
+    cuisine: '泰式料理',
+    level: 1,
+    fit: ['午餐', '平價'], dishes: ['打拋脆皮豬飯（Kaprao Moo Sab）', '蛋包飯'],
+    note: '朋友的打拋豬口袋名單',
+    thai: 'FOOD BAR 29 สุขเกษม',
+    tags: ['打拋豬'],
+    desc: '尼曼附近 Suk Kasame 路上的小餐館，打拋脆皮豬加荷包蛋是招牌，也賣蛋包飯和韓式拌飯。',
+    price: '約 ฿100–200／人',
+    location: '12 ถ.สุขเกษม ต.สุเทพ อ.เมือง',
+    time: '以店家公告為準',
+    days: null,
+    map: 'https://www.google.com/maps/search/?api=1&query=FOOD+BAR+29+Suk+Kasame+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Khao-Sō-i', zh: 'Khao-Sō-i 咖哩麵',
+    cuisine: '麵食・米線',
+    level: 2,
+    fit: ['午餐', '晚餐', '冷氣'], dishes: ['泰北咖哩麵（Khao Soi）', '乾拌咖哩麵', '炸豆腐'],
+    note: '朋友的咖哩麵口袋名單',
+    thai: 'ข้าวโซอิ',
+    tags: ['咖哩麵'],
+    desc: '濱河 Wat Ket 區的日式風格泰北咖哩麵店，湯頭濃郁、麵和湯可免費續，Google 上萬則評論。',
+    price: '約 ฿200–400／人',
+    location: '430/4 ถ.เจริญราษฎร์ ต.วัดเกต อ.เมือง',
+    time: '09:00–21:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Khao-So-i+Charoenrat+Road+Wat+Ket+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Heuannaow', zh: '寒屋（Heuannaow）',
+    cuisine: '麵食・米線',
+    level: 2,
+    fit: ['午餐', '晚餐', '尼曼'], dishes: ['泰北咖哩麵（Khao Soi）', '泰北番茄米線（Nam Ngiao）', '燉豬肋排'],
+    note: '朋友的咖哩麵口袋名單',
+    thai: 'เฮือนหนาว',
+    tags: ['咖哩麵'],
+    desc: '尼曼巷弄裡的泰北麵館，評論說吃起來像泰日融合，咖哩麵、泰北米線和燉排骨都受好評。',
+    price: '約 ฿200–400／人',
+    location: '6 ซ.จำปี ต.สุเทพ อ.เมือง',
+    time: '11:30–20:30',
+    days: [0, 1, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=%E0%B9%80%E0%B8%AE%E0%B8%B7%E0%B8%AD%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B8%A7+HEUANNAOW+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Cafe Rosemary', zh: '迷迭香咖啡',
+    cuisine: '咖啡・早午餐',
+    level: 2,
+    fit: ['早午餐', '早上'], dishes: ['酪梨吐司', '班尼迪克蛋', 'Rosemary 招牌早餐盤'],
+    note: '朋友推薦的早午餐',
+    thai: 'คาเฟ่ โรสแมรี่',
+    tags: ['早午餐'],
+    desc: '尼曼旁 Siri Mangkalajarn 巷子裡的小小早午餐店，酪梨吐司、班尼迪克蛋和炸魚薯條都是人氣款。',
+    price: '約 ฿100–250／人',
+    location: '12/1 ซ.ศิริมังคลาจารย์ 3 ต.สุเทพ อ.เมือง',
+    time: '07:00–15:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Cafe+Rosemary+Siri+Mangkalajarn+Soi+3+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Zohng Coffee', zh: 'Zohng 咖啡',
+    cuisine: '咖啡・早午餐',
+    level: 2,
+    fit: ['早午餐', '古城', '戶外座位'], dishes: ['酪梨吐司', '蘑菇吐司', 'Dirty Chai'],
+    note: '朋友推薦的早午餐',
+    thai: 'Zohng Coffee',
+    tags: ['早午餐'],
+    desc: '古城北邊巷子裡的咖啡早午餐店，酪梨吐司最多人點，二樓座位適合帶電腦久坐。',
+    price: '約 ฿200–400／人',
+    location: '58 ถ.อินทวโรรส ซ.2 ต.ศรีภูมิ อ.เมือง',
+    time: '08:00–17:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Zohng+Coffee+Intrawarorot+Soi+2+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'SMOO! House', zh: 'SMOO! 果昔屋',
+    cuisine: '甜點・飲品',
+    level: 1,
+    fit: ['下午', '尼曼', '飲料'], dishes: ['水果果昔', '現榨果汁'],
+    note: '朋友推薦的果昔',
+    thai: 'SMOO! House',
+    tags: ['果昔'],
+    desc: '尼曼 Soi 13 的新鮮水果果昔店，氣氛輕鬆，也有咖啡和現打果汁。',
+    price: '約 ฿200 以內／人',
+    location: '9 ซ.นิมมานเหมินท์ 13 ต.สุเทพ อ.เมือง',
+    time: '09:00–22:00',
+    days: [0, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=SMOO%21+House+Nimman+Soi+13+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Joost Smoothies (Nimman Soi 13)', zh: 'Joost 果昔',
+    cuisine: '甜點・飲品',
+    level: 1,
+    fit: ['飲料', '晚上', '外帶'], dishes: ['酪梨果昔', '西瓜果昔', '芒果優格'],
+    note: '朋友推薦的果昔',
+    thai: 'Joost Smoothies (Nimman Soi 13)',
+    tags: ['果昔'],
+    desc: '尼曼 Soi 13 的人氣果昔店，酪梨果昔、西瓜和山竹口味最常被點名。',
+    price: '約 ฿200 以內／人',
+    location: '23 ซ.นิมมานเหมินท์ 13 ต.สุเทพ อ.เมือง',
+    time: '08:00–23:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Joost+Smoothies+Nimman+Soi+13+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Adirak Pizza', zh: 'Adirak 柴燒披薩',
+    cuisine: '西式・異國',
+    level: 2,
+    fit: ['晚餐', '戶外座位', '聚餐'], dishes: ['青醬瑞可塔披薩', '辣味培根披薩'],
+    note: '朋友推薦的西餐',
+    thai: 'Adirak Pizza',
+    tags: ['披薩'],
+    desc: '清邁最有名的柴燒披薩之一，自製莫札瑞拉起司和老麵餅皮，青醬瑞可塔是招牌。',
+    price: '約 ฿400–600／人',
+    location: '11/15 หมู่ 5 ต.สุเทพ อ.เมือง',
+    time: '11:00–22:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Adirak+Pizza+Wat+Umong+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Pasta Ama Chiang Mai', zh: '阿嬤義大利麵',
+    cuisine: '西式・異國',
+    level: 2,
+    fit: ['午餐', '晚餐', '冷氣'], dishes: ['蜂蜜沙拉', '培根蛋義大利麵（Carbonara）', '飛魚卵義大利麵'],
+    note: '蜂蜜沙拉很愛吃，義大利麵比較普通',
+    thai: 'พาสต้าอาม่า เชียงใหม่',
+    tags: ['義大利麵'],
+    desc: 'Suan Dok 一帶的平價義大利麵店，Google 4.9 分、三千多則評論，培根蛋麵和明太子/飛魚卵系列最受歡迎。',
+    price: '約 ฿200–400／人',
+    location: '5 ถ.สวนดอก 7 ต.สุเทพ อ.เมือง',
+    time: '10:00–21:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Pasta+Ama+Chiang+Mai+Suan+Dok',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Lot of Taste', zh: 'Lot of Taste 咖啡',
+    cuisine: '咖啡・早午餐',
+    level: 2,
+    fit: ['晚上', '戶外座位', '尼曼'], dishes: ['泰式奶茶', '抹茶', '椰子冰淇淋'],
+    note: '晚上 8 點之後坐室外座位最舒服',
+    thai: 'Lot of Taste',
+    tags: ['咖啡廳'],
+    desc: '尼曼大路上的咖啡甜點店，有戶外座位，營業到晚上 10 點，晚上來坐戶外喝泰奶、抹茶很舒服。',
+    price: '約 ฿200 以內／人',
+    location: '8/5 ถ.นิมมานเหมินท์ ต.สุเทพ อ.เมือง',
+    time: '08:00–22:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Lot+of+Taste+Nimman+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Baan Pie Charin Cafe & Bistro', zh: 'Charin 派之家',
+    cuisine: '甜點・飲品',
+    level: 2,
+    fit: ['下午茶', '戶外座位'], dishes: ['椰子派（Coconut Custard Pie）', '起司蛋糕', '檸檬派'],
+    note: '朋友推薦的椰子派',
+    thai: 'พายจริณ พืชสวนโลก เชียงใหม่',
+    tags: ['椰子派'],
+    desc: '老字號 Charin Pie 開在皇家花園（Royal Park Rajapruek）附近的蘭納木屋分店，椰子派之外也有起司蛋糕和簡餐。',
+    price: '約 ฿200–400／人；椰子派約 ฿75／片',
+    location: '204/8 หมู่ 3 ซ.คำมอกหลวง 1 ต.สุเทพ อ.เมือง',
+    time: '08:00–17:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Baan+Pie+Charin+Cafe+%26+Bistro+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Baan Bakery', zh: 'Baan 麵包坊',
+    cuisine: '甜點・飲品',
+    level: 1,
+    fit: ['早上', '外帶'], dishes: ['可頌', '咖哩麵包', '鳳梨丹麥'],
+    note: '朋友推薦的麵包店',
+    thai: 'Baan Bakery',
+    tags: ['麵包店'],
+    desc: '古城南邊 Haiya 區由日本師傅開的小麵包店，可頌、丹麥和咖哩麵包都很受歡迎。',
+    price: '約 ฿100–200／人',
+    location: '20 ถ.ราชเชียงแสน 1 ต.หายยา อ.เมือง',
+    time: '09:00–15:00',
+    days: [3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Baan+Bakery+Rat+Chiang+Saen+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'RAWtruckr Nimman', zh: 'RAWtruckr 韓式炸雞',
+    cuisine: '西式・異國',
+    level: 2,
+    fit: ['晚上', '啤酒', '戶外座位'], dishes: ['韓式炸雞', '黑椒辣雞翅'],
+    note: '炸雞很脆',
+    thai: 'RAWtruckr Nimman',
+    tags: ['炸雞'],
+    desc: '尼曼 Soi 13 的韓式炸雞，外皮酥脆，坐戶外配進口啤酒或蘋果酒剛好。',
+    price: '約 ฿200–400／人',
+    location: '3 ซ.นิมมานเหมินท์ 13 ต.สุเทพ อ.เมือง',
+    time: '16:30–22:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=RAWtruckr+Nimman+Soi+13+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'phithi', zh: 'Phithi 冬陰牛肉麵',
+    cuisine: '麵食・米線',
+    level: 1,
+    fit: ['午餐', '古城'], dishes: ['辣味冬陰牛肉麵', '韓式牛小排麵', '打拋脆皮豬'],
+    note: '朋友推薦的冬陰功麵',
+    thai: 'พิถี',
+    tags: ['冬陰功麵'],
+    desc: '古城 Phra Sing 一帶的慢燉牛肉麵小店，辣味冬陰牛肉麵湯頭乾淨、肉很嫩。',
+    price: '約 ฿100–200／人',
+    location: 'QXMM+4MJ ต.พระสิงห์ อ.เมือง',
+    time: '09:30–15:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=phithi+%E0%B8%9E%E0%B8%B4%E0%B8%96%E0%B8%B5+noodle+Old+City+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Salsa Kitchen', zh: 'Salsa 墨西哥廚房',
+    cuisine: '西式・異國',
+    level: 2,
+    fit: ['晚餐', '聚餐', '素食友善'], dishes: ['Carnitas 豬肉塔可', '花椰菜塔可', '桑格莉亞'],
+    note: '朋友推薦的 Taco',
+    thai: 'Salsa Kitchen',
+    tags: ['Taco'],
+    desc: 'Huay Kaew 路上的老牌墨西哥餐廳，塔可、法士達和桑格莉亞都有人推，素食選擇也多。',
+    price: '約 ฿200–400／人',
+    location: '26/4 ถ.ห้วยแก้ว ต.ช้างเผือก อ.เมือง',
+    time: '11:00–22:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Salsa+Kitchen+Huay+Kaew+Road+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'MINTNIMAL', zh: 'Mintnimal 薄荷冰淇淋',
+    cuisine: '甜點・飲品',
+    level: 1,
+    fit: ['下午', '古城', '甜點'], dishes: ['薄荷冰淇淋', '香蕉蛋糕', '蘋果蛋糕'],
+    note: '朋友推薦的 Gelato',
+    thai: 'MINTNIMAL',
+    tags: ['冰淇淋'],
+    desc: '古城 Prapokklao 路上的小冰淇淋店，招牌薄荷冰淇淋，也有自製香蕉蛋糕和咖啡。',
+    price: null,
+    location: '65 ถ.พระปกเกล้า ต.พระสิงห์ อ.เมือง',
+    time: '10:00–18:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=MINTNIMAL+Prapokklao+Road+Chiang+Mai',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Roti Pa Dae (Loi Kroh branch)', zh: 'Pa Dae 香蕉煎餅（Loi Kroh 分店）',
+    cuisine: '小吃・甜點',
+    level: 1,
+    fit: ['晚上', '宵夜', '外帶'], dishes: ['香蕉煎餅', '煉乳脆煎餅', '香蕉蛋巧克力煎餅'],
+    note: '朋友都叫外送 😅',
+    thai: 'โรตีป้าเด สาขาลอยเคราะห์',
+    tags: ['香蕉煎餅'],
+    desc: '夜市旁 Loi Kroh 路上、TTT Tattoo Cafe（35 號）門口的煎餅攤，是名店 Roti Pa Dae 的分店，人比塔佩路本店少很多。',
+    price: '約 ฿15–50／片',
+    location: 'ถ.ลอยเคราะห์ ต.ช้างม่อย อ.เมือง',
+    time: '18:30–24:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=%E0%B9%82%E0%B8%A3%E0%B8%95%E0%B8%B5%E0%B8%9B%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%94+%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%A5%E0%B8%AD%E0%B8%A2%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%B0%E0%B8%AB%E0%B9%8C+Loi+Kroh+Chiang+Mai',
+  },
+];
+
+const state = { day: null, group: null, cuisine: null };
+const todayIndex = new Date().getDay();
+const $ = (selector) => document.querySelector(selector);
+
+function isOpenOn(place, day) {
+  if (day === null || !place.days) return true;
+  return place.days.includes(day);
+}
+
+function placesOf(catKey) {
+  return PLACES.filter((place) => place.cat === catKey && isOpenOn(place, state.day));
+}
+
+function renderDays() {
+  const options = [{ value: null, label: '不限' }].concat(
+    WEEK_ORDER.map((day) => ({ value: day, label: DAY_LABELS[day] }))
+  );
+  $('#days').innerHTML = options.map((option) => {
+    const classes = ['day'];
+    if (option.value === null) classes.push('any');
+    if (option.value === todayIndex) classes.push('today');
+    const pressed = option.value === state.day;
+    return `<button class="${classes.join(' ')}" data-day="${option.value}" aria-pressed="${pressed}">${option.label}</button>`;
+  }).join('');
+
+  const label = state.day === null
+    ? '哪天出門？選一天只看有開的'
+    : `週${DAY_LABELS[state.day]}${state.day === todayIndex ? '（今天）' : ''}有開的地方`;
+  $('#day-label').textContent = label;
+}
+
+function renderTiles() {
+  $('#tiles').innerHTML = Object.entries(CATEGORIES).map(([key, cat]) => {
+    const count = placesOf(key).length;
+    const countText = count ? `<b>${count}</b> 個地點` : '還沒有資料';
+    return `
+      <button class="tile" data-cat="${key}" style="background:${cat.soft};--tile-accent:${cat.accent}">
+        <span class="tile-icon">${cat.icon}</span>
+        <span class="tile-name">${cat.name}</span>
+        <span class="tile-en">${cat.en}</span>
+        <span class="tile-intro">${cat.intro}</span>
+        <span class="tile-count">${countText}</span>
+      </button>`;
+  }).join('');
+}
+
+function dayText(days) {
+  if (days.length === 7) return '每天';
+  const runs = [];
+  WEEK_ORDER.forEach((day) => {
+    if (!days.includes(day)) return;
+    const lastRun = runs[runs.length - 1];
+    const prevDay = lastRun && lastRun[lastRun.length - 1];
+    const isConsecutive = lastRun && WEEK_ORDER.indexOf(prevDay) === WEEK_ORDER.indexOf(day) - 1;
+    if (isConsecutive) {
+      lastRun.push(day);
+    } else {
+      runs.push([day]);
+    }
+  });
+  return runs.map((run) => {
+    const labels = run.map((day) => DAY_LABELS[day]);
+    return run.length >= 3 ? `${labels[0]}～${labels[labels.length - 1]}` : labels.join('、');
+  }).join('、');
+}
+
+function weekDots(place) {
+  if (!place.days) return '<span class="day-tag unknown">營業日待確認</span>';
+  return `<span class="day-tag">${dayText(place.days)}</span>`;
+}
+
+function weekCircles(place) {
+  if (!place.days) return '<span class="day-tag unknown">營業日待確認</span>';
+  const circles = WEEK_ORDER.map((day) => {
+    const on = place.days.includes(day) ? ' class="on"' : '';
+    return `<span${on}>${DAY_LABELS[day]}</span>`;
+  }).join('');
+  return `<span class="week-tag">${circles}</span>`;
+}
+
+function hoursOnly(time) {
+  const times = time.match(/\d{1,2}:\d{2}/g) || [];
+  if (times.length === 1) return `${times[0]} 起`;
+  const ranges = [];
+  for (let index = 0; index + 1 < times.length; index += 2) {
+    ranges.push(`${times[index]}~${times[index + 1]}`);
+  }
+  return [...new Set(ranges)].join('、');
+}
+
+function thumbHtml(place, cat) {
+  const image = IMAGES[place.name];
+  if (!image || !image.url) return `<span class="thumb">${cat.icon}</span>`;
+  return `<span class="thumb"><img src="${image.url}" alt="" loading="lazy" onerror="this.remove()"></span>`;
+}
+
+function priceLevel(place) {
+  if (!place.level) return '';
+  const symbols = [1, 2, 3].map((step) => `<i${step > place.level ? ' class="off"' : ''}>฿</i>`).join('');
+  return `<span class="price-level" title="${PRICE_LEVELS[place.level - 1].label}">${symbols}</span>`;
+}
+
+function tagHtml(place) {
+  const tags = [];
+  if (place.bib) tags.push('<span class="tag bib">必比登</span>');
+  if (place.group === '米其林推薦') tags.push('<span class="tag selected">米其林推薦</span>');
+  if (place.group === '其他推薦') tags.push('<span class="tag extra">其他推薦</span>');
+  place.tags.forEach((tag) => tags.push(`<span class="tag">${tag}</span>`));
+  return tags.join('');
+}
+
+function renderCategory(catKey) {
+  const cat = CATEGORIES[catKey];
+  const root = document.documentElement;
+  root.style.setProperty('--accent', cat.accent);
+  root.style.setProperty('--soft', cat.soft);
+
+  const head = $('#cat-head');
+  head.style.background = cat.soft;
+  head.style.borderBottom = `2px dashed ${cat.accent}55`;
+  $('#cat-title').textContent = `${cat.icon} ${cat.name}`;
+  $('#cat-intro').textContent = cat.intro;
+
+  const chips = $('#chips');
+  chips.hidden = cat.groups.length === 0;
+  chips.innerHTML = [null].concat(cat.groups).map((group) => {
+    const pressed = group === state.group;
+    const style = pressed ? `style="background:${cat.soft};border-color:${cat.accent}"` : '';
+    return `<button class="chip" data-group="${group || ''}" aria-pressed="${pressed}" ${style}>${group || '全部'}</button>`;
+  }).join('');
+
+  $('#legend-btn').hidden = catKey !== 'food';
+  $('#price-legend').innerHTML = PRICE_LEVELS.map((level, index) => `
+    <div class="legend-row">${priceLevel({ level: index + 1 })}<b>${level.label}</b><span>${level.note}</span></div>`).join('');
+
+  const cuisines = cat.cuisines || [];
+  const cuisineChips = $('#cuisine-chips');
+  cuisineChips.hidden = cuisines.length === 0;
+  cuisineChips.innerHTML = [null].concat(cuisines).map((cuisine) => {
+    const pressed = cuisine === state.cuisine;
+    const style = pressed ? `style="background:${cat.soft};border-color:${cat.accent}"` : '';
+    return `<button class="chip" data-cuisine="${cuisine || ''}" aria-pressed="${pressed}" ${style}>${cuisine || '全部菜色'}</button>`;
+  }).join('');
+
+  const list = placesOf(catKey)
+    .filter((place) => !state.group || place.group === state.group)
+    .filter((place) => !state.cuisine || place.cuisine === state.cuisine);
+  const totalInCat = PLACES.filter((place) => place.cat === catKey).length;
+
+  $('#result').textContent = totalInCat ? `${list.length} 個地點` : '';
+
+  if (!totalInCat) {
+    $('#cards').innerHTML = `
+      <div class="empty"><div class="big">${cat.icon}</div>
+      這裡還空空的<br>之後想到要去的課程、體驗、展覽再加進來</div>`;
+  } else if (!list.length) {
+    $('#cards').innerHTML = `
+      <div class="empty"><div class="big">😴</div>
+      沒有符合條件的地方<br>換一天或放寬篩選看看</div>`;
+  } else {
+    $('#cards').innerHTML = list.map((place) => `
+      <button class="card" data-index="${PLACES.indexOf(place)}">
+        ${thumbHtml(place, cat)}
+        <div class="card-body">
+        <div class="card-title"><h3>${place.zh}<span class="en">${place.name}</span></h3><span class="arrow">›</span></div>
+        <div class="thai">${place.thai}</div>
+        <p class="one">${place.desc}</p>
+        <div class="card-foot">
+          <div class="tags">${tagHtml(place)}</div>
+          <div class="foot-right">${priceLevel(place)}${weekDots(place)}</div>
+        </div>
+        </div>
+      </button>`).join('');
+  }
+
+  const notice = $('#notice');
+  notice.hidden = !cat.notice;
+  notice.textContent = cat.notice;
+}
+
+function renderPlace(place) {
+  const cat = CATEGORIES[place.cat];
+  const root = document.documentElement;
+  root.style.setProperty('--accent', cat.accent);
+  root.style.setProperty('--soft', cat.soft);
+
+  const image = IMAGES[place.name];
+  const hero = image && image.url
+    ? `<img src="${image.url}" alt="${place.zh}" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'hero-icon',textContent:'${cat.icon}'}))">
+       ${image.credit ? `<span class="hero-credit">${image.credit}</span>` : ''}`
+    : `<span class="hero-icon">${cat.icon}</span>`;
+
+  const fit = place.fit.length
+    ? `<div class="block"><div class="block-title">適合</div><div class="pills">${place.fit.map((item) => `<span class="pill">${item}</span>`).join('')}</div></div>`
+    : '';
+  const dishes = place.dishes.length
+    ? `<div class="block"><div class="block-title">必點</div><div class="pills">${place.dishes.map((item) => `<span class="pill dish">${item}</span>`).join('')}</div></div>`
+    : '';
+
+  const infoRows = [
+    ['📍', place.location],
+    ['📅', weekCircles(place)],
+    ['🕐', hoursOnly(place.time) || '時間待確認'],
+    ['💰', place.level ? `${priceLevel(place)} ${place.price || ''}` : place.price],
+  ].filter(([, value]) => value)
+    .map(([icon, value]) => `<div class="info-row"><span>${icon}</span><span>${value}</span></div>`)
+    .join('');
+
+  const michelinUrl = place.michelin || (place.bib ? BIB_URL : '');
+  const michelin = michelinUrl
+    ? `<a class="btn ghost" href="${michelinUrl}" target="_blank" rel="noopener">Michelin 介紹 ↗</a>`
+    : '';
+
+  $('#view-place').innerHTML = `
+    <div class="hero">
+      ${hero}
+      <button class="back" id="place-back">← ${cat.name}</button>
+    </div>
+    <div class="wrap place">
+      <div class="tags">${tagHtml(place)}</div>
+      <h1>${place.zh}<span class="en">${place.name}</span></h1>
+      <div class="thai">${place.thai}</div>
+      <p class="desc">${place.desc}</p>
+      ${fit}
+      ${dishes}
+      ${place.note ? `<div class="friend-note">💬 <b>朋友說</b>${place.note}</div>` : ''}
+      <div class="info">${infoRows}</div>
+      <div class="btns">
+        <a class="btn" href="${place.map}" target="_blank" rel="noopener">Google Maps 導航 ↗</a>
+        ${michelin}
+      </div>
+    </div>`;
+  $('#place-back').addEventListener('click', () => {
+    location.hash = place.cat;
+  });
+}
+
+function currentPlace() {
+  const match = location.hash.match(/^#place-(\d+)$/);
+  return match ? PLACES[Number(match[1])] : null;
+}
+
+function currentCat() {
+  const key = location.hash.slice(1);
+  return CATEGORIES[key] ? key : null;
+}
+
+function render() {
+  const place = currentPlace();
+  const catKey = place ? null : currentCat();
+  const isHome = !place && !catKey;
+  renderDays();
+  $('#view-home').hidden = !isHome;
+  $('#home-body').hidden = !isHome;
+  $('#view-cat').hidden = !catKey;
+  $('#cat-body').hidden = !catKey;
+  $('#view-place').hidden = !place;
+  $('#daybar').hidden = !!place;
+  if (place) {
+    renderPlace(place);
+  } else if (catKey) {
+    renderCategory(catKey);
+  } else {
+    renderTiles();
+  }
+}
+
+$('#days').addEventListener('click', (event) => {
+  const button = event.target.closest('.day');
+  if (!button) return;
+  state.day = button.dataset.day === 'null' ? null : Number(button.dataset.day);
+  render();
+});
+
+$('#tiles').addEventListener('click', (event) => {
+  const tile = event.target.closest('.tile');
+  if (!tile) return;
+  state.group = null;
+  state.cuisine = null;
+  location.hash = tile.dataset.cat;
+  window.scrollTo(0, 0);
+});
+
+$('#back').addEventListener('click', () => {
+  location.hash = '';
+});
+
+$('#chips').addEventListener('click', (event) => {
+  const chip = event.target.closest('.chip');
+  if (!chip) return;
+  state.group = chip.dataset.group || null;
+  render();
+});
+
+$('#cuisine-chips').addEventListener('click', (event) => {
+  const chip = event.target.closest('.chip');
+  if (!chip) return;
+  state.cuisine = chip.dataset.cuisine || null;
+  render();
+});
+
+$('#cards').addEventListener('click', (event) => {
+  const card = event.target.closest('.card');
+  if (!card) return;
+  location.hash = `place-${card.dataset.index}`;
+});
+
+$('#legend-btn').addEventListener('click', () => $('#legend-dialog').showModal());
+$('#legend-close').addEventListener('click', () => $('#legend-dialog').close());
+$('#legend-dialog').addEventListener('click', (event) => {
+  if (event.target === $('#legend-dialog')) $('#legend-dialog').close();
+});
+
+window.addEventListener('hashchange', () => {
+  window.scrollTo(0, 0);
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
