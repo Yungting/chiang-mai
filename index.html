@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+TC:wght@500;700&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <title>清邁 30 天</title>
 <style>
 :root {
@@ -375,8 +377,26 @@ body { font-variant-numeric: lining-nums; }
 }
 .chip[aria-pressed="true"] { background: var(--espresso); border-color: var(--espresso); color: var(--ivory); }
 .cuisine-chips .chip { font-size: 12px; padding: 5px 12px; border-color: transparent; color: var(--muted); }
+.price-chips .chip { font-size: 12px; padding: 5px 12px; }
 .cuisine-chips .chip[aria-pressed="true"] { background: transparent; border-color: transparent; color: var(--ink); box-shadow: inset 0 -1px 0 var(--ink); }
-.result { color: var(--muted); margin: 6px 0 18px; }
+.result-row { display: flex; justify-content: space-between; align-items: center; margin: 6px 0 18px; }
+.result { color: var(--muted); margin: 0; }
+.chips-row { display: flex; gap: 8px; align-items: flex-start; }
+.chips-row .chips { flex: 1; min-width: 0; gap: 6px; }
+.chips-row .chips .chip { padding: 0 10px; height: 38px; font-size: 13px; }
+.more-btn { position: relative; flex: none; width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); color: var(--ink); }
+.more-btn[aria-expanded="true"], .more-btn.active { border-color: var(--ink); }
+.more-btn[aria-expanded="true"] { background: var(--espresso); color: var(--ivory); }
+.more-btn[aria-expanded="true"] circle { fill: var(--espresso); }
+.more-count:empty { display: none; }
+.more-count { position: absolute; top: -7px; right: -7px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: var(--terracotta); color: var(--ivory); font-size: 10px; line-height: 17px; text-align: center; }
+.more-panel { margin: -6px 0 22px; padding: 16px 16px 14px; background: var(--paper); border: 1px solid var(--line); animation: rise .35s cubic-bezier(.2, .7, .2, 1) both; }
+.more-label { color: var(--muted); margin: 4px 0 8px; font-size: 10px; }
+.more-panel .chips { padding-bottom: 12px; flex-wrap: wrap; overflow: visible; }
+.more-panel .chip { font-size: 12px; padding: 5px 11px; }
+.more-panel .cuisine-chips .chip { border-color: var(--line); color: var(--ink); }
+.more-panel .cuisine-chips .chip[aria-pressed="true"] { background: var(--espresso); border-color: var(--espresso); color: var(--ivory); box-shadow: none; }
+.clear-btn { font-size: 12px; color: var(--terracotta); text-decoration: underline; text-underline-offset: 3px; }
 
 .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 14px; padding-bottom: 20px; }
 .card { text-align: left; display: block; width: 100%; align-self: start; }
@@ -525,6 +545,31 @@ body { font-variant-numeric: lining-nums; }
   color: var(--ivory);
 }
 .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+
+/* ---------- 美食地圖 ---------- */
+.map-wrap { margin: 0 0 28px; }
+#food-map { height: 340px; background: var(--sand); position: relative; z-index: 0; isolation: isolate; }
+#food-map .leaflet-tile-pane { filter: grayscale(.45) sepia(.3) brightness(1.03) contrast(.92); }
+.map-legend { display: flex; gap: 14px; font-size: 11px; color: var(--muted); padding-top: 8px; }
+.map-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--ivory); box-shadow: 0 0 0 1px rgba(47, 38, 31, .25); display: inline-block; }
+.dot.bib { background: var(--terracotta); }
+.dot.selected { background: var(--espresso); }
+.dot.other { background: var(--olive); }
+.pin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ivory); box-shadow: 0 1px 4px rgba(30, 22, 16, .45); }
+.pin.bib { background: var(--terracotta); }
+.pin.selected { background: var(--espresso); }
+.pin.other { background: var(--olive); }
+.leaflet-popup-content-wrapper { border-radius: 0; background: var(--paper); color: var(--ink); box-shadow: 0 6px 20px rgba(30, 22, 16, .2); }
+.leaflet-popup-tip { background: var(--paper); }
+.leaflet-popup-content { margin: 14px 16px; font-family: var(--sans); }
+.pop-zh { font-family: var(--serif-tc); font-size: 16px; font-weight: 500; }
+.pop-en { font-family: var(--display); font-style: italic; font-size: 14px; color: var(--muted); }
+.pop-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.pop-btns { display: flex; gap: 6px; margin-top: 10px; min-width: 150px; }
+.pop-btns a { flex: 1; text-align: center; white-space: nowrap; font-size: 10px; letter-spacing: .06em; padding: 6px 10px; text-decoration: none; border: 1px solid var(--ink); color: var(--ink); }
+.pop-btns a.solid { background: var(--espresso); color: var(--ivory); border-color: var(--espresso); }
+.leaflet-container a.leaflet-popup-close-button { color: var(--muted); }
 
 /* ---------- 地區頁 ---------- */
 .areas-head { background: var(--olive); color: var(--ivory); padding: 16px 0 28px; }
@@ -792,10 +837,30 @@ body { font-variant-numeric: lining-nums; }
   <section id="cat-body" hidden>
     <div class="wrap">
       <div class="filters">
-        <div class="chips" id="chips"></div>
-        <div class="chips cuisine-chips" id="cuisine-chips" hidden></div>
+        <div class="chips-row">
+          <div class="chips" id="chips"></div>
+          <button class="more-btn" id="more-btn" hidden aria-expanded="false" aria-label="更多篩選">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="8" cy="6" r="2.2" fill="var(--ivory)"/><circle cx="15" cy="12" r="2.2" fill="var(--ivory)"/><circle cx="10" cy="18" r="2.2" fill="var(--ivory)"/></svg>
+            <span class="more-count" id="more-count"></span>
+          </button>
+        </div>
       </div>
-      <div class="result caps" id="result"></div>
+      <div class="result-row">
+        <div class="result caps" id="result"></div>
+      </div>
+      <div class="more-panel" id="more-panel" hidden>
+        <div class="more-label caps">地區</div>
+        <div class="chips area-chips" id="area-chips"></div>
+        <div class="more-label caps">菜色</div>
+        <div class="chips cuisine-chips" id="cuisine-chips"></div>
+        <div class="more-label caps">價位</div>
+        <div class="chips price-chips" id="price-chips"></div>
+        <button class="clear-btn" id="clear-filters">清除篩選</button>
+      </div>
+      <div class="map-wrap" id="map-wrap" hidden>
+        <div id="food-map"></div>
+        <div class="map-legend"><span><i class="dot bib"></i>必比登</span><span><i class="dot selected"></i>米其林推薦</span><span><i class="dot other"></i>其他推薦</span></div>
+      </div>
       <div class="cards" id="cards"></div>
       <p class="notice" id="notice" hidden></p>
     </div>
@@ -856,7 +921,7 @@ const CATEGORIES = {
     accent: '#B4592F', soft: '#F1DED3',
     intro: '米其林必比登、入選推薦，加上朋友的口袋名單',
     groups: ['必比登', '米其林推薦', '其他推薦'],
-    cuisines: ['泰北菜', '泰式料理', '麵食・米線', '小吃・甜點', '咖啡・早午餐', '甜點・飲品', '西式・異國', '創意・精緻', '南泰・東南亞'],
+    cuisines: ['泰北菜', '泰式料理', '麵食・米線', '小吃・甜點', '蔬食', '咖啡・早午餐', '甜點・飲品', '西式・異國', '創意・精緻', '南泰・東南亞'],
     notice: '名單依 MICHELIN Guide Thailand 2026。清邁目前沒有星級餐廳；入選推薦共 36 間，這裡精選 13 間。其他推薦是朋友口袋名單，不在米其林名單內。價格為預算估算，營業時間建議出發前確認。',
   },
   activity: {
@@ -876,6 +941,14 @@ const AREAS = [
     intro: '古城是清邁的心臟，巷弄裡密密麻麻都是寺廟、民宿、按摩店和小咖啡館，走路就能逛完大半。週日傍晚，Ratchadamnoen 路會變成整條步行夜市。',
     features: ['寺廟巡禮', '週日步行街', '走路就能逛', '按摩', '平價住宿'],
     spots: [['契迪龍寺', 'Wat Chedi Luang'], ['帕辛寺', 'Wat Phra Singh'], ['清曼寺', 'Wat Chiang Man・最古老的寺廟'], ['週日步行街', 'Ratchadamnoen Rd']],
+  },
+  {
+    key: 'north', zh: '北區', en: 'Chang Phueak', thai: 'ช้างเผือก',
+    image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/201703291152b_Chiang_Mai%2C_City_Wall%2C_Chang_Phuak_Gate.jpg/1280px-201703291152b_Chiang_Mai%2C_City_Wall%2C_Chang_Phuak_Gate.jpg', credit: 'Chang Phueak Gate · Hartmann Linge / CC BY-SA 4.0 · Wikimedia' },
+    history: '古城北門叫「ช้างเผือก」，意思是「白象門」，相傳和蘭納王的白象有關。北門外一路往北是 Chang Phueak、Pa Tan 一帶，過去是城外的農地和村落，後來慢慢發展成在地人生活的住宅區。',
+    intro: '這一區觀光客比較少，多的是在地人吃的老店和市場：北門外傍晚有整排小吃攤，Chotana 路、Ratchaphruek 巷子裡藏著好幾間必比登，週末的真心市集也在這一帶。',
+    features: ['在地老店', '必比登密集', '週末市集', '小吃攤', '觀光客少'],
+    spots: [['北門夜間小吃', 'Chang Phueak Gate・傍晚開'], ['真心市集', 'Jing Jai・週末早上'], ['美賽咖哩麵', '必比登・咖哩麵'], ['Siri Wattana 市場', '庸族番茄米線在這']],
   },
   {
     key: 'nimman', zh: '尼曼', en: 'Nimman', thai: 'นิมมานเหมินท์',
@@ -950,57 +1023,63 @@ const IMAGES = {
   "Warorot Market": { url: "https://upload.wikimedia.org/wikipedia/commons/5/50/Warorot_Market_01.jpg", credit: "Department of Tourism Thailand: LannaPhoto / CC BY-SA 3.0 · Wikimedia" }, // 瓦洛洛市場
   "Chiang Mai Morning Market": { url: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Thai_market_vegetables_01.jpg", credit: "Takeaway / CC BY-SA 3.0 · Wikimedia" }, // 清邁早市
   // ---------- 美食 ----------
-  "Khao Soi Mae Sai": { url: "https://prod-pics.guide.michelin.com/api/public/content/47168a2ec6df46f9998943338efe4342.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 美賽咖哩麵
-  "Guay Jub Chang Moi Tat Mai": { url: "https://prod-pics.guide.michelin.com/api/public/content/dd87496acec64bbf9435caa2db151213.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 張莫新路粿汁
-  "Sanpakoi Kanomjeen": { url: "https://prod-pics.guide.michelin.com/api/public/content/cb918c7f7fff4830a50e2d64a167b3b1.jpg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 山巴蓋米線
-  "Huen Muan Jai": { url: "https://prod-pics.guide.michelin.com/api/public/content/0080cc764abe4d81b7e74fd622d5e995.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 歡心之家泰北菜
-  "Huan Soontaree": { url: "https://prod-pics.guide.michelin.com/api/public/content/fdfe7cb1ee5d4cec8263869f21b02a0e.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 順達莉之家
-  "Euang Kam Sai": { url: "https://prod-pics.guide.michelin.com/api/public/content/5876a32337bd4b1596b02024c6c157f5.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 金蘭花泰北料理
-  "Saiyut and Doctor Sai Kitchen": { url: "https://prod-pics.guide.michelin.com/api/public/content/29b45ff8b4bd4f42b67f74f728fed462.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 賽玉與賽醫師廚房
-  "Roti Pa Day": { url: "https://prod-pics.guide.michelin.com/api/public/content/a8c4505f613e462f9ee72fcda523930d.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 黛阿姨煎餅
-  "Lung Khajohn Wat Ket": { url: "https://prod-pics.guide.michelin.com/api/public/content/3473b140e369403bb6180aa0a750f455.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 卡宗伯傳統點心
-  "Tue Ka Ko Na Prince": { url: "https://prod-pics.guide.michelin.com/api/public/content/d3b0bdd168ca441895efcecc657e7540.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 王子學院前炸豆腐
-  "Meena Rice Based Cuisine": { url: "https://prod-pics.guide.michelin.com/api/public/content/b8e8be83dbdf455fbd599b42b5362896.jpg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 米娜米飯料理
-  "RASIK LOCAL KITCHEN": { url: "https://prod-pics.guide.michelin.com/api/public/content/e89b58516b524726901fff75c4295b45.jpg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 拉希在地廚房
-  "Magnolia Café": { url: "https://prod-pics.guide.michelin.com/api/public/content/19a8f8062a6348689c2e194a11874929.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 木蘭咖啡
-  "CHAWEE": { url: "https://prod-pics.guide.michelin.com/api/public/content/57d21585e9604429a57f6bd3454a7f6f.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 查薇阿嬤菜
-  "Sanae": { url: "https://prod-pics.guide.michelin.com/api/public/content/06bf9e691e87439586b6b16663bf3953.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 迷人牛肉館
-  "Dan Chicken Rice (San Sai)": { url: "https://prod-pics.guide.michelin.com/api/public/content/40cd26d2e505428cbdfc7f54f103d11e.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 丹海南雞飯（山賽本店）
-  "Gongkham": { url: "https://prod-pics.guide.michelin.com/api/public/content/994b2aa4324b4629828283c298ddfb0a.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 金鼓泰北菜
-  "Lhongkhao Kitchen": { url: "https://prod-pics.guide.michelin.com/api/public/content/9c0d45bd1cd641a9a01ce4fb617f04ab.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 米倉廚房
-  "Khao": { url: "https://prod-pics.guide.michelin.com/api/public/content/e62027a79e2f4020bc3b781267a9e7c4.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 稻（四季酒店）
-  "Blackitch": { url: "https://prod-pics.guide.michelin.com/api/public/content/5566c39a11e546e6b9e24a3f6435c2f4.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 黑廚
-  "Baan Landai (Phra Pok Klao Road)": { url: "https://prod-pics.guide.michelin.com/api/public/content/12d8887a6e4d482ba84291863e381551.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 蘭黛之家
-  "Kinlum Kindee": { url: "https://prod-pics.guide.michelin.com/api/public/content/a92d4e8a319c4edbbec83acd4db7bf7f.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 好吃好食泰北菜
-  "Lumdee Te Khuadang": { url: "https://prod-pics.guide.michelin.com/api/public/content/5676b8d35d42410aa4fab966fc6c8f47.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 紅橋好味
-  "Huen Jai Yong": { url: "https://prod-pics.guide.michelin.com/api/public/content/6e5c31f4a17e4d809b2152c1bdbe876a.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 庸族之家
-  "Baan Nam Ngiew Wieng Kao": { url: "https://prod-pics.guide.michelin.com/api/public/content/c9feaad00bf04be0bd8ed670b53bda19.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 古城番茄米線
-  "Withee Laab Charoen Muang": { url: "https://prod-pics.guide.michelin.com/api/public/content/6763a23e954e43c8976d0f9eb50aadf2.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 昌盛路拉布
-  "Nam Ngiao Yong": { url: "https://prod-pics.guide.michelin.com/api/public/content/67c94cfcb8e840db889bb5cfee46fc58.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 庸族番茄米線
-  "Talung": { url: "https://prod-pics.guide.michelin.com/api/public/content/ae288bf03ab24d6880b794d42c6da37f.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 達隆南泰菜
-  "Kang Jing Jai": { url: "https://prod-pics.guide.michelin.com/api/public/content/a37494d06687423b88e442359d289742.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 真心咖哩
-  "Aunt Aoy Kitchen": { url: "https://prod-pics.guide.michelin.com/api/public/content/e60fb6b7745c4a8893c826b6157421a3.jpeg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 阿愛阿姨廚房
-  "Kiti Panit": { url: "https://prod-pics.guide.michelin.com/api/public/content/8019dae81bfb4bb58088dcd21ef70dff.jpg?format=jpeg&w=1000&h=1000", credit: "© MICHELIN Guide" }, // 吉帝商行
-  "Khao Soi Khun Yai": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Khao_soi_Chiang_Mai.jpg/1280px-Khao_soi_Chiang_Mai.jpg", credit: "Takeaway / CC BY-SA 3.0 · Wikimedia" }, // 外婆咖哩麵
+  "Khao Soi Mae Sai": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QAQo01eA6gHKOvvGrToBg7K8ucjAZiDVXh7gJ5i33NFXAMyleFzCqR_mfDsGCRAoq8vgkxx5Z3Kz0w77-U-Vpqy1qgw5ZWQOOIzrJ-ARjzB9qf5ATo0-tKx_nrbbRwPNEn1L-u5CVbOHzp=w800-h1000-k-no", credit: "Google Maps" }, // 美賽咖哩麵
+  "Guay Jub Chang Moi Tat Mai": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9S3Mcw6qJQeJ0f4tUkaPFRuSq557A7L25P_1Klk5d1DyC_lwOJ6DqxnbGaXVWXQQIUZBD399s0mi9A9nvjCCpmAYRS0Ysox3LSv6zdeUZEaRrcniiz8y2BAoNvZmmhPGnlPVtiL_dA2wsY=w800-h1000-k-no", credit: "Google Maps" }, // 張莫新路粿汁
+  "Sanpakoi Kanomjeen": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9T1RTSMMhTsK4XKsOZ4w9BXpUoXIEBDPzMyZLpdUKKaqJQLxlNx4kApdDEirAWbteep1ptV9bwDWu7b6YPb8dk3Gf_D4SDcwhzk5lkTHBi-utpxM-_CuDPk_yjQaB2-LQHA7U4qm6crXUg=w800-h1000-k-no", credit: "Google Maps" }, // 山巴蓋米線
+  "Huen Muan Jai": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9SZ8aod9zRIKnVzKD4qqT2s9ZNfnNRwfR73kRWDy6iRsrM22XZNxya_haAhaGU9cjItpjeRlFhv7qSHlsUqhgTO8eqycDXz5aWKyAw45EHOcK4iuWxwIcPohRQygq7d5e6CXCoLVnyblF8=w800-h1000-k-no", credit: "Google Maps" }, // 歡心之家泰北菜
+  "Huan Soontaree": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9S3kbdmVE0ObvrM_sAMsPd9aNs6M_y2A4kCR9wMqjnSK8TOq78C3dOdknjSwMEiXS3nCthYGA59KHIFSQNPfUYgK8F8zbUoPgU2pMsf4UJuy6OwrRNWR17Pw29xb5u7Ba6dtc2D=w800-h1000-k-no", credit: "Google Maps" }, // 順達莉之家
+  "Euang Kam Sai": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TTCNeHA0yynZig71yLg-j29zynnjdDQu2W33n1VafcUQkGGwYepOR7t1G-5SvAm02ZCUmcO2VGK3f48FuPz082LrevYjRD7C8CZ21aeeNGoV4Aq65qXlc26P7h8vlPLlDwmhk=w800-h1000-k-no", credit: "Google Maps" }, // 金蘭花泰北料理
+  "Saiyut and Doctor Sai Kitchen": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TYKkZ858N3a78gFq_O4Npntsgzpep1OgTR_YXmN3hBlm4dhWcWT8wThvpO0XwMd5E9WF5T8f_9zChGlrG8pzFs4f0VW-9Zf1jyh9E4RatSdl1MdfLdZG0_8v99nSBQGzT0AH2i9bciEVt9=w800-h1000-k-no", credit: "Google Maps" }, // 賽玉與賽醫師廚房
+  "Roti Pa Day": { url: "https://lh3.googleusercontent.com/grass-cs/AABkmLe2scLLZfgUYHapaZ2i9ZBmriIpkrVaBXUXaxY95qLfcaufYpa3y87lTRxKmxtDFUdigxrPDLEys56hZEIJOdKSvmBM-jbjzaAbmquFIxXPSzINJ3bSwpwAhN-lpVLgsZwEKMhjBvW9MGZP=w800-h1000-k-no", credit: "Google Maps" }, // 黛阿姨煎餅
+  "Lung Khajohn Wat Ket": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Qa6q2lvZfCWqEXDE44MF-ykDL8Q8NpcOv4O-ADetsSK7OW9LQ2IIifPT9_HxnhRUfhFrrJLcviCCE6qh0FGsbg9hAGSP5CaPBNPDIY11N34tFLFF8Qc_-rLTRup3GeLrxL2N7bl0FMc7c=w800-h1000-k-no", credit: "Google Maps" }, // 卡宗伯傳統點心
+  "Tue Ka Ko Na Prince": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9SLdti5Z-IMn-atG1gJ2JEbZJliGFDSjK0wbhAdu-CB82w7e7ByZx5yaMHpmhKTxN6uBVh9wHVVXKlS68L3T9syDIgAeSBI-SliqxEldELyy3FS5DHt9hYatQ5P-ZTLNm4Tr1UD0A=w800-h1000-k-no", credit: "Google Maps" }, // 王子學院前炸豆腐
+  "Meena Rice Based Cuisine": { url: "https://lh3.googleusercontent.com/grass-cs/AABkmLceSkTFRLjPPnJ-OAp1Kn0OkoYna6HgcpDnHapCf3GnVonirh88WoY0UrFbgY3cbd87VNpYlRy0OCFGozLv0GooH_ZAB3kQmUNhcro59p06UH-cBZxDQIE2OKF26-zhlsd-W_JG-N-rFIDE=w800-h1000-k-no", credit: "Google Maps" }, // 米娜米飯料理
+  "RASIK LOCAL KITCHEN": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TqITjiFvRUNNVklmYwiytH7-0REeUKE6QpMeNenz2mY-ZaRXLmosImA36lLA-iNEZoiO79nlGe04tSIy-6gAr1cA9-YYx8geYbrJoLMB1p5J1uf_GwzqfOqzY2gE8Vi8Re-HMpVUCMb3XL=w800-h1000-k-no", credit: "Google Maps" }, // 拉希在地廚房
+  "Magnolia Café": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9REK-OR13Ldt2YxlNoE3eN4qaJraeHMsxOLVWyyx50HLkFkazZMFZP5GJF9qB1_Fv2huhXuuhwqYU5TnS2fQuTpJ__BpLTpM2FiAplfPSBwCtIXsNVX1is3z-IwBkoxC_Wo3HYttuhU1itO=w800-h1000-k-no", credit: "Google Maps" }, // 木蘭咖啡
+  "CHAWEE": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9SLAYNRLfvs9N8YKqiE9Fmc_bCLy7VoHsv8nD75YLyoxnZCfVc492NNuX5COfAP-hglgjrxpPB6Nr1Bs4hls3Ur_GyaAaJ5PO17FB8lyHEXDl_X7fE-XDONUt4OaqHe6wy55-QDz2nZqtMz=w800-h1000-k-no", credit: "Google Maps" }, // 查薇阿嬤菜
+  "Sanae": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9T54cGJDqbFawEvqKWjzMV8nm5uG7UFDXArxTpV0RoZRp_wMfM7KqrIhqwb89GsUQcFekPywNsv5FNT8d-BbR6x5t0MENk5oj5HZHavN0H74XGgqwWkfk1zK43Rd3pNSU_Crl8Vwdt19RBt=w800-h1000-k-no", credit: "Google Maps" }, // 迷人牛肉館
+  "Dan Chicken Rice (San Sai)": { url: "https://lh3.googleusercontent.com/grass-cs/AABkmLf1Q5S5UXSrbFSdv86wrrV6Sd6sGJCQ0OcJe4tDhFWddUreKuIdmeA68SFSzZkgF8e2GCH8ZPVI3DWREl8-4fjJsXxyo9-kg5CzqVtsaDLBRtDwfcQNGpNcay_yonKpYbwDtQeeClvqww8e=w800-h1000-k-no", credit: "Google Maps" }, // 丹海南雞飯（山賽本店）
+  "Gongkham": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TY7IdQICq79Fs5pEjGdImP8fk3wZjaOwWP_cUFi5XI5QUepXhbmeM4P1zpm6GfM4K25icp1f7Be3BM8nNFEn4spV0Ph1JQS3JqSc_GeMI35VWMFq5u2Rayc8iJox6T2BZmQRNsrgPbyQoB=w800-h1000-k-no", credit: "Google Maps" }, // 金鼓泰北菜
+  "Lhongkhao Kitchen": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9T4aZjD2VRXDun5RdTWNCCv9Ok9ExhaLEejenlsEJB0L0D_yxTHp5dDkvci6cz-BCRUcnCVWK1AqMEpIXnJZyaG73CiJdCtJg5V9FgTZ1hHnfiFHKKiv4Pa5JJjNZYExRaoin9ct8W2LA=w800-h1000-k-no", credit: "Google Maps" }, // 米倉廚房
+  "Khao": { url: "https://lh3.googleusercontent.com/grass-cs/AABkmLdBqySnbp5ObQK5A9Ld1OHoUOBDr3bsjxK2NPbZJgPzkeJ_pKDkA02evV1fVmWbQtx2aT734yZd8jsAL1KaQqnTbi2IF6Qvzdm615CStwjfp355a5ladekwjzDLMFIFmu4vtsJ6=w800-h1000-k-no", credit: "Google Maps" }, // 稻（四季酒店）
+  "Blackitch": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Ts-4Ua_8umxrGQ5LMyDPu7E_Le29jSL2OIySV0Et3L2lpsO_ocTs7yTcb6NQEjrv_i7zL6SjkCZ0ds_Nvo6RsNrEtlNJZrcsWx3H-Z45Ve-2LHGtBNaQ6BP2ISGqkN6-RWO9CtJi7J3beN=w800-h1000-k-no", credit: "Google Maps" }, // 黑廚
+  "Baan Landai (Phra Pok Klao Road)": { url: "https://lh3.googleusercontent.com/grass-cs/AABkmLcg9dx8iC-cxokkJ-3jaZDv4TOTrdkwGHjbtQSOESTDtFPfaKQzGeOuhlwBaVUozTcKr6oe6kEolFZz5QCPJUlEn7acrzlcOe23J22FtHUDYJRD0nCtTMt7rlBApKXXpnU9KTk4NFvmvoLt=w800-h1000-k-no", credit: "Google Maps" }, // 蘭黛之家
+  "Kinlum Kindee": { url: "https://lh3.googleusercontent.com/grass-cs/AABkmLe45-Wl9JSakICwNJ6l--qXQBldJSBz3apHfseXsQkPk3iVaNwdKIYHj7utUKAArVJdAxytLL7RPQFOTgB9F0c07jj-tBeWk73VwFX59WC41n98RKlhKwDQbVF6GwxM274ZGI8TkVbbd_Y=w800-h1000-k-no", credit: "Google Maps" }, // 好吃好食泰北菜
+  "Lumdee Te Khuadang": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Q5zg-Q2LD6oEndhFqNJdj5Bu_yD5Z8xTvpyS7U0Dm6hCc_akY48BbY6itq-Td5Zk1Hnyg7Q4wwoyiVdoOj5mR2rDzT7ofRsDcg5Hr1xnlGDO9uUpgnPblWMwYSZSBSFmNLkHMDMitE33hK=w800-h1000-k-no", credit: "Google Maps" }, // 紅橋好味
+  "Huen Jai Yong": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Sr9gzWBPH-Ltnbq7olQK407kqY7bbRoJ2vSQyFt-bbAFnxCX1qA_I6k7tCpWyed173ghjlRau7G088FeUvD-eAJ_OXIJFMS0O9vbNyyEClhGdBFb8BAzWhqu92xNER5ZOQcPxq6cNmqh7H=w800-h1000-k-no", credit: "Google Maps" }, // 庸族之家
+  "Baan Nam Ngiew Wieng Kao": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TmNHuX_eF3FNVFkl_aaQBhC0iC7h5WXLNLW3aEY4VYZusFir6Eev5bTWDMJTrjOItLdb0XyrqNa009T_npttmUwtuQRyUz8Txd89PQ_2DKNTJzsioHP4Ln6Eg_iSC84jReGLX8fw-y_p-z=w800-h1000-k-no", credit: "Google Maps" }, // 古城番茄米線
+  "Withee Laab Charoen Muang": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Q8l4adEjParEBxSY7oOZZ-jL2rTez3AcOX9XD0bM4Vk9_ZtfAiC0Rb46PAKomkunvfvZVFnQqKqELX3YmF19jcIyL7XixaClNo-qAzlCpjoyc2ZWSmSAaCstymvpWLsmIiClwg0H4lcvlk=w800-h1000-k-no", credit: "Google Maps" }, // 昌盛路拉布
+  "Nam Ngiao Yong": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TOPaihnQ6BdQkiIy4qBkfrIhZAygqDRCIBrvE_FPpA7j4THhRhS_vIQXqatZ1xnsvACkkbgarqlru436NxcL9nodGuPaS997r-FLfEOMwrmgblv3nVsuDT6T2bhbiVBjVuO2aQr8ddk8Cx=w800-h1000-k-no", credit: "Google Maps" }, // 庸族番茄米線
+  "Talung": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9S1OHWOCn1fcPliPpTyys2TkFWjakBfCZjlyukQjy56UN9non8xJF4x2he8Cjesx58r8EbkwGje-jp7ATQYpVZRlWEjrxmsj19WPrJgBVyrEI2NdFRtL8CFcy9nNKHwmRP_VE7VfsDHTep4=w800-h1000-k-no", credit: "Google Maps" }, // 達隆南泰菜
+  "Kang Jing Jai": { url: "https://lh3.googleusercontent.com/grass-cs/AABkmLdVagDrx1NzYj4AZzima1ykdLSJ7L-TBJNfGt3e789KEWg8P6YYDWqTGZluZjfLrvTKXvlXjUP-v6YyBcKXOjfGarBPEv-6ElXtCTN5F6uYWli10o5k1ahdHOoJmbCwLyZBy_A1Bx0Nes8x=w800-h1000-k-no", credit: "Google Maps" }, // 真心咖哩
+  "Aunt Aoy Kitchen": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9RPP2bszZIL_dAyavoenpXYO0G6o_rbL4NdjmcLR2uhWwwKc2j2y6dYBN8hg3O6jxdjeleEE8GviHtehZJkvS0b9mtPwEuVXS7Kxf3NknbU9wgflz5UfjK3bO5FNBAKf9Ssy6HgiU-V5Qo-=w800-h1000-k-no", credit: "Google Maps" }, // 阿愛阿姨廚房
+  "Kiti Panit": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Sl4y_O0N7sHzMjw2jQrHDPldPih_Xl3k-HITH2HJY32FqSQAl3xAP35WIsowSnOQSDYnnVdorUVcgCiwN5jyCPZH_kq30nR2ru9ak5Hh9SJiVpSL-25SdBDn3Z7_T-xV080xOWs4CCgEE=w800-h1000-k-no", credit: "Google Maps" }, // 吉帝商行
+  "Khao Soi Khun Yai": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Tj1SelZknim1ojoQp4Jc7qNl6m90W4vRV1qp81WAm2oULxYacf9URoxkEFkI8YkKe_7aCZURCDURJOgNmtwCsOycfGXisfj02-HrTDIKBuFGH7JtG9TXgxc6jCLn3yMLZD7iM=w800-h1000-k-no", credit: "Google Maps" }, // 外婆咖哩麵
   // ---------- 朋友推薦 ----------
-  "Lux to eat": { url: "", credit: "" }, // 愛吃小館
-  "FOOD BAR 29 Suk Kasame": { url: "", credit: "" }, // Food Bar 29 快餐小館
-  "Khao-Sō-i": { url: "", credit: "" }, // Khao-Sō-i 咖哩麵
-  "Heuannaow": { url: "", credit: "" }, // 寒屋（Heuannaow）
-  "Cafe Rosemary": { url: "", credit: "" }, // 迷迭香咖啡
-  "Zohng Coffee": { url: "", credit: "" }, // Zohng 咖啡
-  "SMOO! House": { url: "", credit: "" }, // SMOO! 果昔屋
-  "Joost Smoothies (Nimman Soi 13)": { url: "", credit: "" }, // Joost 果昔
-  "Adirak Pizza": { url: "", credit: "" }, // Adirak 柴燒披薩
-  "Pasta Ama Chiang Mai": { url: "", credit: "" }, // 阿嬤義大利麵
-  "Lot of Taste": { url: "", credit: "" }, // Lot of Taste 咖啡
-  "Baan Pie Charin Cafe & Bistro": { url: "", credit: "" }, // Charin 派之家
-  "Baan Bakery": { url: "", credit: "" }, // Baan 麵包坊
-  "RAWtruckr Nimman": { url: "", credit: "" }, // RAWtruckr 韓式炸雞
-  "phithi": { url: "", credit: "" }, // Phithi 冬陰牛肉麵
-  "Salsa Kitchen": { url: "", credit: "" }, // Salsa 墨西哥廚房
-  "MINTNIMAL": { url: "", credit: "" }, // Mintnimal 薄荷冰淇淋
-  "Roti Pa Dae (Loi Kroh branch)": { url: "", credit: "" }, // Pa Dae 香蕉煎餅（Loi Kroh 分店）
+  "Lux to eat": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9T_UWNKMWniE46M5Ae9r1kAet_lZj7Hr9qAUMz3obnZDtpnQrFz59He2xZmVfHr3GPiR6ZSDKj6X2h2KlLc-znwhR_SEF89REKIkioMQP6ePos5TIF5FgZT15SrZmCOcsumY2byKkIGvbE=w800-h1000-k-no", credit: "Google Maps" }, // 愛吃小館
+  "FOOD BAR 29 Suk Kasame": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9T9laEIJ5tjJVHz8l-GA9fe2u7n2L8yi5TDKj-5mo6AhucLiz1kTKexNghwMBUxykPHGaq36YVoLcFd_VijjUntN7-BSLbm0JZ4m1UOBPqHo_e8FLhSodOGzRSIo_JIIl0FTeDD=w800-h1000-k-no", credit: "Google Maps" }, // Food Bar 29 快餐小館
+  "Khao-Sō-i": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QMjQzec76ZQIMnRe9CxhknEddIJ1qZI6hpHJl5ME0kw4Z0JEKuaxl-L4s5bCFMqnIEdCQrIXhb0ky2erDKKrRuBnhinLlhtNbPz3mqyXlACBDrf0csvFAPnkyfSkpEO7VkQaz2cP7NNp0=w800-h1000-k-no", credit: "Google Maps" }, // Khao-Sō-i 咖哩麵
+  "Heuannaow": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9RlcpvRY251GEQgDyNN5sA7AM5AgOJ9mh2lIs3H84v0QCrp28_x6JbdGPiP7ZI_jWLUTi-ImMYfssoyajg6rdsMi-T34XdlguAzkyoE_F-LB6crweX2aQQSsdhuDaB_58ip0AszeSMqLSfq=w800-h1000-k-no", credit: "Google Maps" }, // 寒屋（Heuannaow）
+  "Cafe Rosemary": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9T7j8a4oa70U2YyWcmKDvv56MBI2Hys-lbA2YQhWa6O8aRaCNY3hoPTAnpxgpJOhJwtHxL_jiciVlZ6glm5EBIYkd-zOweTMxgR9LDCB7PLmsOZ0jUe9JospV1d6sa6iwokd0eG=w800-h1000-k-no", credit: "Google Maps" }, // 迷迭香咖啡
+  "Zohng Coffee": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QSEHgKOUah0MJSU9GJCDE_2GfyjWxgvWHATzuleMHuI0KnF5wL5UPcXD031hjbLXO9K84RWKF76QrouIZoqqBmMziPGG4blPgWpViMn6qfggsAJKTFL8_Vo48ocFfjj3CWlNqpcXSMDuo=w800-h1000-k-no", credit: "Google Maps" }, // Zohng 咖啡
+  "SMOO! House": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Q_cbw7-YFu2aVmynJN9OaHp2qNCwaoimbyPgKMUH7DXnA0TbG8glCJcqgMD7o2jm4pkDAodweIatlu683Ka7lkK1wxy8YneuUO8_6ZFaNYoEAjStBsPrM1ZxODy270s3AlX80kTF5o_UU=w800-h1000-k-no", credit: "Google Maps" }, // SMOO! 果昔屋
+  "Joost Smoothies (Nimman Soi 13)": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QIEVTbyzzGTF2J-1RvpkWTdqJBLWovG5F_2kGxlprLRmsv3IE4urqEA7feLO4O2pCVSKn6-TC9SDlGYeCkC-A21V2sXx4MCJdGQDGNFboJ30OosxaFJLhWRFIoBSk0mrWvzrInACXe1MGq=w800-h1000-k-no", credit: "Google Maps" }, // Joost 果昔
+  "Adirak Pizza": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9SBuskXZqOSS8ivx6-KJ-nLqB7khaqNd7cCyNNkW9s7WZ2TssrFXVlTcsYCCanutsExxYD8VS1Q8Hodle8lFMSavOZ0_bINdWolNzX9106A-O4zgkZncxNezj6hIhToHKADRbaY_Lmb69e7=w800-h1000-k-no", credit: "Google Maps" }, // Adirak 柴燒披薩
+  "Pasta Ama Chiang Mai": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QhnuU_qi11Acr2dZnEoqSLRnytmkOA91GD3uBkWrmXHqG9_8F-Axzv_mdbk94ek4UUh7dBXw7g1HjkXgguNUrazcAhl6LSWxaSEiESm4H8lKFjKXY7_RX2DdrEO8yPLFsnfjp1ofWv0-v_=w800-h1000-k-no", credit: "Google Maps" }, // 阿嬤義大利麵
+  "Lot of Taste": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9SdLmxhDaCzkimW50erfvYMmWXeAFyLVNs1hQyh3KuH7Dq8pL-zDCe0lZZpNE6vVkDJFV-rjFo_1QgikP3BMnsiNL8aOXWhl-kJlaqY2zZilOsSiyONzf952iRtYRM25W4htu2U=w800-h1000-k-no", credit: "Google Maps" }, // Lot of Taste 咖啡
+  "Baan Pie Charin Cafe & Bistro": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QCNI8mAM9KduNgWfPIiRX1dw94Etum8a6ek4MeoejcumoCRMXPMFcnicKdVKquSRJdNl_gViSbWl9E6tOfgBZXEcO-wkkOiqJQ1lfE5TOaBT69bWOy-MBwBYAwSCzVZvrWddks=w800-h1000-k-no", credit: "Google Maps" }, // Charin 派之家
+  "Baan Bakery": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TnEsKUsrQjHtFpiywQokbTgT6bqMRIqglwSGnCQ4D33jc1-D4EPKYzABchWSlwidsdMuBtSvHdUCc2cPlxmftcWO2ncIpRQb2mbFbUk60LcJpbmbM4GpnVSKHLufiHD3Z2g_fvAwxz2WWU=w800-h1000-k-no", credit: "Google Maps" }, // Baan 麵包坊
+  "RAWtruckr Nimman": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9ShGzf8qRSzpiX2PPaK8jpTa_8vv0p7hYkUc4Kk8diLRRaTUCq63snlx3Zt-TCP7g_cI0KD90LQhXCv82dC41RTo6H-cnuxlX02mKdHAFrxMWPKgbBjtVHDnOT2a_mGQpG5WPc=w800-h1000-k-no", credit: "Google Maps" }, // RAWtruckr 韓式炸雞
+  "phithi": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QhAThvsSIVr0BhWyQY4r2lqoAxiEQvHt7yXrOFpWq2wb9m8b6BFaRB9wuDtXv6-t4h2irsUjf2Cg7N00IlGyKICbzup0zO-MSZchG8Uw67B64CkuQL8HymXCxLIkodRrlHhHL_aj8m39XR=w800-h1000-k-no", credit: "Google Maps" }, // Phithi 冬陰牛肉麵
+  "Salsa Kitchen": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9SpqcD1oXZJq8wiQNmOL8IFVhUIlIJpsh7u7WaSIq6lJehkpx6QkCZZn-d5Sy66EhrnvjvcRgtyevMYe2Kdxzip0lmc7Eq1vEwT2b81XKgkF0pRFzdimvdtcPmdpEFehYN0GJBAuDPo1PKw=w800-h1000-k-no", credit: "Google Maps" }, // Salsa 墨西哥廚房
+  "MINTNIMAL": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Q7GR7TCOsb1A84AUw6lSA-VVJkxad-loTeCpQkNHfoOv3awB5X4RyqT_Qu6r4GH_CyjBwGUgR2Y2TqoBQqoDb_X37mEnjihSYVSk6rQEvZr_qtaYZZ3ZzbJN-uvTqcvdegEl_W=w800-h1000-k-no", credit: "Google Maps" }, // Mintnimal 薄荷冰淇淋
+  "Roti Pa Dae (Loi Kroh branch)": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9S1MPr-o3-jPV0Uq2nS2Nv7scTpVnGjYNnWyDcNndS3DYVNuklVV8cN910tJkSE-ZMA8aMrNmashHxBK6d_7F4RZmcK9-WC1zCfoLKF2AqZEE0A9ktMOgURR7Oi6jpbWDeS3d8RiynuA1Ib=w800-h1000-k-no", credit: "Google Maps" }, // Pa Dae 香蕉煎餅（Loi Kroh 分店）
+  // ---------- 朋友推薦 2 ----------
+  "Vegan Society Restaurant & Homestay": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9R8QZc6_I-1sNmTNZmNL7xWpbvcAuX3mvqVoQRA3Q-p6ygmpnramz9E3wWA-Z4WRceVtOIjdWoHpXtAPLpmEItEbY8WZ2sGZ-0fVA1_GvyZx-g1o080v00jFmTkXv6rF8aiInyd7a5EGlcA=w800-h1000-k-no", credit: "Google Maps" }, // Vegan Society 蔬食餐廳
+  "CHUM Northern Kitchen @Old City": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QpN7t225HZwLHb1pYxWZFOio9De7FuxsccwtehoCnLf6Qc50ioB83uLh_sHDiRcc6mS6nJ14LdAaEd1ejZ-mRLoLauc34GDBYh756RzuGVY3fHsAZdy98cUOXhGu83rpWpuQTQl_vbM4lv=w800-h1000-k-no", credit: "Google Maps" }, // CHUM 泰北料理（古城店）
+  "Aum Vegetarian Restaurant": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9RnAtxLkghE53SaZKsyagUOu3NPe7kKh4v-9rEIUP4jPOy4RCSTsbezRePpXJaNhD-NvFIuvzGA2bPpQGYhPAq-nVUOftmwCldbGgrD7j0fazKXlYD56UPiq4dWb5gQp8qy0n8=w800-h1000-k-no", credit: "Google Maps" }, // Aum 蔬食餐廳
+  "Khao Soi Arak": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QE859YaE7WeHhyO9qApOgeGMBTL9yTpZgGWIvUmbwY7mrfY2zHxi8kbAbKyUqIPPolJW665oYzbsQexi78-W24trUuOg7VzNWs2mceY2U3w2ZJrEShaI2jP91r6qnhqObaGMFI5gJEJHUX=w800-h1000-k-no", credit: "Google Maps" }, // Arak 泰北金麵
+  "Kebab, Felafel, Salad": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9S1I9cArruf38qqSBD8OB1G1zwIUnTBhpoDp5F5sk1Y7TJi6NamEMfij01s_O-Z6FU0fGJTt_DpRfbs5ritotRkUMLqcag27zNM5IAUVD4bC6nKt2O41sT8jwivl6P-vWhPkzxuhA0RVjxx=w800-h1000-k-no", credit: "Google Maps" }, // 沙威瑪泰式小館
 };
 
 const PLACES = [
@@ -1123,6 +1202,8 @@ const PLACES = [
   // ---------- 美食 ----------
   {
     cat: 'food', group: '必比登', bib: true, name: 'Khao Soi Mae Sai', zh: '美賽咖哩麵', thai: 'ข้าวซอยแม่สาย',
+    area: 'north',
+    lat: 18.799599, lng: 98.975214,
     cuisine: '麵食・米線',
     level: 1,
     fit: ['首次來清邁', '午餐'], dishes: ['雞肉咖哩麵', '牛肉咖哩麵'],
@@ -1133,10 +1214,12 @@ const PLACES = [
     location: '29/1 ถ.ราชพฤกษ์ ต.ช้างเผือก อ.เมือง',
     time: '週一至週六 08:00–16:00，週日休息',
     days: MON_TO_SAT,
-    map: 'https://www.google.com/maps/search/?api=1&query=Khao+Soi+Mae+Sai+Chiang+Mai',
+    map: 'https://maps.app.goo.gl/N4HcWUaGhYESGBux9',
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Guay Jub Chang Moi Tat Mai', zh: '張莫新路粿汁', thai: 'ก๋วยจั๊บช้างม่อยตัดใหม่',
+    area: 'thaphae',
+    lat: 18.790144, lng: 98.998704,
     cuisine: '麵食・米線',
     level: 1,
     fit: ['簡單一餐'], dishes: ['粿汁湯', '豬肉配料'],
@@ -1150,6 +1233,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Sanpakoi Kanomjeen', zh: '山巴蓋米線', thai: 'ขนมจีนสันป่าข่อย',
+    area: 'watket',
+    lat: 18.785908, lng: 99.008663,
     cuisine: '麵食・米線',
     level: 1,
     fit: ['在地早午餐'], dishes: ['泰北番茄豬肉米線'],
@@ -1163,6 +1248,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Huen Muan Jai', zh: '歡心之家泰北菜', thai: 'เฮือนม่วนใจ๋',
+    area: 'north',
+    lat: 18.800108, lng: 98.975628,
     cuisine: '泰北菜',
     level: 2,
     fit: ['泰北菜入門', '多人分享'], dishes: ['泰北香腸', 'Hang Lay 咖哩豬', '番茄肉醬'],
@@ -1176,6 +1263,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Huan Soontaree', zh: '順達莉之家', thai: 'เฮือนสุนทรี',
+    area: 'north',
+    lat: 18.831028, lng: 98.993758,
     cuisine: '泰北菜',
     level: 2,
     fit: ['晚餐', '多人分享'], dishes: ['泰北香腸', 'Hang Lay 咖哩豬', 'Nam Prik 沾醬'],
@@ -1189,6 +1278,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Euang Kam Sai', zh: '金蘭花泰北料理', thai: 'เอื้องคำสาย',
+    area: 'oldcity',
+    lat: 18.771581, lng: 98.980204,
     cuisine: '泰北菜',
     level: 2,
     fit: ['泰北菜'], dishes: ['泰北咖哩', '泰北香腸'],
@@ -1202,6 +1293,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Saiyut and Doctor Sai Kitchen', zh: '賽玉與賽醫師廚房', thai: 'ร้านสายหยุดและหมอทราย',
+    area: 'north',
+    lat: 18.82204, lng: 98.987254,
     cuisine: '泰式料理',
     level: 2,
     fit: ['特色料理', '晚餐'], dishes: [],
@@ -1215,6 +1308,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Roti Pa Day', zh: '黛阿姨煎餅', thai: 'โรตีป้าเด',
+    area: 'thaphae',
+    lat: 18.788065, lng: 98.995897,
     cuisine: '小吃・甜點',
     level: 1,
     fit: ['夜晚散步', '甜點'], dishes: ['香蕉煉乳 Roti', '蛋 Roti'],
@@ -1229,6 +1324,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Lung Khajohn Wat Ket', zh: '卡宗伯傳統點心', thai: 'ลุงขจร วัดเกต',
+    area: 'watket',
+    lat: 18.792313, lng: 99.002243,
     cuisine: '小吃・甜點',
     level: 1,
     fit: ['早餐', '傳統點心'], dishes: [],
@@ -1242,6 +1339,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Tue Ka Ko Na Prince', zh: '王子學院前炸豆腐', thai: 'เต้าหู้ทอดหน้าปริ๊นซ์',
+    area: 'watket',
+    lat: 18.796238, lng: 99.006207,
     cuisine: '小吃・甜點',
     level: 1,
     fit: ['街頭零嘴'], dishes: ['炸豆腐', '芋頭糕'],
@@ -1255,19 +1354,23 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Meena Rice Based Cuisine', zh: '米娜米飯料理', thai: 'มีนา มีข้าว',
+    area: 'suburbs',
+    lat: 18.784636, lng: 99.045891,
     cuisine: '泰式料理',
     level: 2,
     fit: ['悠閒午餐', '多人分享'], dishes: ['五色米飯', '泰式咖哩'],
     tags: ['米飯料理'],
     desc: '以米飯與泰式料理為主題的餐廳，適合安排一頓悠閒的午餐。',
     price: '約 ฿100–300／道',
-    location: '13/5 ม.2 ต.สันกลาง อ.สันกำแพง',
+    location: '135/5 ถ.สีวลี ต.ต้นเปา อ.สันกำแพง',
     time: '10:00–20:30',
     days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/search/?api=1&query=Meena+Rice+Based+Cuisine+Chiang+Mai',
+    map: 'https://maps.app.goo.gl/qzSFPDe6Kjf88kLU6',
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'RASIK LOCAL KITCHEN', zh: '拉希在地廚房', thai: 'รสิก',
+    area: 'thaphae',
+    lat: 18.78106, lng: 98.995752,
     cuisine: '創意・精緻',
     level: 2,
     fit: ['特別晚餐', '需預約'], dishes: ['主廚套餐'],
@@ -1281,6 +1384,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Magnolia Café', zh: '木蘭咖啡', thai: 'แมกโนเลีย คาเฟ่',
+    area: 'north',
+    lat: 18.800562, lng: 98.997101,
     cuisine: '泰式料理',
     level: 2,
     fit: ['晚餐', '復古空間'], dishes: ['炸魷魚乾佐花生醬', '西瓜配鮭魚鬆'],
@@ -1295,6 +1400,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'CHAWEE', zh: '查薇阿嬤菜', thai: 'ฉวี',
+    area: 'north',
+    lat: 18.826815, lng: 98.979573,
     cuisine: '泰式料理',
     level: 2,
     fit: ['晚餐', '季節菜單'], dishes: ['每月套餐', 'Samrap 共享菜'],
@@ -1309,6 +1416,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Sanae', zh: '迷人牛肉館', thai: 'เสน่ห์',
+    area: 'suthep',
+    lat: 18.776868, lng: 98.946039,
     cuisine: '泰式料理',
     level: 1,
     fit: ['牛肉控', '清真'], dishes: ['牛油炒飯', '酸辣牛小排湯'],
@@ -1323,6 +1432,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Dan Chicken Rice (San Sai)', zh: '丹海南雞飯（山賽本店）', thai: 'แดนข้าวมันไก่ (สาขาสันทราย)',
+    area: 'suburbs',
+    lat: 18.821814, lng: 99.033285,
     cuisine: '小吃・甜點',
     level: 1,
     fit: ['早午餐', '平價'], dishes: ['海南雞飯', '雞肝'],
@@ -1337,6 +1448,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Gongkham', zh: '金鼓泰北菜', thai: 'ก๋องคำ',
+    area: 'suburbs',
+    lat: 18.910008, lng: 98.951036,
     cuisine: '泰北菜',
     level: 1,
     fit: ['郊區兜風', '泰北菜'], dishes: ['泰北蔬菜咖哩', '青辣椒醬', '芥菜湯'],
@@ -1351,6 +1464,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '必比登', bib: true, name: 'Lhongkhao Kitchen', zh: '米倉廚房', thai: 'ครัวหลองข้าว',
+    area: 'suburbs',
+    lat: 18.917087, lng: 98.951475,
     cuisine: '泰北菜',
     level: 1,
     fit: ['稻田景觀', '郊區兜風'], dishes: ['山陀兒沙拉', '辣炒田雞腿'],
@@ -1365,6 +1480,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Khao', zh: '稻（四季酒店）', thai: 'ข้าว',
+    area: 'suburbs',
+    lat: 18.91636, lng: 98.931589,
     cuisine: '創意・精緻',
     level: 3,
     fit: ['紀念日', '酒店景觀', '需預約'], dishes: [],
@@ -1379,6 +1496,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Blackitch', zh: '黑廚', thai: 'แบล็คคิช',
+    area: 'nimman',
+    lat: 18.798126, lng: 98.969536,
     cuisine: '創意・精緻',
     level: 3,
     fit: ['特別晚餐', '主廚餐桌', '需預約'], dishes: ['季節 Tasting Menu', '自釀發酵飲'],
@@ -1393,6 +1512,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Baan Landai (Phra Pok Klao Road)', zh: '蘭黛之家', thai: 'บ้านลันได (สาขา ถ.พระปกเกล้า)',
+    area: 'oldcity',
+    lat: 18.794125, lng: 98.987436,
     cuisine: '泰式料理',
     level: 2,
     fit: ['朋友聚餐'], dishes: ['紅酒醬豬肋排', '泰式甜點'],
@@ -1407,6 +1528,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Kinlum Kindee', zh: '好吃好食泰北菜', thai: 'กิ๋นลำกิ๋นดี',
+    area: 'suburbs',
+    lat: 18.86084, lng: 99.065619,
     cuisine: '泰北菜',
     level: 2,
     fit: ['農場餐桌', '郊區兜風'], dishes: ['青辣椒醬配發酵魚', '炒田雞', '螞蟻蛋湯'],
@@ -1421,6 +1544,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Lumdee Te Khuadang', zh: '紅橋好味', thai: 'ลำดีตี้ขัวแดง',
+    area: 'suburbs',
+    lat: 18.79847, lng: 99.033134,
     cuisine: '泰北菜',
     level: 2,
     fit: ['家庭團體', '吹冷氣'], dishes: ['炒雞樅菇', 'Saep 豬肋排'],
@@ -1435,6 +1560,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Huen Jai Yong', zh: '庸族之家', thai: 'เฮือนใจ๋ยอง',
+    area: 'suburbs',
+    lat: 18.725304, lng: 99.102878,
     cuisine: '泰北菜',
     level: 1,
     fit: ['老屋氣氛', '郊區兜風'], dishes: ['香草蒸雞', '螞蟻蛋湯', '泰北香腸'],
@@ -1449,6 +1576,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Baan Nam Ngiew Wieng Kao', zh: '古城番茄米線', thai: 'บ้านน้ำเงี้ยวเวียงเก่า',
+    area: 'watket',
+    lat: 18.801651, lng: 99.024559,
     cuisine: '麵食・米線',
     level: 1,
     fit: ['平價午餐'], dishes: ['清萊式番茄米線'],
@@ -1463,6 +1592,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Withee Laab Charoen Muang', zh: '昌盛路拉布', thai: 'วิถีลาบ เจริญเมือง',
+    area: 'watket',
+    lat: 18.787115, lng: 99.007336,
     cuisine: '泰北菜',
     level: 1,
     fit: ['平價', '在地人愛店'], dishes: ['生水牛肉 Laab', '熟豬肉 Laab'],
@@ -1477,6 +1608,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Nam Ngiao Yong', zh: '庸族番茄米線', thai: 'น้ำเงี้ยวยอง',
+    area: 'north',
+    lat: 18.804448, lng: 98.983863,
     cuisine: '麵食・米線',
     level: 1,
     fit: ['市場小吃', '排隊名店'], dishes: ['番茄湯米線', '紅咖哩雞米線'],
@@ -1491,6 +1624,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Talung', zh: '達隆南泰菜', thai: 'ตะลุง',
+    area: 'north',
+    lat: 18.823855, lng: 98.986437,
     cuisine: '南泰・東南亞',
     level: 2,
     fit: ['南泰菜', '吹冷氣'], dishes: ['墨魚汁炒魷魚', '南泰蝦醬炒臭豆'],
@@ -1505,6 +1640,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Kang Jing Jai', zh: '真心咖哩', thai: 'แกง จริงใจ',
+    area: 'north',
+    lat: 18.805977, lng: 98.995784,
     cuisine: '南泰・東南亞',
     level: 2,
     fit: ['逛真心市集順路', '多人分享'], dishes: ['椰漿飯', '香料咖哩'],
@@ -1519,6 +1656,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Aunt Aoy Kitchen', zh: '阿愛阿姨廚房', thai: 'ครัวป้าอ้อย',
+    area: 'nimman',
+    lat: 18.795214, lng: 98.964349,
     cuisine: '泰式料理',
     level: 1,
     fit: ['平價家常'], dishes: ['招牌歐姆蛋', '咖哩蟹飯'],
@@ -1534,6 +1673,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '米其林推薦', name: 'Kiti Panit', zh: '吉帝商行', thai: 'กิติพานิช',
+    area: 'thaphae',
+    lat: 18.787946, lng: 99.000485,
     cuisine: '泰北菜',
     level: 2,
     fit: ['老宅氣氛', '古城散步'], dishes: ['Hang Le 咖哩', '香菜烤雞沙拉', '花椒炒牛肉'],
@@ -1548,6 +1689,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Khao Soi Khun Yai', zh: '外婆咖哩麵', thai: 'ข้าวซอยคุณยาย',
+    area: 'oldcity',
+    lat: 18.795328, lng: 98.983145,
     cuisine: '麵食・米線',
     level: 1,
     fit: ['午餐', '咖哩麵比較'], dishes: ['雞肉咖哩麵'],
@@ -1561,6 +1704,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Lux to eat', zh: '愛吃小館',
+    area: 'nimman',
+    lat: 18.796078, lng: 98.970444,
     cuisine: '泰式料理',
     level: 1,
     fit: ['午餐', '晚餐', '尼曼'], dishes: ['打拋豬飯（Pad Kra Pao）', '咖哩蟹飯', '冬陰功湯'],
@@ -1576,6 +1721,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'FOOD BAR 29 Suk Kasame', zh: 'Food Bar 29 快餐小館',
+    area: 'nimman',
+    lat: 18.799288, lng: 98.965521,
     cuisine: '泰式料理',
     level: 1,
     fit: ['午餐', '平價'], dishes: ['打拋脆皮豬飯（Kaprao Moo Sab）', '蛋包飯'],
@@ -1591,6 +1738,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Khao-Sō-i', zh: 'Khao-Sō-i 咖哩麵',
+    area: 'watket',
+    lat: 18.809147, lng: 99.004762,
     cuisine: '麵食・米線',
     level: 2,
     fit: ['午餐', '晚餐', '冷氣'], dishes: ['泰北咖哩麵（Khao Soi）', '乾拌咖哩麵', '炸豆腐'],
@@ -1606,6 +1755,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Heuannaow', zh: '寒屋（Heuannaow）',
+    area: 'nimman',
+    lat: 18.793814, lng: 98.970136,
     cuisine: '麵食・米線',
     level: 2,
     fit: ['午餐', '晚餐', '尼曼'], dishes: ['泰北咖哩麵（Khao Soi）', '泰北番茄米線（Nam Ngiao）', '燉豬肋排'],
@@ -1621,6 +1772,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Cafe Rosemary', zh: '迷迭香咖啡',
+    area: 'nimman',
+    lat: 18.795933, lng: 98.97206,
     cuisine: '咖啡・早午餐',
     level: 2,
     fit: ['早午餐', '早上'], dishes: ['酪梨吐司', '班尼迪克蛋', 'Rosemary 招牌早餐盤'],
@@ -1636,6 +1789,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Zohng Coffee', zh: 'Zohng 咖啡',
+    area: 'oldcity',
+    lat: 18.789568, lng: 98.982808,
     cuisine: '咖啡・早午餐',
     level: 2,
     fit: ['早午餐', '古城', '戶外座位'], dishes: ['酪梨吐司', '蘑菇吐司', 'Dirty Chai'],
@@ -1651,6 +1806,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'SMOO! House', zh: 'SMOO! 果昔屋',
+    area: 'nimman',
+    lat: 18.796547, lng: 98.967459,
     cuisine: '甜點・飲品',
     level: 1,
     fit: ['下午', '尼曼', '飲料'], dishes: ['水果果昔', '現榨果汁'],
@@ -1666,6 +1823,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Joost Smoothies (Nimman Soi 13)', zh: 'Joost 果昔',
+    area: 'nimman',
+    lat: 18.796513, lng: 98.968648,
     cuisine: '甜點・飲品',
     level: 1,
     fit: ['飲料', '晚上', '外帶'], dishes: ['酪梨果昔', '西瓜果昔', '芒果優格'],
@@ -1681,6 +1840,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Adirak Pizza', zh: 'Adirak 柴燒披薩',
+    area: 'suthep',
+    lat: 18.775092, lng: 98.947575,
     cuisine: '西式・異國',
     level: 2,
     fit: ['晚餐', '戶外座位', '聚餐'], dishes: ['青醬瑞可塔披薩', '辣味培根披薩'],
@@ -1696,6 +1857,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Pasta Ama Chiang Mai', zh: '阿嬤義大利麵',
+    area: 'suthep',
+    lat: 18.78403, lng: 98.969465,
     cuisine: '西式・異國',
     level: 2,
     fit: ['午餐', '晚餐', '冷氣'], dishes: ['蜂蜜沙拉', '培根蛋義大利麵（Carbonara）', '飛魚卵義大利麵'],
@@ -1711,6 +1874,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Lot of Taste', zh: 'Lot of Taste 咖啡',
+    area: 'nimman',
+    lat: 18.7993, lng: 98.96705,
     cuisine: '咖啡・早午餐',
     level: 2,
     fit: ['晚上', '戶外座位', '尼曼'], dishes: ['泰式奶茶', '抹茶', '椰子冰淇淋'],
@@ -1726,6 +1891,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Baan Pie Charin Cafe & Bistro', zh: 'Charin 派之家',
+    area: 'suthep',
+    lat: 18.757953, lng: 98.923798,
     cuisine: '甜點・飲品',
     level: 2,
     fit: ['下午茶', '戶外座位'], dishes: ['椰子派（Coconut Custard Pie）', '起司蛋糕', '檸檬派'],
@@ -1741,6 +1908,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Baan Bakery', zh: 'Baan 麵包坊',
+    area: 'oldcity',
+    lat: 18.779572, lng: 98.989793,
     cuisine: '甜點・飲品',
     level: 1,
     fit: ['早上', '外帶'], dishes: ['可頌', '咖哩麵包', '鳳梨丹麥'],
@@ -1756,6 +1925,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'RAWtruckr Nimman', zh: 'RAWtruckr 韓式炸雞',
+    area: 'nimman',
+    lat: 18.796685, lng: 98.966959,
     cuisine: '西式・異國',
     level: 2,
     fit: ['晚上', '啤酒', '戶外座位'], dishes: ['韓式炸雞', '黑椒辣雞翅'],
@@ -1771,6 +1942,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'phithi', zh: 'Phithi 冬陰牛肉麵',
+    area: 'oldcity',
+    lat: 18.782767, lng: 98.984285,
     cuisine: '麵食・米線',
     level: 1,
     fit: ['午餐', '古城'], dishes: ['辣味冬陰牛肉麵', '韓式牛小排麵', '打拋脆皮豬'],
@@ -1786,6 +1959,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Salsa Kitchen', zh: 'Salsa 墨西哥廚房',
+    area: 'nimman',
+    lat: 18.798143, lng: 98.974094,
     cuisine: '西式・異國',
     level: 2,
     fit: ['晚餐', '聚餐', '素食友善'], dishes: ['Carnitas 豬肉塔可', '花椰菜塔可', '桑格莉亞'],
@@ -1801,6 +1976,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'MINTNIMAL', zh: 'Mintnimal 薄荷冰淇淋',
+    area: 'oldcity',
+    lat: 18.783021, lng: 98.988649,
     cuisine: '甜點・飲品',
     level: 1,
     fit: ['下午', '古城', '甜點'], dishes: ['薄荷冰淇淋', '香蕉蛋糕', '蘋果蛋糕'],
@@ -1816,6 +1993,8 @@ const PLACES = [
   },
   {
     cat: 'food', group: '其他推薦', name: 'Roti Pa Dae (Loi Kroh branch)', zh: 'Pa Dae 香蕉煎餅（Loi Kroh 分店）',
+    area: 'thaphae',
+    lat: 18.784776, lng: 98.994715,
     cuisine: '小吃・甜點',
     level: 1,
     fit: ['晚上', '宵夜', '外帶'], dishes: ['香蕉煎餅', '煉乳脆煎餅', '香蕉蛋巧克力煎餅'],
@@ -1829,9 +2008,94 @@ const PLACES = [
     days: [0, 1, 2, 3, 4, 5, 6],
     map: 'https://www.google.com/maps/search/?api=1&query=%E0%B9%82%E0%B8%A3%E0%B8%95%E0%B8%B5%E0%B8%9B%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%94+%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%A5%E0%B8%AD%E0%B8%A2%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%B0%E0%B8%AB%E0%B9%8C+Loi+Kroh+Chiang+Mai',
   },
+  {
+    cat: 'food', group: '其他推薦', name: 'Vegan Society Restaurant & Homestay', zh: 'Vegan Society 蔬食餐廳',
+    area: 'oldcity',
+    lat: 18.78362, lng: 98.982414,
+    cuisine: '蔬食',
+    level: 1,
+    fit: ['蔬食', '平價', '古城'], dishes: ['素食泰北金麵', '南瓜豆腐紅咖哩', '芒果糯米飯'],
+    note: '環境、價格、餐點都很讚，推薦給好幾個朋友都讚不絕口',
+    thai: 'Vegan Society Restaurant & Homestay',
+    tags: ['蔬食', '民宿'],
+    desc: '古城巷弄裡的全素餐廳兼民宿，環境清幽、份量大又便宜，泰式咖哩、金麵、炒寬粉都能吃到素食版。',
+    price: '主餐約 ฿80–100',
+    location: '30/1 ซ.ราชมรรคา 7 ต.พระสิงห์ อ.เมือง',
+    time: '12:00–21:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Vegan+Society+Restaurant+%26+Homestay/@18.7836203,98.9824139,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3b25a18f12cb:0xe595492d98ab60a2!8m2!3d18.7836203!4d98.9824139!16s%2Fg%2F11q_2_63nm',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'CHUM Northern Kitchen @Old City', zh: 'CHUM 泰北料理（古城店）',
+    area: 'oldcity',
+    lat: 18.789662, lng: 98.983838,
+    cuisine: '泰北菜',
+    level: 2,
+    fit: ['泰北菜', '要候位', '多人分食'], dishes: ['炭烤松阪豬', '蜂巢料理', '泰北咖哩麵'],
+    note: '環境好又乾淨，常要候位；每道菜幾乎低於 ฿100，推薦松阪豬，蜂巢料理口感很奇怪 XD',
+    thai: 'ชุ่ม อาหารพื้นเมือง @กลางเวียง',
+    tags: ['泰北菜', '人氣店'],
+    desc: '古城北側的泰北家常菜館，裝潢乾淨有質感、份量小巧好點多道，用餐時段常要排隊。',
+    price: '單點多在 ฿100 內，4 人約 ฿1,000 有找',
+    location: '24 ถ.พระสิงห์ ต.ศรีภูมิ อ.เมือง',
+    time: '10:30–20:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/CHUM+Northern+Kitchen+@Old+City/@18.7896622,98.983838,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3ba1f9b6973d:0xd535b3b0a8295c18!8m2!3d18.7896622!4d98.983838!16s%2Fg%2F11q8tjxr4p',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Aum Vegetarian Restaurant', zh: 'Aum 蔬食餐廳',
+    area: 'oldcity',
+    lat: 18.778374, lng: 98.987997,
+    cuisine: '蔬食',
+    level: 1,
+    fit: ['蔬食', '看夕陽', '席地而坐'], dishes: ['芒果糯米飯', '素食泰北金麵', '炸豆腐'],
+    note: '推薦坐二樓，可以席地而坐看夕陽；芒果糯米飯很適合拍照 XD',
+    thai: 'ร้านโอมมังสวิรัต',
+    tags: ['蔬食', '老店'],
+    desc: '1982 年開業的清邁蔬食老店，二樓有席地而坐的座位、傍晚看得到夕陽，泰式菜色全改成素食版。',
+    price: '約 ฿60–150／人',
+    location: '1/4 ซ.สุริยวงศ์ ต.หายยา อ.เมือง',
+    time: '11:00–20:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Aum+Vegetarian+Restaurant/@18.778374,98.9879973,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3075074c7685:0xca69f2292f07be24!8m2!3d18.778374!4d98.9879973!16s%2Fg%2F11gdvdqcq5',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Khao Soi Arak', zh: 'Arak 泰北金麵',
+    area: 'oldcity',
+    lat: 18.78648, lng: 98.980755,
+    cuisine: '麵食・米線',
+    level: 1,
+    fit: ['平價', '在地小吃', '只開午餐'], dishes: ['雞肉泰北金麵', '牛肉泰北金麵'],
+    note: '環境簡陋但好吃，菜單只有三種，口味偏甜',
+    thai: 'ข้าวซอยอารักษ์',
+    tags: ['咖哩麵', '平價'],
+    desc: '古城巷子裡的家庭式金麵小攤，環境簡陋但湯頭濃郁偏甜，菜單只有幾種，在地人很愛。',
+    price: '一碗約 ฿50',
+    location: '36/2 ซ.อารักษ์ 7 ต.ศรีภูมิ อ.เมือง',
+    time: '10:30–16:00',
+    days: [1, 2, 3, 4, 5],
+    map: 'https://www.google.com/maps/place/Khao+Soi+Arak/@18.7864798,98.9807552,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a9cbcaa1e7d:0xaa1bc7713fa9505f!8m2!3d18.7864798!4d98.9807552!16s%2Fg%2F11bzzp0_n6',
+  },
+  {
+    cat: 'food', group: '其他推薦', name: 'Kebab, Felafel, Salad', zh: '沙威瑪泰式小館',
+    area: 'oldcity',
+    lat: 18.784929, lng: 98.981866,
+    cuisine: '泰式料理',
+    level: 1,
+    fit: ['平價', '泰式料理', '古城'], dishes: ['鳳梨蝦仁炒飯', '泰式炒河粉', '沙威瑪捲餅'],
+    note: '最推薦鳳梨蝦仁炒飯',
+    thai: 'Kebab, Felafel, Salad',
+    tags: ['泰式料理', '平價'],
+    desc: '店名看起來像中東菜，其實是泰式料理和沙拉、沙威瑪都有的古城小館，價格親民、份量大方。',
+    price: '平價，份量大',
+    location: '44 ถ.สามล้าน ต.พระสิงห์ อ.เมือง',
+    time: '11:00–21:00',
+    days: [0, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Kebab,+Felafel,+Salad/@18.7849286,98.9818665,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3b4ab5b6e55f:0x579a3eae1e5ea11!8m2!3d18.7849286!4d98.9818665!16s%2Fg%2F11sdd3m1r8',
+  },
 ];
 
-const state = { day: null, group: null, cuisine: null };
+const state = { day: null, group: null, cuisine: null, price: null, area: null, moreOpen: false };
 const todayIndex = new Date().getDay();
 const $ = (selector) => document.querySelector(selector);
 
@@ -1968,6 +2232,53 @@ function setAccent(cat) {
   root.style.setProperty('--soft', cat.soft);
 }
 
+let foodMap = null;
+let foodLayer = null;
+
+function pinClass(place) {
+  if (place.bib) return 'bib';
+  if (place.group === '米其林推薦') return 'selected';
+  return 'other';
+}
+
+function renderFoodMap(list) {
+  const located = list.filter((place) => typeof place.lat === 'number');
+  const hasMap = typeof L !== 'undefined' && PLACES.some((place) => place.cat === 'food' && typeof place.lat === 'number');
+  $('#map-wrap').hidden = !hasMap;
+  if (!hasMap) return;
+
+  if (!foodMap) {
+    foodMap = L.map('food-map', { scrollWheelZoom: false, zoomControl: true }).setView([18.7883, 98.9853], 13);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+      attribution: 'Tiles &copy; Esri',
+    }).addTo(foodMap);
+    foodLayer = L.layerGroup().addTo(foodMap);
+  }
+  foodLayer.clearLayers();
+
+  located.forEach((place) => {
+    const icon = L.divIcon({ className: '', html: `<div class="pin ${pinClass(place)}"></div>`, iconSize: [16, 16], iconAnchor: [8, 8] });
+    const days = place.days ? dayText(place.days) : '營業日待確認';
+    const popup = `
+      <div class="pop-zh">${place.zh}</div>
+      <div class="pop-en">${place.name}</div>
+      <div class="pop-meta">${'฿'.repeat(place.level || 0)} · ${days}</div>
+      <div class="pop-btns">
+        <a class="solid" href="#place-${PLACES.indexOf(place)}">看介紹</a>
+        <a href="${place.map}" target="_blank" rel="noopener">導航 ↗</a>
+      </div>`;
+    L.marker([place.lat, place.lng], { icon }).bindPopup(popup, { closeButton: true }).addTo(foodLayer);
+  });
+
+  requestAnimationFrame(() => {
+    foodMap.invalidateSize();
+    if (!located.length) return;
+    const bounds = L.latLngBounds(located.map((place) => [place.lat, place.lng]));
+    foodMap.fitBounds(bounds, { padding: [28, 28], maxZoom: 15 });
+  });
+}
+
 function renderCategory(catKey) {
   const cat = CATEGORIES[catKey];
   setAccent(cat);
@@ -1981,8 +2292,29 @@ function renderCategory(catKey) {
   $('#chips').innerHTML = chipsHtml(cat.groups, state.group, 'group', '全部');
 
   const cuisines = cat.cuisines || [];
-  $('#cuisine-chips').hidden = cuisines.length === 0;
   $('#cuisine-chips').innerHTML = chipsHtml(cuisines, state.cuisine, 'cuisine', '全部菜色');
+
+  const catPlaces = PLACES.filter((place) => place.cat === catKey);
+  const areaKeys = AREAS.map((area) => area.key).filter((key) => catPlaces.some((place) => place.area === key));
+  $('#area-chips').innerHTML = [null].concat(areaKeys).map((key) => {
+    const area = AREAS.find((item) => item.key === key);
+    const pressed = key === state.area;
+    return `<button class="chip" data-area="${key || ''}" aria-pressed="${pressed}">${area ? area.zh : '全部地區'}</button>`;
+  }).join('');
+
+  const hasMore = cuisines.length > 0 || areaKeys.length > 0;
+  const activeCount = [state.cuisine, state.price, state.area].filter((value) => value !== null).length;
+  $('#more-btn').hidden = !hasMore;
+  $('#more-btn').classList.toggle('active', activeCount > 0);
+  $('#more-btn').setAttribute('aria-expanded', String(state.moreOpen));
+  $('#more-count').textContent = activeCount ? String(activeCount) : '';
+  $('#more-panel').hidden = !hasMore || !state.moreOpen;
+
+  $('#price-chips').innerHTML = [null, 1, 2, 3].map((level) => {
+    const pressed = level === state.price;
+    const label = level ? `${'฿'.repeat(level)} ${PRICE_LEVELS[level - 1].label}` : '全部價位';
+    return `<button class="chip" data-price="${level || ''}" aria-pressed="${pressed}">${label}</button>`;
+  }).join('');
 
   $('#legend-btn').hidden = catKey !== 'food';
   $('#price-legend').innerHTML = PRICE_LEVELS.map((level, index) => `
@@ -1990,10 +2322,17 @@ function renderCategory(catKey) {
 
   const list = placesOf(catKey)
     .filter((place) => !state.group || place.group === state.group)
-    .filter((place) => !state.cuisine || place.cuisine === state.cuisine);
+    .filter((place) => !state.cuisine || place.cuisine === state.cuisine)
+    .filter((place) => !state.price || place.level === state.price)
+    .filter((place) => !state.area || place.area === state.area);
   const totalInCat = PLACES.filter((place) => place.cat === catKey).length;
 
   $('#result').textContent = totalInCat ? `${list.length} Places` : '';
+  if (catKey === 'food') {
+    renderFoodMap(list);
+  } else {
+    $('#map-wrap').hidden = true;
+  }
 
   if (!totalInCat) {
     $('#cards').innerHTML = '<div class="empty">Coming soon<small>之後想到要去的課程、體驗、展覽再加進來</small></div>';
@@ -2087,7 +2426,7 @@ function areaImage(area) {
 }
 
 const MAP_POINTS = {
-  oldcity: [190, 210], nimman: [118, 150], thaphae: [258, 214], watket: [338, 176], suthep: [62, 238], suburbs: [338, 318],
+  oldcity: [190, 210], north: [196, 100], nimman: [118, 150], thaphae: [258, 214], watket: [338, 176], suthep: [62, 238], suburbs: [338, 318],
 };
 
 function mapSvg() {
@@ -2258,6 +2597,9 @@ $('#tiles').addEventListener('click', (event) => {
   if (!tile) return;
   state.group = null;
   state.cuisine = null;
+  state.price = null;
+  state.area = null;
+  state.moreOpen = false;
   location.hash = tile.dataset.cat;
 });
 
@@ -2276,6 +2618,32 @@ $('#cuisine-chips').addEventListener('click', (event) => {
   const chip = event.target.closest('.chip');
   if (!chip) return;
   state.cuisine = chip.dataset.cuisine || null;
+  render();
+});
+
+$('#more-btn').addEventListener('click', () => {
+  state.moreOpen = !state.moreOpen;
+  render();
+});
+
+$('#area-chips').addEventListener('click', (event) => {
+  const chip = event.target.closest('.chip');
+  if (!chip) return;
+  state.area = chip.dataset.area || null;
+  render();
+});
+
+$('#clear-filters').addEventListener('click', () => {
+  state.cuisine = null;
+  state.price = null;
+  state.area = null;
+  render();
+});
+
+$('#price-chips').addEventListener('click', (event) => {
+  const chip = event.target.closest('.chip');
+  if (!chip) return;
+  state.price = chip.dataset.price ? Number(chip.dataset.price) : null;
   render();
 });
 
@@ -2409,6 +2777,9 @@ $('#menu-body').addEventListener('click', (event) => {
   closeMenu();
   state.group = null;
   state.cuisine = null;
+  state.price = null;
+  state.area = null;
+  state.moreOpen = false;
   let hash = go;
   if (go === 'home' || go === 'about') hash = '';
   if (go === 'about') homeScrollTarget = '.about';
