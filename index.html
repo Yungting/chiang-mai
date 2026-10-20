@@ -223,6 +223,49 @@ body { font-variant-numeric: lining-nums; }
   .fact:nth-child(n) { padding: 16px; border-right: 1px solid rgba(244, 239, 231, .25); }
 }
 
+/* ---------- 歷史時間軸 ---------- */
+.band-history { background: var(--ivory); color: var(--ink); padding: 56px 0 40px; }
+.band-history .caps { color: var(--terracotta); }
+.history-title { font-family: var(--serif-tc); font-weight: 500; font-size: 28px; letter-spacing: .08em; margin: 10px 0 28px; }
+.timeline { position: relative; }
+.era { position: relative; padding: 0 0 36px 28px; }
+.era::before { content: ""; position: absolute; left: 5px; top: 10px; bottom: -6px; width: 1px; background: var(--line); }
+.era:last-child::before { display: none; }
+.era::after { content: ""; position: absolute; left: 0; top: 6px; width: 11px; height: 11px; border-radius: 50%; background: var(--ivory); border: 1px solid var(--terracotta); }
+.era-year { font-family: var(--display); font-size: 30px; line-height: 1; color: var(--terracotta); }
+.era h3 { font-family: var(--serif-tc); font-weight: 500; font-size: 19px; margin: 6px 0 0; }
+.era-img { position: relative; aspect-ratio: 16 / 10; margin-top: 14px; background: var(--sand) center / cover no-repeat; }
+.era-img .hero-credit { max-width: 80%; }
+.era p { margin: 12px 0 0; font-size: 14px; line-height: 1.9; }
+
+/* ---------- 小知識 ---------- */
+.band-fact { background: var(--ivory); padding: 0 0 56px; }
+.fact-card { border: 1px solid var(--ink); padding: 22px 20px 18px; position: relative; }
+.fact-card::before { content: "“"; position: absolute; top: -30px; left: 14px; height: 52px; overflow: hidden; font-family: var(--display); font-size: 72px; line-height: 1; color: var(--terracotta); background: var(--ivory); padding: 0 6px; }
+.fact-head { display: flex; justify-content: space-between; align-items: center; padding-top: 6px; }
+.fact-head .caps { color: var(--terracotta); }
+.fact-next { font-size: 12px; color: var(--muted); }
+.fact-tabs { display: flex; gap: 14px; margin-top: 12px; border-bottom: 1px solid var(--line); }
+.fact-tab { font-size: 12px; color: var(--muted); padding: 0 0 8px; margin-bottom: -1px; border-bottom: 1px solid transparent; white-space: nowrap; }
+.fact-tab[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); }
+.fact-text { margin: 12px 0 14px; font-family: var(--serif-tc); font-size: 17px; line-height: 1.8; min-height: 3.6em; transition: opacity .25s; }
+.fact-area { font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.area-fact { margin-top: 24px; padding: 16px 18px; border-left: 2px solid var(--terracotta); background: var(--paper); font-size: 14px; line-height: 1.8; }
+.block-text { margin: 0; font-size: 15px; line-height: 1.9; }
+.taboo-block { border-top-color: var(--terracotta); }
+.taboo-block .block-title { color: var(--terracotta); }
+.taboos { margin: 0; padding: 0; list-style: none; }
+.taboos li { position: relative; padding: 12px 0 12px 22px; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.8; }
+.taboos li::before { content: "!"; position: absolute; left: 0; top: 14px; width: 15px; height: 15px; border-radius: 50%; background: var(--terracotta); color: var(--ivory); font-size: 10px; font-weight: 700; line-height: 15px; text-align: center; }
+.taboos li.women { background: #F7E6DD; padding-right: 10px; padding-left: 32px; margin: 6px 0; border-bottom: 0; }
+.taboos li.women::before { left: 10px; }
+.block .taboos li:last-child, .block .photo-spots li:last-child, .block .info-row:last-child { border-bottom: 0; }
+.taboo-tag { display: inline-block; font-size: 10px; letter-spacing: .1em; color: var(--ivory); background: var(--terracotta); padding: 1px 6px; margin-right: 6px; vertical-align: 1px; }
+.photo-spots { margin: 10px 0 0; padding: 0; list-style: none; counter-reset: spot; }
+.photo-spots li { counter-increment: spot; position: relative; padding: 10px 0 10px 30px; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.7; }
+.photo-spots li::before { content: counter(spot, decimal-leading-zero); position: absolute; left: 0; top: 11px; font-family: var(--display); font-size: 15px; color: var(--terracotta); }
+.area-fact b { display: block; font-size: 10px; letter-spacing: .2em; color: var(--terracotta); margin-bottom: 4px; }
+
 /* ---------- 首頁 Intro ---------- */
 .intro { padding-top: 56px; padding-bottom: 40px; text-align: center; }
 .intro .caps { color: var(--terracotta); }
@@ -424,6 +467,7 @@ body { font-variant-numeric: lining-nums; }
 }
 .badge.bib { background: var(--terracotta); color: var(--ivory); }
 .badge.selected { background: var(--espresso); color: var(--ivory); }
+.badge.rank { background: #9A6B2F; color: var(--ivory); }
 .card-kicker { display: block; margin-top: 12px; color: var(--accent); font-size: 10px; }
 .card h3 {
   font-family: var(--serif-tc);
@@ -560,6 +604,7 @@ body { font-variant-numeric: lining-nums; }
 .pin.bib { background: var(--terracotta); }
 .pin.selected { background: var(--espresso); }
 .pin.other { background: var(--olive); }
+.pin.temple { background: #9A6B2F; }
 .leaflet-popup-content-wrapper { border-radius: 0; background: var(--paper); color: var(--ink); box-shadow: 0 6px 20px rgba(30, 22, 16, .2); }
 .leaflet-popup-tip { background: var(--paper); }
 .leaflet-popup-content { margin: 14px 16px; font-family: var(--sans); }
@@ -756,6 +801,28 @@ body { font-variant-numeric: lining-nums; }
     </div>
   </section>
 
+  <section class="band band-history" id="history">
+    <div class="wrap">
+      <div class="caps reveal">清邁的歷史</div>
+      <h2 class="history-title reveal">七百年的蘭納古都</h2>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <section class="band band-fact">
+    <div class="wrap">
+      <div class="fact-card reveal">
+        <div class="fact-head">
+          <span class="caps" id="fact-type">你知道嗎？</span>
+          <button class="fact-next" id="fact-next">換一則 ↻</button>
+        </div>
+        <div class="fact-tabs" id="fact-tabs"></div>
+        <p class="fact-text" id="fact-text"></p>
+        <button class="fact-area" id="fact-area"></button>
+      </div>
+    </div>
+  </section>
+
   <section class="band band-time">
     <div class="wrap">
       <div class="reveal">
@@ -924,6 +991,13 @@ const CATEGORIES = {
     cuisines: ['泰北菜', '泰式料理', '麵食・米線', '小吃・甜點', '蔬食', '咖啡・早午餐', '甜點・飲品', '西式・異國', '創意・精緻', '南泰・東南亞'],
     notice: '名單依 MICHELIN Guide Thailand 2026。清邁目前沒有星級餐廳；入選推薦共 36 間，這裡精選 13 間。其他推薦是朋友口袋名單，不在米其林名單內。價格為預算估算，營業時間建議出發前確認。',
   },
+  temple: {
+    name: '寺廟', en: 'Temples',
+    accent: '#9A6B2F', soft: '#EFE4CF',
+    intro: '依熱門度排序，最多人去的在最前面；附門票、服裝和禁忌',
+    groups: ['古城內', '城外', '山上・郊區'],
+    notice: '進寺廟請穿過膝、遮肩的衣服，進大殿前脫鞋。門票與開放時間可能調整，以現場公告為準。',
+  },
   activity: {
     name: '活動', en: 'Things to Do',
     accent: '#8A6A4A', soft: '#EDE3D6',
@@ -992,6 +1066,127 @@ const AREAS = [
   },
 ];
 
+const HISTORY = [
+  {
+    year: '1296', title: '孟萊王建城',
+    image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Chiang_Mai_-_Wat_Chiang_Man_-_0001.jpg/1280px-Chiang_Mai_-_Wat_Chiang_Man_-_0001.jpg', credit: 'Wat Chiang Man · Stefan Fussan / CC BY-SA 3.0 · Wikimedia' },
+    text: '孟萊王統一北方各城邦，在素帖山和濱河之間選了一塊地，建起「新城」——這就是清邁（เชียงใหม่）名字的意思。建城時他住的地方後來蓋成清曼寺，是清邁最古老的寺廟，到現在還在古城東北角。',
+  },
+  {
+    year: '15 世紀', title: '蘭納的黃金時代',
+    image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Wat_Chet_Yot%2C_Chiang_Mai_-_2011-07-06_-_002.jpg/1280px-Wat_Chet_Yot%2C_Chiang_Mai_-_2011-07-06_-_002.jpg', credit: 'Wat Chet Yot · Photo Dharma / CC BY 2.0 · Wikimedia' },
+    text: '蒂洛卡拉王在位時，蘭納王國勢力最強，佛教和建築都很興盛。契迪龍寺的大佛塔在這個時期完工，是當時清邁最高的建築；1477 年還在七峰寺舉辦了佛教結集，各地僧侶都來到清邁。',
+  },
+  {
+    year: '1558', title: '緬甸統治兩百年',
+    image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Chiang-Mai_Thailand_Brick-wall-01.jpg/1280px-Chiang-Mai_Thailand_Brick-wall-01.jpg', credit: 'Old city wall · CEphoto, Uwe Aranas / CC BY-SA 3.0 · Wikimedia' },
+    text: '緬甸東吁王朝攻下清邁，之後兩百多年蘭納都在緬甸控制下。這段時間留下了不少緬式風格的寺廟和建築，清邁的飲食、工藝也混進了緬甸的影子，像泰北的 Hang Lay 咖哩豬就源自緬甸。',
+  },
+  {
+    year: '1775', title: '趕走緬軍、重建清邁',
+    image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Three_Kings_Monument_Chiang_Mai.jpg/1280px-Three_Kings_Monument_Chiang_Mai.jpg', credit: 'Three Kings Monument · iTenz / CC0 · Wikimedia' },
+    text: '卡威拉王和暹羅聯手把緬軍趕出清邁。經過多年戰亂，城裡一度幾乎沒人住，後來才慢慢遷回、重建城牆。古城中心的三王像，紀念的就是孟萊王和另外兩位建城時的盟友。',
+  },
+  {
+    year: '1921', title: '火車開進清邁',
+    image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Chiang_Mai_Thailand_Chiang-Mai-Railway-Station-08.jpg/1280px-Chiang_Mai_Thailand_Chiang-Mai-Railway-Station-08.jpg', credit: 'Chiang Mai Railway Station · CEphoto, Uwe Aranas / CC BY-SA 4.0 · Wikimedia' },
+    text: '19 世紀末蘭納逐步併入暹羅，1921 年北線鐵路通到清邁，從曼谷過來不用再坐好幾週的船。之後清邁慢慢和泰國其他地方連在一起，1939 年最後一任清邁王去世，蘭納王室走入歷史。',
+  },
+  {
+    year: '現在', title: '慢活之城',
+    image: { place: 'One Nimman' },
+    text: '清邁現在是泰國第二大的城市圈，有大學、文創聚落和大量咖啡廳，也是數位遊牧最愛的城市之一。古城裡的寺廟和城牆還在，週末市集、夜市一樣熱鬧，新舊混在一起，正是清邁最迷人的地方。',
+  },
+];
+
+const FACT_TYPES = { trivia: '冷知識', photo: '拍照打卡', tip: '一定要知道' };
+
+const FACTS = {
+  general: [
+    { type: 'tip', text: '進寺廟要穿過膝的褲裙、遮住肩膀，進大殿前脫鞋；可以帶一條薄披肩備用。' },
+    { type: 'tip', text: '不要摸別人的頭，坐著時腳底不要對著佛像或別人，這在泰國很失禮。' },
+    { type: 'tip', text: '女生不要碰觸僧侶，要給東西時放在旁邊或交給男生轉交。' },
+    { type: 'tip', text: '泰國人非常尊敬王室，不要拿國王開玩笑；電影開演前會播頌聖歌，大家會起立。' },
+    { type: 'tip', text: '早上 8 點和傍晚 6 點，公園、車站等公共場所會播國歌，大家會停下來站好。' },
+    { type: 'tip', text: '便利商店只有 11:00–14:00 和 17:00–24:00 能買酒，佛教節日當天全面禁止賣酒。' },
+    { type: 'tip', text: '2～4 月是燒山季，空氣品質很差，出門前看一下 AQI，記得帶口罩。' },
+    { type: 'tip', text: '自來水不能直接喝，買瓶裝水就好；很多餐廳會免費提供冰水。' },
+    { type: 'tip', text: '紅色雙條車上車前先跟司機講好目的地和價錢，市區短程一人約 ฿30 起。' },
+    { type: 'tip', text: '小攤和市場多半只收現金，記得留一些小額泰銖；大一點的店可以掃 QR code 或刷卡。' },
+    { type: 'trivia', text: '泰北寺廟屋脊兩端翹起的裝飾叫 Chofa，形狀像鳥頭，代表神話中的金翅鳥。' },
+    { type: 'trivia', text: '清邁咖哩麵 Khao Soi 據說是由雲南來的穆斯林馬幫帶進泰北，所以湯頭有香料味。' },
+    { type: 'trivia', text: '7-Eleven 的起司火腿烤吐司是很多人到泰國必吃的宵夜，店員會幫你現場烤。' },
+  ],
+  oldcity: [
+    { type: 'trivia', text: '古城是一個方形，每邊大約 1.5 公里，四個角各有一座稜堡，西南角的 Chaeng Ku Huang 還留著原本的老磚牆。' },
+    { type: 'trivia', text: '清曼寺是清邁最古老的寺廟，相傳孟萊王建城時就住在這裡。' },
+    { type: 'trivia', text: '契迪龍寺的大佛塔原本約 80 公尺高，16 世紀一場地震震垮了上半部，到現在都維持殘塔的樣子。' },
+    { type: 'trivia', text: '清邁的城柱（Sao Inthakin）供奉在契迪龍寺，每年 5～6 月有為期約一週的城柱節。' },
+    { type: 'trivia', text: '古城有五座城門：東邊塔佩門、北邊白象門、西邊松達門，南邊則有清邁門和 Saen Pung 門。' },
+    { type: 'photo', text: '契迪龍寺的殘塔，傍晚夕陽打在紅磚上最好看，晚上打燈也很有氣氛。' },
+    { type: 'photo', text: '潘道寺整座大殿用柚木蓋成，大殿後面的小水池和佛塔是熱門拍照角落，水燈節時會點滿燈。' },
+    { type: 'photo', text: '帕辛寺的金色佛塔和白色大殿，早上光線最乾淨，人也比較少。' },
+    { type: 'trivia', text: '潘道寺的柚木大殿原本是王宮裡的建築，後來拆下來搬到寺裡重建。' },
+  ],
+  north: [
+    { type: 'trivia', text: '北門的泰文 ช้างเผือก 意思是「白象」，門外不遠處有一座供奉兩隻白象的小亭子。' },
+    { type: 'trivia', text: '北門外傍晚有整排小吃攤，最有名的是戴牛仔帽的阿姨賣的豬腳飯。' },
+    { type: 'trivia', text: '真心市集的「จริงใจ」是「真心」的意思，主打在地小農和手作品牌，週末早上最熱鬧。' },
+    { type: 'trivia', text: '美賽咖哩麵的「美賽」是泰國最北端的邊境小鎮，跟緬甸只隔一條河。' },
+    { type: 'trivia', text: '北區的 Chotana 路一路往北通到湄林，以前是進出清邁北部山區的主要道路。' },
+    { type: 'photo', text: '北門外的護城河和老城牆，傍晚燈亮起來時很有味道。' },
+    { type: 'photo', text: '真心市集裡的白色木屋和大片草地，週末早上光線最好。' },
+  ],
+  nimman: [
+    { type: 'trivia', text: '尼曼路的名字來自清邁望族 Nimmanhaemin 家族，家族裡的 Kraisri Nimmanhaemin 是研究蘭納文化的知名學者。' },
+    { type: 'trivia', text: '清邁大學成立於 1964 年，是泰國第一所設在曼谷以外的大學。' },
+    { type: 'trivia', text: 'MAYA 百貨的頂樓可以正面看到素帖山，傍晚很多人上去看夕陽。' },
+    { type: 'trivia', text: '尼曼主街兩側的小巷用 Soi 1 到 Soi 17 編號，從頭走到尾大約 15 分鐘。' },
+    { type: 'trivia', text: '尼曼有很多共同工作空間和長租公寓，是全世界數位遊牧最愛的街區之一。' },
+    { type: 'photo', text: 'One Nimman 的紅磚鐘樓，晚上燈串亮起來像歐洲小鎮。' },
+    { type: 'photo', text: 'MAYA 百貨頂樓，傍晚可以拍到素帖山和夕陽。' },
+    { type: 'photo', text: '清邁大學裡的 Ang Kaew 湖，天氣好時可以拍到素帖山倒影。' },
+  ],
+  thaphae: [
+    { type: 'trivia', text: 'ท่าแพ 的意思是「竹筏碼頭」，以前商人沿著這條路從濱河碼頭走進古城。' },
+    { type: 'trivia', text: '現在的塔佩門是 1980 年代照舊址重建的，原本的城門早就不在了。' },
+    { type: 'trivia', text: '瓦洛洛市場在地人叫 Kad Luang，意思是「大市場」，一百多年來都是北部的採買中心。' },
+    { type: 'trivia', text: '旁邊的 Ton Lamyai 花市，泰文名字的意思是「龍眼樹」，24 小時都有攤位在賣花。' },
+    { type: 'trivia', text: '每年 11 月水燈節，塔佩門一帶會掛滿燈籠，是清邁慶典最熱鬧的地方。' },
+    { type: 'photo', text: '塔佩門廣場的紅磚城門，早上人少、鴿子多，是清邁最經典的明信片角度。' },
+    { type: 'photo', text: '晚上到 Ton Lamyai 花市，整排鮮花在燈下很好拍。' },
+  ],
+  watket: [
+    { type: 'trivia', text: '19 世紀柚木貿易時期，英國婆羅洲公司的辦公室就在河東岸，那棟老房子現在是 137 Pillars House 酒店。' },
+    { type: 'trivia', text: '瓦凱寺的博物館由在地居民收集老照片、老物件，記錄這一區的華人和西方商人歷史。' },
+    { type: 'trivia', text: '濱河（Ping River）是泰國湄南河的主要源流之一，一路流到曼谷。' },
+    { type: 'trivia', text: '河上有一座漆成白色的老鐵橋，現在是只給行人和腳踏車走的橋。' },
+    { type: 'trivia', text: '瓦凱寺的寺名來自一座供奉佛陀頭髮的天界佛塔「Ketkaew Chulamani」。' },
+    { type: 'photo', text: 'Charoenrat 路的河景咖啡館，傍晚坐在河邊可以拍到夕陽和對岸。' },
+    { type: 'photo', text: '瓦凱寺金色大殿和周圍的老木屋，整條巷子都很有老街感。' },
+  ],
+  suthep: [
+    { type: 'trivia', text: '相傳 14 世紀一頭白象馱著佛舍利爬上素帖山，在山上停下的地方就蓋了雙龍寺。' },
+    { type: 'trivia', text: '到雙龍寺要爬 300 多階兩旁有那伽（蛇神）扶手的階梯，也可以搭纜車上去。' },
+    { type: 'trivia', text: '素帖山海拔約 1,676 公尺，山上比市區涼好幾度。' },
+    { type: 'trivia', text: '素帖山上有泰國王室的冬宮普濱皇宮，開放時可以進去參觀花園。' },
+    { type: 'trivia', text: '悟孟寺的名字意思是「隧道寺」，相傳是為了一位喜歡在森林裡冥想的高僧所建。' },
+    { type: 'photo', text: '雙龍寺的金色佛塔，傍晚上去還能俯瞰整個清邁市區的夜景。' },
+    { type: 'photo', text: '悟孟寺的磚造隧道，光線從入口照進來時很有意境。' },
+    { type: 'photo', text: '半山腰的帕拉寺（Wat Pha Lat）藏在森林和瀑布旁，可以從山腳的 Monk’s Trail 步道走上去。' },
+    { type: 'photo', text: '寺邊藝術村的木屋和小路，整個聚落隨手拍都好看。' },
+  ],
+  suburbs: [
+    { type: 'trivia', text: 'Bo Sang 紙傘村每年 1 月有紙傘節，整條街都會掛滿手繪紙傘。' },
+    { type: 'trivia', text: 'San Kamphaeng 溫泉的泉水溫度很高，可以直接買雞蛋放進去煮溫泉蛋。' },
+    { type: 'trivia', text: 'San Kamphaeng 以前就以絲綢和手工藝聞名，沿路有很多織布工坊。' },
+    { type: 'trivia', text: '湄林（แม่ริม）一帶山谷多，蘭花園、蝴蝶園、象營都集中在這條路上。' },
+    { type: 'trivia', text: '湄林的名字意思大概是「河邊」，因為這一帶就在濱河支流旁邊。' },
+    { type: 'photo', text: 'Bo Sang 紙傘村，整面牆掛滿彩繪紙傘，色彩很適合拍照。' },
+    { type: 'photo', text: '湄林山上的 Mon Cham，梯田和花田配山景，早上常有雲海。' },
+  ],
+};
+
 const PRICE_LEVELS = [
   { label: '低價位', note: '路邊攤、小吃、麵店' },
   { label: '中價位', note: '一般餐廳，適合坐下來吃一餐' },
@@ -1004,6 +1199,7 @@ const COVERS = {
   market: { url: '' },
   night: { url: '' },
   food: { url: '' },
+  temple: { url: '' },
   activity: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Yi_Peng_lanterns_in_Chiang_Mai_%2811067469754%29.jpg/1280px-Yi_Peng_lanterns_in_Chiang_Mai_%2811067469754%29.jpg' },
 };
 
@@ -1080,6 +1276,21 @@ const IMAGES = {
   "Aum Vegetarian Restaurant": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9RnAtxLkghE53SaZKsyagUOu3NPe7kKh4v-9rEIUP4jPOy4RCSTsbezRePpXJaNhD-NvFIuvzGA2bPpQGYhPAq-nVUOftmwCldbGgrD7j0fazKXlYD56UPiq4dWb5gQp8qy0n8=w800-h1000-k-no", credit: "Google Maps" }, // Aum 蔬食餐廳
   "Khao Soi Arak": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QE859YaE7WeHhyO9qApOgeGMBTL9yTpZgGWIvUmbwY7mrfY2zHxi8kbAbKyUqIPPolJW665oYzbsQexi78-W24trUuOg7VzNWs2mceY2U3w2ZJrEShaI2jP91r6qnhqObaGMFI5gJEJHUX=w800-h1000-k-no", credit: "Google Maps" }, // Arak 泰北金麵
   "Kebab, Felafel, Salad": { url: "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9S1I9cArruf38qqSBD8OB1G1zwIUnTBhpoDp5F5sk1Y7TJi6NamEMfij01s_O-Z6FU0fGJTt_DpRfbs5ritotRkUMLqcag27zNM5IAUVD4bC6nKt2O41sT8jwivl6P-vWhPkzxuhA0RVjxx=w800-h1000-k-no", credit: "Google Maps" }, // 沙威瑪泰式小館
+  // ---------- 寺廟 ----------
+  "Wat Phra That Doi Suthep": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Chedi_of_Wat_Phra_That_Doi_Suthep_1.jpg/1280px-Chedi_of_Wat_Phra_That_Doi_Suthep_1.jpg", credit: "Christophe95 / CC BY-SA 4.0 · Wikimedia" }, // 雙龍寺（素帖寺）
+  "Wat Chedi Luang": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/20171105_Wat_Chedi_Luang_Chiang_Mai_9897_DxO.jpg/1280px-20171105_Wat_Chedi_Luang_Chiang_Mai_9897_DxO.jpg", credit: "Jakub Hałun / CC BY-SA 4.0 · Wikimedia" }, // 契迪龍寺（大佛塔寺）
+  "Wat Phra Singh Woramahawihan": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chiang_Mai_-_Wat_Phra_Singh_-_0001.jpg/1280px-Chiang_Mai_-_Wat_Phra_Singh_-_0001.jpg", credit: "Stefan Fussan / CC BY-SA 3.0 · Wikimedia" }, // 帕辛寺
+  "Wat Phra That Doi Kham": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Wat_Phra_That_Doi_Kham_Temple.jpg/1280px-Wat_Phra_That_Doi_Kham_Temple.jpg", credit: "ManoiCMU / CC BY 4.0 · Wikimedia" }, // 金山寺（多伊坎寺）
+  "Wat Umong Suan Phutthatham": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Tunnels_at_Wat_Umong_Suan_Phutthatham-10.jpg/1280px-Tunnels_at_Wat_Umong_Suan_Phutthatham-10.jpg", credit: "Immanuelle / CC BY 4.0 · Wikimedia" }, // 悟孟寺（隧道寺）
+  "Wat Lok Moli": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/20171106_Wat_Lok_Moli_Chiang_Mai_0154_DxO.jpg/1280px-20171106_Wat_Lok_Moli_Chiang_Mai_0154_DxO.jpg", credit: "Jakub Hałun / CC BY-SA 4.0 · Wikimedia" }, // 洛克摩利寺
+  "Wat Pha Lat": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Wat_Pha_Lat%2C_Chiang_Mai_20250116.jpg/1280px-Wat_Pha_Lat%2C_Chiang_Mai_20250116.jpg", credit: "Supanut Arunoprayote / CC BY 4.0 · Wikimedia" }, // 帕拉寺（叢林寺）
+  "Wat Chiang Man": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Temple_Wat_Chiang_Man_1.jpg/1280px-Temple_Wat_Chiang_Man_1.jpg", credit: "Welcome to Thailand / CC0 · Wikimedia" }, // 清曼寺
+  "Wat Den Sali Si Mueang Kaen (Wat Ban Den)": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Wat_Ban_Den%2C_Chiang_Mai.jpg/1280px-Wat_Ban_Den%2C_Chiang_Mai.jpg", credit: "ManoiCMU / CC BY-SA 4.0 · Wikimedia" }, // 班登寺
+  "Wat Sri Suphan (Silver Temple)": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Wat_Sri_Suphan%2C_Chiang_Mai-silver_temple_entrance_with_offering_bowls_visible.jpg/1280px-Wat_Sri_Suphan%2C_Chiang_Mai-silver_temple_entrance_with_offering_bowls_visible.jpg", credit: "Immanuelle / CC BY 4.0 · Wikimedia" }, // 銀廟（蘇攀寺）
+  "Wat Suan Dok": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Wat_Suan_Dok_2.jpg/1280px-Wat_Suan_Dok_2.jpg", credit: "Christophe95 / CC BY-SA 4.0 · Wikimedia" }, // 松達寺（花園寺）
+  "Wat Chet Yot (Wat Photharam Maha Wihan)": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Wat_Chet_Yot%2C_Chiang_Mai_-_2008-02-24_-_001.jpg/1280px-Wat_Chet_Yot%2C_Chiang_Mai_-_2008-02-24_-_001.jpg", credit: "Lukas Bergstrom / CC BY 2.0 · Wikimedia" }, // 七峰寺
+  "Wat Phan Tao": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Asalha_Puja_night_at_Wat_Phan_Tao%2C_Chiang_Mai_%2829_Jul_2026%29_-_IMG_03.jpg/1280px-Asalha_Puja_night_at_Wat_Phan_Tao%2C_Chiang_Mai_%2829_Jul_2026%29_-_IMG_03.jpg", credit: "Chainwit. / CC BY 4.0 · Wikimedia" }, // 潘道寺
+  "Wat Ket Karam": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Watket.jpg/1280px-Watket.jpg", credit: "Vichitsilp / CC BY-SA 4.0 · Wikimedia" }, // 瓦凱寺（凱卡蘭寺）
 };
 
 const PLACES = [
@@ -2093,6 +2304,258 @@ const PLACES = [
     days: [0, 2, 3, 4, 5, 6],
     map: 'https://www.google.com/maps/place/Kebab,+Felafel,+Salad/@18.7849286,98.9818665,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3b4ab5b6e55f:0x579a3eae1e5ea11!8m2!3d18.7849286!4d98.9818665!16s%2Fg%2F11sdd3m1r8',
   },
+  {
+    cat: 'temple', group: '山上・郊區', name: 'Wat Phra That Doi Suthep', zh: '雙龍寺（素帖寺）',
+    rank: 1, area: 'suthep',
+    lat: 18.804989, lng: 98.921634,
+    fit: ['金色佛塔', '那伽龍階梯', '城市夜景'], dishes: [],
+    thai: 'วัดพระธาตุดอยสุเทพราชวรวิหาร',
+    tags: ['1383 年'],
+    desc: '素帖山上的金色佛塔，清邁最神聖的寺廟，也是俯瞰整座城市的最佳地點。',
+    history: '傳說高僧 Sumana Thera 帶來佛舍利，蘭納國王 Kue Na 讓白象馱著舍利上山，白象在山頂停下倒地，便在此建塔供奉。寺廟位於素帖山海拔約 1,073 公尺，1935 年才有公路通達，是清邁最神聖的寺院。',
+    taboos: [{text: '佛塔方形基座外圍有欄杆，欄杆內的繞塔步道女性不可進入（僅限男性；網路上的說法，未找到近期告示照片）', women: true}, {text: '女性不可觸碰僧侶，也不要直接把東西遞給僧侶', women: true}, {text: '背心、短褲、短裙會被入口僧侶拒絕進入上層寺區', women: false}],
+    tips: ['一早 6 點前後抵達避開人潮與旅行團', '體力好可爬 300 多階那伽龍階梯，下山再搭纜車', '可從清邁大學後方走 Monk’s Trail 經帕拉寺上山'],
+    fee: '外國人 ฿30', feeShort: '฿30', feeNote: '上山纜車（funicular）約 ฿20 單程；另有來源寫外國人來回 ฿50。2025/10 起國家公園門票不適用於走主幹道參拜本寺',
+    dress: '需遮肩過膝、進上層寺區須脫鞋；入口可借／租沙龍',
+    location: 'ต.สุเทพ อ.เมือง',
+    time: '05:00–21:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Phra+That+Doi+Suthep/@18.8049889,98.9216337,17z/data=!3m1!4b1!4m6!3m5!1s0x30da39b5dff1ddb5:0x9d864c5caec57e21!8m2!3d18.8049889!4d98.9216337!16zL20vMGNmd3M2',
+  },
+  {
+    cat: 'temple', group: '古城內', name: 'Wat Chedi Luang', zh: '契迪龍寺（大佛塔寺）',
+    rank: 2, area: 'oldcity',
+    lat: 18.786969, lng: 98.98658,
+    fit: ['殘塔', '城柱殿', '那伽階梯'], dishes: [],
+    thai: 'วัดเจดีย์หลวงวรวิหาร',
+    tags: ['14 世紀（15 世紀完工）'],
+    desc: '古城正中央的巨大殘塔，曾是蘭納最高的建築，晚上打燈很有氣勢。',
+    history: '14 世紀末由國王 Saenmueangma 為安葬父王骨灰開始興建，15 世紀中 Tilokaraj 王時完工，高約 82 公尺，是蘭納最高的建築。1468 年曾供奉玉佛，1545 年地震震垮塔頂約 30 公尺，留下今天的殘塔；寺內另有清邁城柱 Sao Inthakhin。',
+    taboos: [{text: '供奉城柱的 Sao Inthakhin 殿禁止女性進入，門口告示寫明理由與月經禁忌有關；女性可參觀寺內其他建築', women: true}, {text: '衣著不得體的男性同樣不能進入城柱殿', women: false}],
+    tips: ['7–9 點最清靜', '城柱殿每年 5–6 月有 Inthakhin 城柱祭', '晚上點燈後的殘塔也很好拍'],
+    fee: '外國人 ฿40–50', feeShort: '฿40–50', feeNote: '城柱殿（Sao Inthakhin）本身不另收費',
+    dress: '需遮肩過膝；門口可租／買沙龍（偏貴）',
+    location: '103 ถ.พระปกเกล้า ต.พระสิงห์ อ.เมือง',
+    time: '05:00–22:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Chedi+Luang/@18.7869693,98.9865804,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a9933111415:0x5cf7709a044ba8ba!8m2!3d18.7869693!4d98.9865804!16zL20vMDNyd2Zn',
+  },
+  {
+    cat: 'temple', group: '古城內', name: 'Wat Phra Singh Woramahawihan', zh: '帕辛寺',
+    rank: 3, area: 'oldcity',
+    lat: 18.788526, lng: 98.981995,
+    fit: ['Viharn Lai Kham 古壁畫', '金色佛塔', '蘭納木雕藏經閣'], dishes: [],
+    thai: 'วัดพระสิงห์วรมหาวิหาร',
+    tags: ['1345 年'],
+    desc: '清邁地位最高的皇家寺院之一，供奉帕辛佛，蘭納壁畫和木雕都很精緻。',
+    history: '1345 年蘭納第五代國王 Phayu 為安葬父王骨灰而建，原名 Wat Lee Chiang Phra。1400 年迎來帕辛佛（Phra Buddha Sihing）供奉於此，因而改稱帕辛寺，是清邁地位最高的皇家寺院之一。',
+    taboos: [{text: '女性不可直接把東西遞給僧侶，應放在地上或布上讓僧侶自取', women: true}],
+    tips: ['潑水節（4 月）帕辛佛會出巡遊街', 'Viharn Lai Kham 的蘭納壁畫值得細看', '下午近黃昏光線最美'],
+    fee: '外國人 ฿40–50，寺院範圍免費', feeShort: '฿40–50', feeNote: null,
+    dress: '需遮肩過膝，進殿脫鞋；Lai Kham 入口有沙龍可借（有來源寫押金約 ฿100）',
+    location: '2 ถ.สามล้าน ต.พระสิงห์ อ.เมือง',
+    time: '05:30–19:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Phra+Singh+Woramahawihan/@18.7885802,98.9814171,18z/data=!3m1!4b1!4m6!3m5!1s0x30da3a9b6e4a246f:0x9656d9e717cd54e9!8m2!3d18.7885265!4d98.9819946!16s%2Fm%2F076w26w',
+  },
+  {
+    cat: 'temple', group: '山上・郊區', name: 'Wat Phra That Doi Kham', zh: '金山寺（多伊坎寺）',
+    rank: 4, area: 'suburbs',
+    lat: 18.759524, lng: 98.918837,
+    fit: ['17 公尺大坐佛', '許願茉莉花環', '城市與機場景觀'], dishes: [],
+    thai: 'วัดพระธาตุดอยคำ',
+    tags: ['傳說 7 世紀'],
+    desc: '機場旁小山上的金山寺，17 公尺大坐佛和許願茉莉花環是在地人最愛。',
+    history: '傳說可追溯到哈里奔猜王國時期，山上兩個食人巨人聽聞佛法後皈依並發願守護寺院。相傳佛舍利引來三天三夜的雨化為金流流入山洞，Doi Kham 意即「金山」。1966 年主塔因大雨倒塌，修復時在塔內發現許多古佛像。',
+    taboos: [],
+    tips: ['向 Luang Por Tan Jai 許願要說出姓名和願望，承諾還願的茉莉花環數量，願望實現後要回來還', '山頂少遮蔭，平日早上去較舒服', '可順遊附近的 Royal Park Rajapruek'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '需遮肩過膝',
+    location: 'ต.แม่เหียะ อ.เมือง',
+    time: '06:00–18:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Phra+That+Doi+Kham/@18.7595235,98.9188375,17z/data=!3m1!4b1!4m6!3m5!1s0x30da37360a1597d9:0xd71cc5202ab6547b!8m2!3d18.7595235!4d98.9188375!16s%2Fg%2F120z72jm',
+  },
+  {
+    cat: 'temple', group: '城外', name: 'Wat Umong Suan Phutthatham', zh: '悟孟寺（隧道寺）',
+    rank: 5, area: 'suthep',
+    lat: 18.782726, lng: 98.95211,
+    fit: ['隧道', '森林', '殘塔'], dishes: [],
+    thai: 'วัดอุโมงค์ สวนพุทธธรรม',
+    tags: ['13 世紀末（隧道 14 世紀）'],
+    desc: '藏在森林裡的隧道寺，磚造隧道和林間小路很有禪意。',
+    history: '由蘭納開國君主孟萊王建立，供來自斯里蘭卡的僧團居住，原名 Wat Weluwanaram。Kue Na 王時期修塔並開鑿四方向的修行隧道，改名為悟孟寺；緬甸統治時期一度荒廢，1949 年後重新復興，如今是森林禪修寺。',
+    taboos: [{text: '隧道內是禪修空間，請放低音量，不要打擾修行者', women: false}],
+    tips: ['早上光線從隧道口照入最有氣氛', '林間有「會說話的樹」箴言牌可慢慢看', '離清邁大學近，可和松達寺排同一天'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '需遮肩過膝',
+    location: 'ต.สุเทพ อ.เมือง',
+    time: '04:00–20:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Umong+Suan+Putthatham/@18.7827263,98.9521099,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a706f40689d:0xedef9aa39d595059!8m2!3d18.7827263!4d98.9521099!16s%2Fm%2F02x5m4h',
+  },
+  {
+    cat: 'temple', group: '城外', name: 'Wat Lok Moli', zh: '洛克摩利寺',
+    rank: 6, area: 'north',
+    lat: 18.796024, lng: 98.982568,
+    fit: ['紅磚佛塔', '柚木大殿'], dishes: [],
+    thai: 'วัดโลกโมฬี',
+    tags: ['1367 年前（首見記載）'],
+    desc: '古城北邊的紅磚大佛塔，沒有刷白貼金，傍晚夕陽下特別好看。',
+    history: '建寺年代不詳，最早見於 1367 年的文獻，Kue Na 王曾邀緬甸僧人駐錫於此。1527 年 Ket 王建造大佛塔，之後成為孟萊王朝王室的骨灰安葬地；佛塔保留裸露的紅磚，和其他刷白貼金的佛塔很不一樣。',
+    taboos: [],
+    tips: ['傍晚夕陽打在紅磚塔上最好拍', '就在古城北側護城河外，可和清曼寺串連步行'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '進大殿需遮肩過膝',
+    location: '298/1 ถ.มณีนพรัตน์ ต.ศรีภูมิ อ.เมือง',
+    time: '06:00–18:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Lok+Moli/@18.7960243,98.9825675,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a9100c30075:0x37241441d3264a00!8m2!3d18.7960243!4d98.9825675!16s%2Fm%2F080dl_9',
+  },
+  {
+    cat: 'temple', group: '山上・郊區', name: 'Wat Pha Lat', zh: '帕拉寺（叢林寺）',
+    rank: 7, area: 'suthep',
+    lat: 18.799397, lng: 98.934147,
+    fit: ['森林瀑布', '岩石佛寺', 'Monk’s Trail'], dishes: [],
+    thai: 'วัดผาลาด',
+    tags: ['1355 年'],
+    desc: '素帖山半山腰的森林小寺，岩石、瀑布和佛寺混在一起，可以走步道上去。',
+    history: '傳說 Kue Na 王時期，馱著佛舍利的白象上山途中曾在此處岩石歇腳，國王便在此建寺。20 世紀初由緬甸柚木商人修建，公路開通後一度沉寂，1991 年起復興，是藏在森林瀑布旁的小寺。',
+    taboos: [],
+    tips: ['從清邁大學後方走 Monk’s Trail 約 30–60 分鐘可到', '寺內有禪修區，保持安靜', '可續行上山到雙龍寺'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: '走 Monk’s Trail 步道：2025/10 起國家公園對外國成人收 ฿100（開車走主幹道參拜則不收）',
+    dress: '需遮肩過膝',
+    location: 'ต.สุเทพ อ.เมือง',
+    time: '06:00–17:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Pha+Lad/@18.7993968,98.9341468,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a1a20f4a0eb:0x5def9b5b34bb6888!8m2!3d18.7993968!4d98.9341468!16s%2Fg%2F1td8p45q',
+  },
+  {
+    cat: 'temple', group: '古城內', name: 'Wat Chiang Man', zh: '清曼寺',
+    rank: 8, area: 'oldcity',
+    lat: 18.793813, lng: 98.98927,
+    fit: ['大象佛塔', '古佛像', '蘭納柚木殿'], dishes: [],
+    thai: 'วัดเชียงมั่น',
+    tags: ['1297 年'],
+    desc: '清邁第一座寺廟，15 隻大象撐起的佛塔是招牌。',
+    history: '孟萊王於 1297 年建立，是清邁第一座寺廟，所在地原是孟萊王建城時駐紮的營地。最古老的建築是大象佛塔 Chedi Chang Lom，基座有 15 隻大象半身像撐起塔身；寺內另供奉水晶佛等古佛像。',
+    taboos: [],
+    tips: ['遊客比契迪龍寺少，可悠閒拍大象佛塔', '在古城東北角，可和洛克摩利寺、塔佩門串連'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '需遮肩過膝',
+    location: 'ถ.ราชภาคินัย ต.ศรีภูมิ อ.เมือง',
+    time: '05:00–19:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Chiang+Man/@18.7938126,98.9892703,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a97936133d7:0x6e33b1cdc659f2dd!8m2!3d18.7938126!4d98.9892703!16s%2Fm%2F076z4nx',
+  },
+  {
+    cat: 'temple', group: '山上・郊區', name: 'Wat Den Sali Si Mueang Kaen (Wat Ban Den)', zh: '班登寺',
+    rank: 9, area: 'suburbs',
+    lat: 19.157736, lng: 98.978484,
+    fit: ['十二生肖佛塔', '蘭納金飾殿堂'], dishes: [],
+    thai: 'วัดเด่นสะหลีศรีเมืองแกน (วัดบ้านเด่น)',
+    tags: ['500 多年前（現貌為近代重建）'],
+    desc: '郊區湄登的金碧輝煌寺院群，十二生肖佛塔一次看齊。',
+    history: '原是湄登鄉間一座有 500 多年歷史的小寺，在高僧 Kruba Thueang 主持下靠各地信眾捐款大規模擴建，1988 年後陸續重建成今天的華麗寺院群。寺內有十二生肖佛塔與大量蘭納風格木雕金飾。',
+    taboos: [],
+    tips: ['距清邁市區約 1 小時車程，大眾運輸不便，建議包車', '可和湄登大象營、黏黏瀑布排同一天'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '需遮肩，穿長褲或長裙',
+    location: 'ต.อินทขิล อ.แม่แตง',
+    time: '07:00–18:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Den+Sali+Sri+Muang+Kaen+(Wat+Ban+Den)/@19.1577357,98.9784843,17z/data=!3m1!4b1!4m6!3m5!1s0x30da1028229e1e93:0xf4ddaafe98cc4d0f!8m2!3d19.1577357!4d98.9784843!16s%2Fg%2F1hd_8z15y',
+  },
+  {
+    cat: 'temple', group: '城外', name: 'Wat Sri Suphan (Silver Temple)', zh: '銀廟（蘇攀寺）',
+    rank: 10, area: 'oldcity',
+    lat: 18.778723, lng: 98.983652,
+    fit: ['銀殿', '銀雕工藝', '週六夜市'], dishes: [],
+    thai: 'วัดศรีสุพรรณ',
+    tags: ['約 1500 年'],
+    desc: '整座戒堂用銀雕打造的銀廟，晚上點燈最美，但女性不能進入銀殿。',
+    history: '約 1500 年 Mueang Kaeo 王時期建立，位於傳統銀匠聚落 Wualai 區。現今的戒堂由在地銀匠以銀、鎳、鋁板打造，滿布浮雕，因此被稱為「銀廟」。',
+    taboos: [{text: '銀色戒堂（Silver Ubosot）只限男性進入，女性只能在外圍繞行、從門外看內部；入口有「Man Only」告示（2025 年仍有此告示）', women: true}],
+    tips: ['週六傍晚 Wualai 週六夜市就在門口，可順逛', '晚上點燈的銀殿最好看', '女性購票前先知道進不了銀殿'],
+    fee: '外國人 ฿50', feeShort: '฿50', feeNote: '男女同價，但女性不能進入銀殿',
+    dress: '需遮肩過膝',
+    location: '100 ถ.วัวลาย ต.หายยา อ.เมือง',
+    time: '08:30–19:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Sri+Suphan+-+Silver+Temple/@18.7787227,98.9836524,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3076509e5cf3:0x196337361614f763!8m2!3d18.7787227!4d98.9836524!16s%2Fg%2F11c2kbvph9',
+  },
+  {
+    cat: 'temple', group: '城外', name: 'Wat Suan Dok', zh: '松達寺（花園寺）',
+    rank: 11, area: 'suthep',
+    lat: 18.788239, lng: 98.967762,
+    fit: ['白色王室骨灰塔群', '鐘形大佛塔', 'Monk Chat'], dishes: [],
+    thai: 'วัดสวนดอก',
+    tags: ['1370 年'],
+    desc: '國王花園改建的寺廟，白色王室骨灰塔群是招牌，還能參加 Monk Chat。',
+    history: '1370 年 Kue Na 王為斯里蘭卡系高僧 Sumana Thera 所建，原址是國王的花園，因此得名「花園寺」。寺內有斯里蘭卡式白色大佛塔與蘭納王室的白色骨灰塔群，也是摩訶朱拉隆功佛教大學清邁校區所在地。',
+    taboos: [{text: '王室骨灰塔群（Royal Cemetery）安葬蘭納王族，2019 年曾有遊客在內擺拍、走上 Ku Chao Luang 圍牆引發王族後裔抗議，勿攀爬或擺拍', women: false}],
+    tips: ['Monk Chat 由佛教大學的沙彌主持，免費，可用英文和僧侶聊天', '夕陽時白塔群映著素帖山最好拍'],
+    fee: '免費', feeShort: '免費', feeNote: null,
+    dress: '需遮肩過膝；寺方僧人表示男性穿長褲較佳',
+    location: '139 ถ.สุเทพ ต.สุเทพ อ.เมือง',
+    time: '06:00–18:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Suan+Dok/@18.7882387,98.9677619,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a7de79258eb:0xc3ba2271c3e95576!8m2!3d18.7882387!4d98.9677619!16s%2Fm%2F0472j9f',
+  },
+  {
+    cat: 'temple', group: '城外', name: 'Wat Chet Yot (Wat Photharam Maha Wihan)', zh: '七峰寺',
+    rank: 12, area: 'nimman',
+    lat: 18.809019, lng: 98.971733,
+    fit: ['七座尖塔', '天人浮雕', '菩提樹'], dishes: [],
+    thai: 'วัดเจ็ดยอด (วัดโพธารามมหาวิหาร)',
+    tags: ['1455 年'],
+    desc: '仿印度菩提伽耶建造的七峰寺，七座尖塔和天人浮雕很少見。',
+    history: '1455 年 Tilokarat 王派僧人到緬甸蒲甘考察，仿印度菩提伽耶大菩提寺建造，大殿頂上有七座尖塔因而得名。1477 年在此舉行第八次世界佛教結集，是屬蛇者的朝聖寺。',
+    taboos: [],
+    tips: ['屬蛇的人可來參拜', '離寧曼路、Maya 百貨很近，遊客少，適合慢慢看灰泥浮雕'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '需遮肩過膝',
+    location: 'ถ.ซุปเปอร์ไฮเวย์ ต.ช้างเผือก อ.เมือง',
+    time: '06:00–18:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Jedyod+Royal+Temple+Wat+Chet+Yod+Phra+Aram+Luang/@18.8090186,98.9717327,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a603f33f959:0x3dfa48bd78887e51!8m2!3d18.8090186!4d98.9717327!16s%2Fm%2F0472hfl',
+  },
+  {
+    cat: 'temple', group: '古城內', name: 'Wat Phan Tao', zh: '潘道寺',
+    rank: 13, area: 'oldcity',
+    lat: 18.787776, lng: 98.987862,
+    fit: ['柚木大殿', '孔雀木雕', '燈籠'], dishes: [],
+    thai: 'วัดพันเตา',
+    tags: ['15 世紀（柚木殿 19 世紀）'],
+    desc: '整座柚木蓋的大殿原是王宮，就在契迪龍寺隔壁。',
+    history: '原屬隔壁契迪龍寺的一部分，寺名意為「千座熔爐」，昔日在此鑄造佛像。現在的柚木大殿原是 19 世紀清邁第五代統治者的宮殿，1876 年才遷到這裡，是少見的蘭納王室木造建築。',
+    taboos: [],
+    tips: ['就在契迪龍寺隔壁，順路一起參觀', '佛教節日（如三寶佛節、水燈節）夜晚會點滿燈籠', '早上 8–10 點光線好、人少'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '需遮肩過膝',
+    location: '105 ถ.พระปกเกล้า ต.พระสิงห์ อ.เมือง',
+    time: '07:00–19:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Phantao/@18.7877757,98.9878621,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a99281639cd:0x8663582207f7bcfa!8m2!3d18.7877757!4d98.9878621!16s%2Fg%2F11b67rmbhv',
+  },
+  {
+    cat: 'temple', group: '城外', name: 'Wat Ket Karam', zh: '瓦凱寺（凱卡蘭寺）',
+    rank: 14, area: 'watket',
+    lat: 18.792438, lng: 99.0029,
+    fit: ['社區博物館', '河岸老街', '老照片'], dishes: [],
+    thai: 'วัดเกตการาม',
+    tags: ['1428 年'],
+    desc: '濱河東岸的老寺，寺裡的社區博物館記錄清邁舊河岸生活。',
+    history: '1428 年 Sam Fang Kaen 王時期建於濱河東岸，周邊是早年華人商圈與老市場。寺內有社區博物館，展示老照片與古董，記錄清邁舊時的河岸生活。',
+    taboos: [],
+    tips: ['博物館沒人時可按鈴請人開門', '可和 Wat Ket 老街、河岸咖啡廳一起逛'],
+    fee: '免費（博物館歡迎樂捐）', feeShort: '免費', feeNote: '博物館約 09:00–16:00，佛教節日可能休館',
+    dress: '需遮肩過膝',
+    location: '96 ถ.เจริญราษฎร์ ต.วัดเกต อ.เมือง',
+    time: '06:00–21:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Ket+Karam/@18.792438,99.0029003,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3ab01f15d56b:0xc16971a37769795f!8m2!3d18.792438!4d99.0029003!16s%2Fg%2F122fvjbn',
+  },
 ];
 
 const state = { day: null, group: null, cuisine: null, price: null, area: null, moreOpen: false };
@@ -2198,6 +2661,9 @@ function priceLevel(place) {
 }
 
 function badgeHtml(place) {
+  if (place.cat === 'temple' && place.rank <= 3) return `<span class="badge rank">#${place.rank} 熱門</span>`;
+  if (place.cat === 'temple' && place.rank <= 7) return `<span class="badge rank">#${place.rank}</span>`;
+  if (place.cat === 'temple') return '';
   if (place.bib) return '<span class="badge bib">必比登</span>';
   if (place.group === '米其林推薦') return '<span class="badge selected">米其林推薦</span>';
   return '';
@@ -2236,16 +2702,18 @@ let foodMap = null;
 let foodLayer = null;
 
 function pinClass(place) {
+  if (place.cat === 'temple') return 'temple';
   if (place.bib) return 'bib';
   if (place.group === '米其林推薦') return 'selected';
   return 'other';
 }
 
-function renderFoodMap(list) {
+function renderFoodMap(list, catKey) {
   const located = list.filter((place) => typeof place.lat === 'number');
-  const hasMap = typeof L !== 'undefined' && PLACES.some((place) => place.cat === 'food' && typeof place.lat === 'number');
+  const hasMap = typeof L !== 'undefined' && PLACES.some((place) => place.cat === catKey && typeof place.lat === 'number');
   $('#map-wrap').hidden = !hasMap;
   if (!hasMap) return;
+  document.querySelector('.map-legend').hidden = catKey !== 'food';
 
   if (!foodMap) {
     foodMap = L.map('food-map', { scrollWheelZoom: false, zoomControl: true }).setView([18.7883, 98.9853], 13);
@@ -2263,7 +2731,7 @@ function renderFoodMap(list) {
     const popup = `
       <div class="pop-zh">${place.zh}</div>
       <div class="pop-en">${place.name}</div>
-      <div class="pop-meta">${'฿'.repeat(place.level || 0)} · ${days}</div>
+      <div class="pop-meta">${place.cat === 'temple' ? (place.feeShort || '') : '฿'.repeat(place.level || 0)} · ${days}</div>
       <div class="pop-btns">
         <a class="solid" href="#place-${PLACES.indexOf(place)}">看介紹</a>
         <a href="${place.map}" target="_blank" rel="noopener">導航 ↗</a>
@@ -2328,11 +2796,7 @@ function renderCategory(catKey) {
   const totalInCat = PLACES.filter((place) => place.cat === catKey).length;
 
   $('#result').textContent = totalInCat ? `${list.length} Places` : '';
-  if (catKey === 'food') {
-    renderFoodMap(list);
-  } else {
-    $('#map-wrap').hidden = true;
-  }
+  renderFoodMap(list, catKey);
 
   if (!totalInCat) {
     $('#cards').innerHTML = '<div class="empty">Coming soon<small>之後想到要去的課程、體驗、展覽再加進來</small></div>';
@@ -2341,7 +2805,7 @@ function renderCategory(catKey) {
   } else {
     $('#cards').innerHTML = list.map((place) => {
       const days = place.days ? dayText(place.days) : '營業日待確認';
-      const price = priceLevel(place);
+      const price = place.cat === 'temple' ? (place.feeShort ? `<span>${place.feeShort}</span>` : '') : priceLevel(place);
       return `
       <button class="card" data-index="${PLACES.indexOf(place)}">
         ${cardImageHtml(place)}
@@ -2369,8 +2833,10 @@ function renderPlace(place) {
   const kicker = [place.bib ? 'Bib Gourmand' : '', place.group === '米其林推薦' ? 'Michelin Selected' : '', kickerText(place)]
     .filter(Boolean).join(' · ');
 
+  const isTemple = place.cat === 'temple';
+  const fitTitle = isTemple ? '看點 · Highlights' : '適合 · Good for';
   const fit = place.fit.length
-    ? `<div class="block"><div class="block-title caps">適合 · Good for</div><div class="pills">${place.fit.map((item) => `<span class="pill">${item}</span>`).join('')}</div></div>`
+    ? `<div class="block"><div class="block-title caps">${fitTitle}</div><div class="pills">${place.fit.map((item) => `<span class="pill">${item}</span>`).join('')}</div></div>`
     : '';
   const dishes = place.dishes.length
     ? `<div class="block"><div class="block-title caps">必點 · Must order</div><div class="pills">${place.dishes.map((item) => `<span class="pill dish">${item}</span>`).join('')}</div></div>`
@@ -2379,10 +2845,16 @@ function renderPlace(place) {
     ? `<div class="friend-note"><div class="script">from a friend</div><p>${place.note}</p></div>`
     : '';
 
+  const templeBlocks = isTemple ? `
+      ${place.history ? `<div class="block"><div class="block-title caps">歷史 · History</div><p class="block-text">${place.history}</p></div>` : ''}
+      ${place.taboos && place.taboos.length ? `<div class="block taboo-block"><div class="block-title caps">禁忌與注意 · Before you go</div><ul class="taboos">${place.taboos.map((taboo) => `<li class="${taboo.women ? 'women' : ''}">${taboo.women ? '<span class="taboo-tag">女性注意</span>' : ''}${taboo.text}</li>`).join('')}</ul></div>` : ''}
+      ${place.tips && place.tips.length ? `<div class="block"><div class="block-title caps">小提示 · Tips</div><ul class="photo-spots">${place.tips.map((tip) => `<li>${tip}</li>`).join('')}</ul></div>` : ''}` : '';
+
   const infoRows = [
     ['地址', place.location],
-    ['營業日', weekCircles(place)],
+    [isTemple ? '開放日' : '營業日', weekCircles(place)],
     ['時間', hoursOnly(place.time) || '時間待確認'],
+    ...(isTemple ? [['門票', [place.fee, place.feeNote].filter(Boolean).join('<br>')], ['服裝', place.dress]] : []),
     ['價位', place.level ? `${priceLevel(place)}&nbsp; ${place.price || ''}` : place.price],
   ].filter(([, value]) => value)
     .map(([label, value]) => `<div class="info-row"><span class="caps">${label}</span><span>${value}</span></div>`)
@@ -2407,8 +2879,9 @@ function renderPlace(place) {
       <p class="desc">${place.desc}</p>
       ${fit}
       ${dishes}
+      ${templeBlocks}
       ${note}
-      <div class="block"><div class="block-title caps">營業資訊 · Visit</div><div class="info">${infoRows}</div></div>
+      <div class="block"><div class="block-title caps">${isTemple ? '參觀資訊 · Visit' : '營業資訊 · Visit'}</div><div class="info">${infoRows}</div></div>
       <div class="btns">
         <a class="btn" href="${place.map}" target="_blank" rel="noopener">GOOGLE MAPS 導航 ↗</a>
         ${michelin}
@@ -2492,6 +2965,8 @@ function renderAreas(focusKey) {
         <div class="pills">${area.features.map((item) => `<span class="pill">${item}</span>`).join('')}</div>
         <div class="area-label caps">必去 · Must see</div>
         <ul class="spots">${area.spots.map(([name, note]) => `<li>${name}<span>${note}</span></li>`).join('')}</ul>
+        ${photoSpotsOf(area.key).length ? `<div class="area-label caps">拍照打卡 · Photo spots</div><ul class="photo-spots">${photoSpotsOf(area.key).map((text) => `<li>${text}</li>`).join('')}</ul>` : ''}
+        ${FACTS[area.key] ? `<div class="area-fact"><b>冷知識</b>${randomFactOf(area.key)}</div>` : ''}
       </section>`;
   }).join('');
 
@@ -2528,11 +3003,66 @@ function renderAreas(focusKey) {
 let returnToAreas = false;
 let homeScrollTarget = null;
 
+function renderTimeline() {
+  $('#timeline').innerHTML = HISTORY.map((era) => {
+    const image = era.image.url ? era.image : areaImage({ image: era.image });
+    const credit = image && image.credit ? `<span class="hero-credit">${image.credit}</span>` : '';
+    return `
+      <div class="era reveal">
+        <div class="era-year">${era.year}</div>
+        <h3>${era.title}</h3>
+        <div class="era-img" data-tone="dark" style="${bgStyle(image ? image.url : '')}">${credit}</div>
+        <p>${era.text}</p>
+      </div>`;
+  }).join('');
+}
+
+const ALL_FACTS = Object.entries(FACTS).flatMap(([key, list]) => list.map((fact) => ({ key, ...fact })));
+let factType = null;
+let currentFact = null;
+
+function factPool() {
+  return ALL_FACTS.filter((fact) => !factType || fact.type === factType);
+}
+
+function pickFact() {
+  const pool = factPool().filter((fact) => fact !== currentFact);
+  const source = pool.length ? pool : factPool();
+  currentFact = source[Math.floor(Math.random() * source.length)];
+}
+
+function renderFact() {
+  if (!currentFact || (factType && currentFact.type !== factType)) pickFact();
+  const fact = currentFact;
+  const area = AREAS.find((item) => item.key === fact.key);
+  $('#fact-type').textContent = FACT_TYPES[fact.type];
+  $('#fact-text').textContent = fact.text;
+  $('#fact-area').hidden = !area;
+  if (area) {
+    $('#fact-area').textContent = `${area.zh} ${area.en} →`;
+    $('#fact-area').dataset.area = fact.key;
+  }
+  $('#fact-tabs').innerHTML = [[null, '全部']].concat(Object.entries(FACT_TYPES)).map(([type, label]) =>
+    `<button class="fact-tab" data-type="${type || ''}" aria-pressed="${type === factType}">${label}</button>`).join('');
+}
+
+function randomFactOf(key) {
+  const list = (FACTS[key] || []).filter((fact) => fact.type === 'trivia');
+  const fact = list[Math.floor(Math.random() * list.length)];
+  return fact ? fact.text : '';
+}
+
+function photoSpotsOf(key) {
+  return (FACTS[key] || []).filter((fact) => fact.type === 'photo').map((fact) => fact.text);
+}
+
 function renderHome() {
   $('#hero-home').style.backgroundImage = COVERS.hero.url ? `url('${COVERS.hero.url}')` : '';
   $('#hero-credit').textContent = COVERS.hero.credit || '';
   renderTiles();
   renderAreaTiles();
+  renderTimeline();
+  renderFact();
   if (returnToAreas) {
     returnToAreas = false;
     homeScrollTarget = '#areas-home';
@@ -2688,13 +3218,82 @@ function aboutTop() {
 }
 
 function snapHero() {
-  if ($('#view-home').hidden) return;
+  if ($('#view-home').hidden || isAnimating || isTouching) return;
   const target = aboutTop();
   const current = window.scrollY;
   const isBetween = current > 2 && current < target - 2;
   if (!isBetween) return;
   window.scrollTo({ top: scrollDirection > 0 ? target : 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
 }
+
+let isAnimating = false;
+let isTouching = false;
+
+function animateScrollTo(target) {
+  if (prefersReducedMotion) {
+    window.scrollTo(0, target);
+    return;
+  }
+  const start = window.scrollY;
+  const distance = target - start;
+  const duration = 700;
+  const startTime = performance.now();
+  isAnimating = true;
+  const step = (now) => {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    window.scrollTo(0, start + distance * eased);
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      isAnimating = false;
+    }
+  };
+  requestAnimationFrame(step);
+}
+
+let touchStartY = 0;
+let touchHandled = false;
+
+function heroGestureActive() {
+  return !$('#view-home').hidden && $('#menu').hidden;
+}
+
+window.addEventListener('touchstart', (event) => {
+  isTouching = true;
+  touchHandled = false;
+  touchStartY = event.touches[0].clientY;
+}, { passive: true });
+
+window.addEventListener('touchmove', (event) => {
+  if (!heroGestureActive()) return;
+  if (isAnimating) {
+    event.preventDefault();
+    return;
+  }
+  const delta = touchStartY - event.touches[0].clientY;
+  const current = window.scrollY;
+  const target = aboutTop();
+  const inHero = current < target - 2;
+  const atAboutTop = Math.abs(current - target) <= 2;
+  if (inHero && delta > 0) {
+    event.preventDefault();
+    if (delta > 24 && !touchHandled) {
+      touchHandled = true;
+      animateScrollTo(target);
+    }
+  } else if ((inHero || atAboutTop) && delta < 0 && current > 0) {
+    event.preventDefault();
+    if (delta < -24 && !touchHandled) {
+      touchHandled = true;
+      animateScrollTo(0);
+    }
+  }
+}, { passive: false });
+
+window.addEventListener('touchend', () => {
+  isTouching = false;
+}, { passive: true });
 
 function isDarkBehind(button) {
   const rect = button.getBoundingClientRect();
@@ -2747,7 +3346,8 @@ function renderMenu() {
     ${menuLink('home', '首頁', 'Home', delay)}
     <div class="menu-group"><div class="caps">探索</div>${explore}</div>
     <div class="menu-group"><div class="caps">認識清邁</div>
-      ${menuLink('about', '關於清邁', 'History & About', step())}
+      ${menuLink('about', '關於清邁', 'About', step())}
+      ${menuLink('history', '清邁歷史', 'History', step())}
       ${menuLink('area', '地區介紹', 'Neighborhoods', step())}
       ${areas}
     </div>`;
@@ -2781,8 +3381,9 @@ $('#menu-body').addEventListener('click', (event) => {
   state.area = null;
   state.moreOpen = false;
   let hash = go;
-  if (go === 'home' || go === 'about') hash = '';
+  if (go === 'home' || go === 'about' || go === 'history') hash = '';
   if (go === 'about') homeScrollTarget = '.about';
+  if (go === 'history') homeScrollTarget = '#history';
   const isSameHash = location.hash.replace('#', '') === hash;
   if (isSameHash) {
     render();
@@ -2795,6 +3396,27 @@ $('#menu-body').addEventListener('click', (event) => {
 
 $('#to-top').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+});
+
+$('#fact-next').addEventListener('click', () => {
+  $('#fact-text').style.opacity = 0;
+  setTimeout(() => {
+    pickFact();
+    renderFact();
+    $('#fact-text').style.opacity = 1;
+  }, 200);
+});
+
+$('#fact-tabs').addEventListener('click', (event) => {
+  const tab = event.target.closest('.fact-tab');
+  if (!tab) return;
+  factType = tab.dataset.type || null;
+  pickFact();
+  renderFact();
+});
+
+$('#fact-area').addEventListener('click', () => {
+  location.hash = `area-${$('#fact-area').dataset.area}`;
 });
 
 $('#scroll-cue').addEventListener('click', () => {
