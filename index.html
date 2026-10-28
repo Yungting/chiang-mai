@@ -89,6 +89,12 @@ body { font-variant-numeric: lining-nums; }
   letter-spacing: .02em;
   margin: 14px 0 0;
 }
+.hero-copy .hero-thai {
+  font-size: clamp(22px, 6vw, 34px);
+  letter-spacing: .12em;
+  margin-top: 10px;
+  color: #F6E7D4;
+}
 .hero-copy .script {
   font-family: var(--script);
   font-size: clamp(26px, 7vw, 40px);
@@ -122,6 +128,7 @@ body { font-variant-numeric: lining-nums; }
 .hero-copy > :nth-child(2) { animation-delay: .15s; }
 .hero-copy > :nth-child(3) { animation-delay: .4s; }
 .hero-copy > :nth-child(4) { animation-delay: .6s; }
+.hero-copy > :nth-child(5) { animation-delay: .75s; }
 .scroll-cue {
   position: absolute;
   left: 50%;
@@ -227,6 +234,7 @@ body { font-variant-numeric: lining-nums; }
 .band-history { background: var(--ivory); color: var(--ink); padding: 56px 0 40px; }
 .band-history .caps { color: var(--terracotta); }
 .history-title { font-family: var(--serif-tc); font-weight: 500; font-size: 28px; letter-spacing: .08em; margin: 10px 0 28px; }
+.history-lead { margin: -12px 0 32px; font-size: 15px; line-height: 1.9; max-width: 34em; }
 .timeline { position: relative; }
 .era { position: relative; padding: 0 0 36px 28px; }
 .era::before { content: ""; position: absolute; left: 5px; top: 10px; bottom: -6px; width: 1px; background: var(--line); }
@@ -237,6 +245,40 @@ body { font-variant-numeric: lining-nums; }
 .era-img { position: relative; aspect-ratio: 16 / 10; margin-top: 14px; background: var(--sand) center / cover no-repeat; }
 .era-img .hero-credit { max-width: 80%; }
 .era p { margin: 12px 0 0; font-size: 14px; line-height: 1.9; }
+
+/* ---------- 寺內看點 ---------- */
+.sights { display: grid; gap: 22px; margin-top: 4px; }
+.sight { margin: 0; }
+.sight img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: var(--sand); }
+.sight b { display: block; margin-top: 10px; font-family: var(--serif-tc); font-weight: 500; font-size: 16px; }
+.sight p { margin: 4px 0 0; font-size: 14px; line-height: 1.8; }
+.sights-source { margin: 14px 0 0; font-size: 12px; color: var(--muted); }
+.sights-source a { color: inherit; }
+@media (min-width: 760px) {
+  .sights { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- 店家清單 ---------- */
+.shop { padding: 18px 16px; background: var(--soft); }
+.shop + .shop { margin-top: 12px; }
+.shop h3 { margin: 0; font-family: var(--serif-tc); font-weight: 500; font-size: 18px; color: var(--terracotta); }
+.shop p { margin: 8px 0 14px; font-size: 14px; line-height: 1.8; }
+.shop-map { display: inline-block; margin-top: 12px; font-size: 12px; letter-spacing: .12em; color: var(--ink); }
+
+/* ---------- 順路一起看 ---------- */
+.nearby-card { display: flex; gap: 14px; align-items: flex-start; padding: 14px; background: var(--soft); color: inherit; text-decoration: none; }
+.nearby-card + .nearby-card { margin-top: 10px; }
+.nearby-card img { flex: 0 0 88px; width: 88px; height: 88px; object-fit: cover; }
+.nearby-text b { display: block; font-family: var(--serif-tc); font-weight: 500; font-size: 17px; color: var(--terracotta); }
+.nearby-text span { display: block; margin-top: 4px; font-size: 14px; line-height: 1.75; }
+
+/* ---------- 泰文發音 ---------- */
+.say { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; margin: 0 2px; padding: 0; border: 1px solid currentColor; border-radius: 50%; background: transparent; color: inherit; font-size: 13px; line-height: 1; vertical-align: middle; cursor: pointer; opacity: .8; }
+.say:hover, .say.speaking { opacity: 1; background: rgba(180, 89, 47, .15); }
+.no-thai-voice .say { display: none; }
+
+/* ---------- 螢光筆 ---------- */
+.hl { background: #F6E27A; color: inherit; padding: 0 2px; }
 
 /* ---------- 小知識 ---------- */
 .band-fact { background: var(--ivory); padding: 0 0 56px; }
@@ -251,6 +293,8 @@ body { font-variant-numeric: lining-nums; }
 .fact-text { margin: 12px 0 14px; font-family: var(--serif-tc); font-size: 17px; line-height: 1.8; min-height: 3.6em; transition: opacity .25s; }
 .fact-area { font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
 .area-fact { margin-top: 24px; padding: 16px 18px; border-left: 2px solid var(--terracotta); background: var(--paper); font-size: 14px; line-height: 1.8; }
+.story h3 { margin: 0 0 8px; font-family: var(--serif-tc); font-weight: 500; font-size: 18px; color: var(--terracotta); }
+.story .block-text + h3 { margin-top: 24px; }
 .block-text { margin: 0; font-size: 15px; line-height: 1.9; }
 .taboo-block { border-top-color: var(--terracotta); }
 .taboo-block .block-title { color: var(--terracotta); }
@@ -777,7 +821,7 @@ body { font-variant-numeric: lining-nums; }
     <div class="hero-copy">
       <div class="caps">A Pocket Guide · 30 Days</div>
       <h1>CHIANG<br>MAI</h1>
-      <div class="script">slow days, warm nights</div>
+      <div class="hero-thai">เชียงใหม่</div>
       <div class="zh">清邁三十天</div>
     </div>
     <button class="scroll-cue" id="scroll-cue" aria-label="往下看介紹"><span class="caps">Scroll</span><i></i></button>
@@ -797,29 +841,7 @@ body { font-variant-numeric: lining-nums; }
         <div class="fact"><b>฿</b><span>泰銖 THB<br>小攤多半只收現金</span></div>
       </div>
 
-      <p class="about-tip reveal">交通主要靠 Grab 或 Bolt 叫車，也可以招紅色雙條車（Songthaew），上車前先講好價錢。北部打招呼說「สวัสดีเจ้า（sa-wat-dee jao）」，在地人會很開心。</p>
-    </div>
-  </section>
-
-  <section class="band band-history" id="history">
-    <div class="wrap">
-      <div class="caps reveal">清邁的歷史</div>
-      <h2 class="history-title reveal">七百年的蘭納古都</h2>
-      <div class="timeline" id="timeline"></div>
-    </div>
-  </section>
-
-  <section class="band band-fact">
-    <div class="wrap">
-      <div class="fact-card reveal">
-        <div class="fact-head">
-          <span class="caps" id="fact-type">你知道嗎？</span>
-          <button class="fact-next" id="fact-next">換一則 ↻</button>
-        </div>
-        <div class="fact-tabs" id="fact-tabs"></div>
-        <p class="fact-text" id="fact-text"></p>
-        <button class="fact-area" id="fact-area"></button>
-      </div>
+      <p class="about-tip reveal">交通主要靠 Grab 或 Bolt 叫車，也可以招紅色雙條車（Songthaew），上車前先講好價錢。北部打招呼說「สวัสดีเจ้า（sa-wat-dee jao）」<button class="say" data-say="สวัสดีเจ้า" aria-label="播放泰文發音">🔊</button>，在地人會很開心。</p>
     </div>
   </section>
 
@@ -841,6 +863,29 @@ body { font-variant-numeric: lining-nums; }
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <section class="band band-history" id="history">
+    <div class="wrap">
+      <div class="caps reveal">清邁的歷史</div>
+      <h2 class="history-title reveal">七百年的蘭納古都</h2>
+      <p class="history-lead reveal">清邁不只是一座觀光城市，<mark class="hl">它曾是一個王國的首都</mark>。從孟萊王選地建城、被緬甸統治兩百年，到併入泰國，七百多年的起落，都還寫在古城的紅磚牆和寺廟裡。</p>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <section class="band band-fact">
+    <div class="wrap">
+      <div class="fact-card reveal">
+        <div class="fact-head">
+          <span class="caps" id="fact-type">你知道嗎？</span>
+          <button class="fact-next" id="fact-next">換一則 ↻</button>
+        </div>
+        <div class="fact-tabs" id="fact-tabs"></div>
+        <p class="fact-text" id="fact-text"></p>
+        <button class="fact-area" id="fact-area"></button>
+      </div>
     </div>
   </section>
 
@@ -992,17 +1037,17 @@ const CATEGORIES = {
     notice: '名單依 MICHELIN Guide Thailand 2026。清邁目前沒有星級餐廳；入選推薦共 36 間，這裡精選 13 間。其他推薦是朋友口袋名單，不在米其林名單內。價格為預算估算，營業時間建議出發前確認。',
   },
   temple: {
-    name: '寺廟', en: 'Temples',
+    name: '寺廟 & 景點', en: 'Temples & Sights',
     accent: '#9A6B2F', soft: '#EFE4CF',
-    intro: '依熱門度排序，最多人去的在最前面；附門票、服裝和禁忌',
-    groups: ['古城內', '城外', '山上・郊區'],
+    intro: '前 3 間是古城必去寺廟，接著是古城地標、清萊一日遊、山上寺廟，最後是順路小寺',
+    groups: ['古城內', '城外', '山上・郊區', '清萊'],
     notice: '進寺廟請穿過膝、遮肩的衣服，進大殿前脫鞋。門票與開放時間可能調整，以現場公告為準。',
   },
   activity: {
     name: '活動', en: 'Things to Do',
     accent: '#8A6A4A', soft: '#EDE3D6',
-    intro: '課程、體驗、展覽、節慶，之後陸續補上',
-    groups: [],
+    intro: '節慶和在地體驗，11 月剛好遇上天燈節和水燈節',
+    groups: ['節慶', '體驗'],
     notice: '',
   },
 };
@@ -1066,38 +1111,62 @@ const AREAS = [
   },
 ];
 
+const TEMPLE_SOURCE = { title: '泰好網〈訪清邁古城寺廟 探尋蘭納文化之美〉', url: 'https://www.taithaione.com/tw/article/1245' };
+const TT_IMG = 'https://www.taithaione.com/gt/webp/ai/c/2020/05/18/1245-';
+
 const HISTORY = [
   {
-    year: '1296', title: '孟萊王建城',
-    image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Chiang_Mai_-_Wat_Chiang_Man_-_0001.jpg/1280px-Chiang_Mai_-_Wat_Chiang_Man_-_0001.jpg', credit: 'Wat Chiang Man · Stefan Fussan / CC BY-SA 3.0 · Wikimedia' },
-    text: '孟萊王統一北方各城邦，在素帖山和濱河之間選了一塊地，建起「新城」——這就是清邁（เชียงใหม่）名字的意思。建城時他住的地方後來蓋成清曼寺，是清邁最古老的寺廟，到現在還在古城東北角。',
+    year: '1296', title: '在山與河之間，建一座新城',
+    sections: [
+      {
+        image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Chiang_Mai_-_Wat_Chiang_Man_-_0001.jpg/1280px-Chiang_Mai_-_Wat_Chiang_Man_-_0001.jpg', credit: 'Wat Chiang Man · Stefan Fussan / CC BY-SA 3.0 · Wikimedia' },
+        text: '13 世紀末，傣阮族的孟萊王（King Mengrai／พญามังราย）統一北方各城邦，在素帖山和濱河之間選了一塊地，建起「新城」——這就是清邁（เชียงใหม่）名字的意思。<br><br>這個國家叫<mark class="hl">蘭納（Lanna／ล้านนา），「Lan」是百萬、「Na」是稻田，蘭納就是「百萬稻田之地」</mark>，說的是一個土地肥沃、人民富足、以農業為本的北方王國，建城時他紮營的地方，後來蓋成了清邁第一座寺廟「清曼寺」。',
+      },
+      {
+        image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Three_Kings_Monument_Chiang_Mai.jpg/1280px-Three_Kings_Monument_Chiang_Mai.jpg', credit: 'Three Kings Monument · iTenz / CC0 · Wikimedia' },
+        text: '今天古城中央的三王紀念碑（Three Kings Monument），就是當年孟萊王（中間）找來蘭甘亨王（左側，พ่อขุนรามคำแหง）和南蒙王（右側，พญางำเมือง）一起勘查、選地，三人相傳是結拜好友。<br><br>新城站穩了腳步，接下來的一百多年，蘭納越來越強大。',
+      },
+    ],
   },
   {
-    year: '15 世紀', title: '蘭納的黃金時代',
+    year: '15 世紀', title: '蘭納最輝煌的一百年',
     image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Wat_Chet_Yot%2C_Chiang_Mai_-_2011-07-06_-_002.jpg/1280px-Wat_Chet_Yot%2C_Chiang_Mai_-_2011-07-06_-_002.jpg', credit: 'Wat Chet Yot · Photo Dharma / CC BY 2.0 · Wikimedia' },
-    text: '蒂洛卡拉王在位時，蘭納王國勢力最強，佛教和建築都很興盛。契迪龍寺的大佛塔在這個時期完工，是當時清邁最高的建築；1477 年還在七峰寺舉辦了佛教結集，各地僧侶都來到清邁。',
+    text: '到了蒂洛卡拉王（King Tilokarat）在位時，蘭納迎來<mark class="hl">黃金時代</mark>，佛教和建築都盛極一時。古城中央的<mark class="hl">契迪龍寺大佛塔</mark>在這時完工，高約 82 公尺，是<mark class="hl">整個王國最高的建築</mark>；1477 年，各地僧侶齊聚七峰寺舉行佛教結集，清邁成了<mark class="hl">北方的佛教中心</mark>。只是盛極必衰，王位爭奪讓國力一點一點被削弱。',
   },
   {
-    year: '1558', title: '緬甸統治兩百年',
+    year: '1558', title: '兩百年的緬甸歲月',
     image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Chiang-Mai_Thailand_Brick-wall-01.jpg/1280px-Chiang-Mai_Thailand_Brick-wall-01.jpg', credit: 'Old city wall · CEphoto, Uwe Aranas / CC BY-SA 3.0 · Wikimedia' },
-    text: '緬甸東吁王朝攻下清邁，之後兩百多年蘭納都在緬甸控制下。這段時間留下了不少緬式風格的寺廟和建築，清邁的飲食、工藝也混進了緬甸的影子，像泰北的 Hang Lay 咖哩豬就源自緬甸。',
+    text: '1558 年，緬甸東吁王朝（Toungoo）攻下清邁，之後兩百多年蘭納都<mark class="hl">在緬甸控制之下</mark>。這段日子並非只有戰亂，緬式的寺廟、工藝和飲食也一起留了下來，像泰北招牌的 Hang Lay 咖哩豬就是從緬甸傳來的，但蘭納人始終沒有忘記自己是誰。',
   },
   {
-    year: '1775', title: '趕走緬軍、重建清邁',
-    image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Three_Kings_Monument_Chiang_Mai.jpg/1280px-Three_Kings_Monument_Chiang_Mai.jpg', credit: 'Three Kings Monument · iTenz / CC0 · Wikimedia' },
-    text: '卡威拉王和暹羅聯手把緬軍趕出清邁。經過多年戰亂，城裡一度幾乎沒人住，後來才慢慢遷回、重建城牆。古城中心的三王像，紀念的就是孟萊王和另外兩位建城時的盟友。',
+    year: '1775', title: '趕走緬軍，從廢墟裡重來',
+    image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/20171105_Tha_Phae_Gate_Chiang_Mai_9784_DxO.jpg/1280px-20171105_Tha_Phae_Gate_Chiang_Mai_9784_DxO.jpg', credit: 'Tha Phae Gate · Jakub Hałun / CC BY-SA 4.0 · Wikimedia' },
+    text: '卡威拉王（King Kawila）和暹羅（Siam）聯手，終於把緬軍趕出清邁。多年戰亂後，城裡幾乎沒有人住，人們花了二十年才慢慢遷回、重新砌起城牆，而其中古城東邊的<mark class="hl">塔佩門（Tha Phae Gate／ประตูท่าแพ），就是這圈城牆最有名的一道門</mark>。<br><br>城門在 20 世紀中一度被拆除，現在看到的紅磚城門和兩側城牆，是 1985 年起由清邁市政府和泰國藝術廳依照老照片、史料和考古資料重建的；2023 年，這裡還挖出了一塊古老的石刻銘文。<br><br>城牆重新站了起來，只是這一次，蘭納（Lanna）已經不再完全屬於自己。',
   },
   {
-    year: '1921', title: '火車開進清邁',
+    year: '1921', title: '火車開進來，王國走入歷史',
     image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Chiang_Mai_Thailand_Chiang-Mai-Railway-Station-08.jpg/1280px-Chiang_Mai_Thailand_Chiang-Mai-Railway-Station-08.jpg', credit: 'Chiang Mai Railway Station · CEphoto, Uwe Aranas / CC BY-SA 4.0 · Wikimedia' },
-    text: '19 世紀末蘭納逐步併入暹羅，1921 年北線鐵路通到清邁，從曼谷過來不用再坐好幾週的船。之後清邁慢慢和泰國其他地方連在一起，1939 年最後一任清邁王去世，蘭納王室走入歷史。',
+    text: '19 世紀末，拉瑪五世（King Chulalongkorn）推行行政改革，<mark class="hl">蘭納一步步被併入暹羅（Siam）</mark>。1899 年，這裡被劃進「西北省」（Monthon Phayap／มณฑลพายัพ），曼谷開始派官員進駐，清邁王手上的實權一點一點被收走。<br><br>1921 年北線鐵路通到清邁，從曼谷過來不用再坐好幾週的船，清邁和泰國其他地方從此緊緊相連；1933 年省制廢除，<mark class="hl">清邁正式成為「清邁府」（จังหวัดเชียงใหม่），改由中央任命的府尹管理</mark>。<br><br>1939 年，最後一任清邁王 Chao Kaew Nawarat 去世，王位沒有再傳下去，蘭納王室正式走入歷史；巧的是同一年，暹羅也改了國名，<mark class="hl">成為今天的「泰國」（Thailand）</mark>。王室後代 Na Chiang Mai 家族到現在都還在，只是不再治理這座城。<br><br>王國不在了，但蘭納並沒有消失。',
   },
   {
-    year: '現在', title: '慢活之城',
-    image: { place: 'One Nimman' },
-    text: '清邁現在是泰國第二大的城市圈，有大學、文創聚落和大量咖啡廳，也是數位遊牧最愛的城市之一。古城裡的寺廟和城牆還在，週末市集、夜市一樣熱鬧，新舊混在一起，正是清邁最迷人的地方。',
+    year: '現在', title: '老蘭納，新清邁',
+    sections: [
+      {
+        image: { url: 'https://www.eisland.com.tw/Images/Article/aQrWsLnS_20210702.png', credit: '八角紙燈籠 · 英語島' },
+        text: '走在今天的清邁，蘭納其實無所不在，仔細聽，在地人講的是泰北話（Kham Mueang／คำเมือง），聽起來反而更像寮語：女生句尾說「jao（เจ้า）」而不是「kha」，打招呼會說「สวัสดีเจ้า（sa-wat-dee jao）」<button class="say" data-say="สวัสดีเจ้า" aria-label="播放泰文發音">🔊</button></mark>。<br><br>',
+      },
+      {
+        image: { url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Khao_soi_Chiang_Mai.jpg/1280px-Khao_soi_Chiang_Mai.jpg', credit: 'Khao Soi · Takeaway / CC BY-SA 3.0 · Wikimedia' },
+        text: '抬頭看，寺廟和街上掛滿<mark class="hl">八角紙燈籠（โคมรังมดส้ม）<button class="say" data-say="โคมรังมดส้ม" aria-label="播放泰文發音">🔊</button>和彩色長幡旗 Tung（ตุง）<button class="say" data-say="ตุง" aria-label="播放泰文發音">🔊</button>，都是蘭納人獻給佛祖、累積功德的供品</mark>；<br><br>餓了就坐下來吃一碗泰北金麵（Khao Soi），或是加了乾燥木棉花的米線（Khanom Jeen Nam Ngiao），吃進嘴裡的也是蘭納的味道。<br><br>',
+      },
+      {
+        image: { place: 'One Nimman' },
+        text: '而在這些老傳統旁邊，清邁也長出了新的樣子，如今它是泰國第二大的城市圈，有大學、文創聚落和數不清的咖啡廳，也是<mark class="hl">數位遊牧最愛的城市之一</mark>。<br><br>白天在古城的寺廟和城牆間散步，晚上逛週末市集和夜市，七百年的蘭納和最新潮的生活就這樣混在一起，這正是清邁最迷人的地方。',
+      },
+    ],
   },
 ];
+
 
 const FACT_TYPES = { trivia: '冷知識', photo: '拍照打卡', tip: '一定要知道' };
 
@@ -1281,16 +1350,25 @@ const IMAGES = {
   "Wat Chedi Luang": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/20171105_Wat_Chedi_Luang_Chiang_Mai_9897_DxO.jpg/1280px-20171105_Wat_Chedi_Luang_Chiang_Mai_9897_DxO.jpg", credit: "Jakub Hałun / CC BY-SA 4.0 · Wikimedia" }, // 契迪龍寺（大佛塔寺）
   "Wat Phra Singh Woramahawihan": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chiang_Mai_-_Wat_Phra_Singh_-_0001.jpg/1280px-Chiang_Mai_-_Wat_Phra_Singh_-_0001.jpg", credit: "Stefan Fussan / CC BY-SA 3.0 · Wikimedia" }, // 帕辛寺
   "Wat Phra That Doi Kham": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Wat_Phra_That_Doi_Kham_Temple.jpg/1280px-Wat_Phra_That_Doi_Kham_Temple.jpg", credit: "ManoiCMU / CC BY 4.0 · Wikimedia" }, // 金山寺（多伊坎寺）
-  "Wat Umong Suan Phutthatham": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Tunnels_at_Wat_Umong_Suan_Phutthatham-10.jpg/1280px-Tunnels_at_Wat_Umong_Suan_Phutthatham-10.jpg", credit: "Immanuelle / CC BY 4.0 · Wikimedia" }, // 悟孟寺（隧道寺）
-  "Wat Lok Moli": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/20171106_Wat_Lok_Moli_Chiang_Mai_0154_DxO.jpg/1280px-20171106_Wat_Lok_Moli_Chiang_Mai_0154_DxO.jpg", credit: "Jakub Hałun / CC BY-SA 4.0 · Wikimedia" }, // 洛克摩利寺
-  "Wat Pha Lat": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Wat_Pha_Lat%2C_Chiang_Mai_20250116.jpg/1280px-Wat_Pha_Lat%2C_Chiang_Mai_20250116.jpg", credit: "Supanut Arunoprayote / CC BY 4.0 · Wikimedia" }, // 帕拉寺（叢林寺）
   "Wat Chiang Man": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Temple_Wat_Chiang_Man_1.jpg/1280px-Temple_Wat_Chiang_Man_1.jpg", credit: "Welcome to Thailand / CC0 · Wikimedia" }, // 清曼寺
   "Wat Den Sali Si Mueang Kaen (Wat Ban Den)": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Wat_Ban_Den%2C_Chiang_Mai.jpg/1280px-Wat_Ban_Den%2C_Chiang_Mai.jpg", credit: "ManoiCMU / CC BY-SA 4.0 · Wikimedia" }, // 班登寺
   "Wat Sri Suphan (Silver Temple)": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Wat_Sri_Suphan%2C_Chiang_Mai-silver_temple_entrance_with_offering_bowls_visible.jpg/1280px-Wat_Sri_Suphan%2C_Chiang_Mai-silver_temple_entrance_with_offering_bowls_visible.jpg", credit: "Immanuelle / CC BY 4.0 · Wikimedia" }, // 銀廟（蘇攀寺）
-  "Wat Suan Dok": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Wat_Suan_Dok_2.jpg/1280px-Wat_Suan_Dok_2.jpg", credit: "Christophe95 / CC BY-SA 4.0 · Wikimedia" }, // 松達寺（花園寺）
-  "Wat Chet Yot (Wat Photharam Maha Wihan)": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Wat_Chet_Yot%2C_Chiang_Mai_-_2008-02-24_-_001.jpg/1280px-Wat_Chet_Yot%2C_Chiang_Mai_-_2008-02-24_-_001.jpg", credit: "Lukas Bergstrom / CC BY 2.0 · Wikimedia" }, // 七峰寺
   "Wat Phan Tao": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Asalha_Puja_night_at_Wat_Phan_Tao%2C_Chiang_Mai_%2829_Jul_2026%29_-_IMG_03.jpg/1280px-Asalha_Puja_night_at_Wat_Phan_Tao%2C_Chiang_Mai_%2829_Jul_2026%29_-_IMG_03.jpg", credit: "Chainwit. / CC BY 4.0 · Wikimedia" }, // 潘道寺
-  "Wat Ket Karam": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Watket.jpg/1280px-Watket.jpg", credit: "Vichitsilp / CC BY-SA 4.0 · Wikimedia" }, // 瓦凱寺（凱卡蘭寺）
+  "Wat Duang Di": { url: TT_IMG + "2e6e63c1.webp", credit: "泰好網" }, // 端迪寺
+  "Wat Prasat": { url: TT_IMG + "d541e338.webp", credit: "泰好網" }, // 巴善寺
+  "Wat Fon Soi": { url: TT_IMG + "3ce71a2a.webp", credit: "泰好網" }, // 鳳歲寺
+  "Three Kings Monument": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Three_Kings_Monument_Chiang_Mai.jpg/1280px-Three_Kings_Monument_Chiang_Mai.jpg", credit: "iTenz / CC0 · Wikimedia" }, // 三王紀念碑
+  "Tha Phae Gate": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/20171105_Tha_Phae_Gate_Chiang_Mai_9784_DxO.jpg/1280px-20171105_Tha_Phae_Gate_Chiang_Mai_9784_DxO.jpg", credit: "Jakub Hałun / CC BY-SA 4.0 · Wikimedia" }, // 塔佩門
+  "Wat Rong Khun (White Temple)": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Wat_Rong_Khun_-_Chiang_Rai.jpg/1280px-Wat_Rong_Khun_-_Chiang_Rai.jpg", credit: "JJ Harrison / CC BY-SA 3.0 · Wikimedia" }, // 白廟
+  "Wat Rong Suea Ten (Blue Temple)": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Chiang_Rai_Blue_Temple_%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%A3%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%95%E0%B9%89%E0%B8%99.jpg/1280px-Chiang_Rai_Blue_Temple_%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%A3%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%95%E0%B9%89%E0%B8%99.jpg", credit: "Chainwit. / CC BY-SA 4.0 · Wikimedia" }, // 藍廟
+  "Baan Dam Museum (Black House)": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Muzeum_Baan_Dam%2C_nazywane_%E2%80%9ECzarnym_Domem%E2%80%9D_w_Chiang_Rai%2C_Tajlandia.jpg/1280px-Muzeum_Baan_Dam%2C_nazywane_%E2%80%9ECzarnym_Domem%E2%80%9D_w_Chiang_Rai%2C_Tajlandia.jpg", credit: "Szwendam się / CC BY-SA 4.0 · Wikimedia" }, // 黑屋
+  // ---------- 活動 ----------
+  "CAD Khomloy Sky Lantern Festival": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Yi_peng_sky_lantern_festival_San_Sai_Thailand.jpg/1280px-Yi_peng_sky_lantern_festival_San_Sai_Thailand.jpg", credit: "Takeaway / CC BY-SA 3.0 · Wikimedia" }, // CAD 天燈節
+  "Loy Krathong & Yi Peng": { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Yi_Peng_lanterns_in_Chiang_Mai_%2811067469754%29.jpg/1280px-Yi_Peng_lanterns_in_Chiang_Mai_%2811067469754%29.jpg", credit: "Nik Cyclist / CC BY 2.0 · Wikimedia" }, // 水燈節
+  "Elephant Nature Park": { url: "https://res.klook.com/image/upload/c_fill,w_800/20240314-150800_gzrtu1.jpg", credit: "" }, // 大象保護營
+  "Chiang Mai Night Safari": { url: "https://img.rezio.io/size/cc9c5efd-9620-4a84-8d8a-0c5bc5852e75/a76887eb-1c8e-410c-9fc8-d4882d6d207d.jpeg", credit: "" }, // 夜間動物園
+  "Muay Thai Class": { url: "https://img.rezio.io/size/cc9c5efd-9620-4a84-8d8a-0c5bc5852e75/6333b57f-4866-4a66-8bed-2c6f78108fb8.jpeg", credit: "" }, // 泰拳體驗課
+  "Thai Costume Rental": { url: "https://flyblog.cc/wp-content/uploads/2023/05/batch_IMG_4100.jpg", credit: "" }, // 泰服租借
 };
 
 const PLACES = [
@@ -2305,140 +2383,24 @@ const PLACES = [
     map: 'https://www.google.com/maps/place/Kebab,+Felafel,+Salad/@18.7849286,98.9818665,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3b4ab5b6e55f:0x579a3eae1e5ea11!8m2!3d18.7849286!4d98.9818665!16s%2Fg%2F11sdd3m1r8',
   },
   {
-    cat: 'temple', group: '山上・郊區', name: 'Wat Phra That Doi Suthep', zh: '雙龍寺（素帖寺）',
-    rank: 1, area: 'suthep',
-    lat: 18.804989, lng: 98.921634,
-    fit: ['金色佛塔', '那伽龍階梯', '城市夜景'], dishes: [],
-    thai: 'วัดพระธาตุดอยสุเทพราชวรวิหาร',
-    tags: ['1383 年'],
-    desc: '素帖山上的金色佛塔，清邁最神聖的寺廟，也是俯瞰整座城市的最佳地點。',
-    history: '傳說高僧 Sumana Thera 帶來佛舍利，蘭納國王 Kue Na 讓白象馱著舍利上山，白象在山頂停下倒地，便在此建塔供奉。寺廟位於素帖山海拔約 1,073 公尺，1935 年才有公路通達，是清邁最神聖的寺院。',
-    taboos: [{text: '佛塔方形基座外圍有欄杆，欄杆內的繞塔步道女性不可進入（僅限男性；網路上的說法，未找到近期告示照片）', women: true}, {text: '女性不可觸碰僧侶，也不要直接把東西遞給僧侶', women: true}, {text: '背心、短褲、短裙會被入口僧侶拒絕進入上層寺區', women: false}],
-    tips: ['一早 6 點前後抵達避開人潮與旅行團', '體力好可爬 300 多階那伽龍階梯，下山再搭纜車', '可從清邁大學後方走 Monk’s Trail 經帕拉寺上山'],
-    fee: '外國人 ฿30', feeShort: '฿30', feeNote: '上山纜車（funicular）約 ฿20 單程；另有來源寫外國人來回 ฿50。2025/10 起國家公園門票不適用於走主幹道參拜本寺',
-    dress: '需遮肩過膝、進上層寺區須脫鞋；入口可借／租沙龍',
-    location: 'ต.สุเทพ อ.เมือง',
-    time: '05:00–21:00',
-    days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Phra+That+Doi+Suthep/@18.8049889,98.9216337,17z/data=!3m1!4b1!4m6!3m5!1s0x30da39b5dff1ddb5:0x9d864c5caec57e21!8m2!3d18.8049889!4d98.9216337!16zL20vMGNmd3M2',
-  },
-  {
-    cat: 'temple', group: '古城內', name: 'Wat Chedi Luang', zh: '契迪龍寺（大佛塔寺）',
-    rank: 2, area: 'oldcity',
-    lat: 18.786969, lng: 98.98658,
-    fit: ['殘塔', '城柱殿', '那伽階梯'], dishes: [],
-    thai: 'วัดเจดีย์หลวงวรวิหาร',
-    tags: ['14 世紀（15 世紀完工）'],
-    desc: '古城正中央的巨大殘塔，曾是蘭納最高的建築，晚上打燈很有氣勢。',
-    history: '14 世紀末由國王 Saenmueangma 為安葬父王骨灰開始興建，15 世紀中 Tilokaraj 王時完工，高約 82 公尺，是蘭納最高的建築。1468 年曾供奉玉佛，1545 年地震震垮塔頂約 30 公尺，留下今天的殘塔；寺內另有清邁城柱 Sao Inthakhin。',
-    taboos: [{text: '供奉城柱的 Sao Inthakhin 殿禁止女性進入，門口告示寫明理由與月經禁忌有關；女性可參觀寺內其他建築', women: true}, {text: '衣著不得體的男性同樣不能進入城柱殿', women: false}],
-    tips: ['7–9 點最清靜', '城柱殿每年 5–6 月有 Inthakhin 城柱祭', '晚上點燈後的殘塔也很好拍'],
-    fee: '外國人 ฿40–50', feeShort: '฿40–50', feeNote: '城柱殿（Sao Inthakhin）本身不另收費',
-    dress: '需遮肩過膝；門口可租／買沙龍（偏貴）',
-    location: '103 ถ.พระปกเกล้า ต.พระสิงห์ อ.เมือง',
-    time: '05:00–22:30',
-    days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Chedi+Luang/@18.7869693,98.9865804,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a9933111415:0x5cf7709a044ba8ba!8m2!3d18.7869693!4d98.9865804!16zL20vMDNyd2Zn',
-  },
-  {
-    cat: 'temple', group: '古城內', name: 'Wat Phra Singh Woramahawihan', zh: '帕辛寺',
-    rank: 3, area: 'oldcity',
-    lat: 18.788526, lng: 98.981995,
-    fit: ['Viharn Lai Kham 古壁畫', '金色佛塔', '蘭納木雕藏經閣'], dishes: [],
-    thai: 'วัดพระสิงห์วรมหาวิหาร',
-    tags: ['1345 年'],
-    desc: '清邁地位最高的皇家寺院之一，供奉帕辛佛，蘭納壁畫和木雕都很精緻。',
-    history: '1345 年蘭納第五代國王 Phayu 為安葬父王骨灰而建，原名 Wat Lee Chiang Phra。1400 年迎來帕辛佛（Phra Buddha Sihing）供奉於此，因而改稱帕辛寺，是清邁地位最高的皇家寺院之一。',
-    taboos: [{text: '女性不可直接把東西遞給僧侶，應放在地上或布上讓僧侶自取', women: true}],
-    tips: ['潑水節（4 月）帕辛佛會出巡遊街', 'Viharn Lai Kham 的蘭納壁畫值得細看', '下午近黃昏光線最美'],
-    fee: '外國人 ฿40–50，寺院範圍免費', feeShort: '฿40–50', feeNote: null,
-    dress: '需遮肩過膝，進殿脫鞋；Lai Kham 入口有沙龍可借（有來源寫押金約 ฿100）',
-    location: '2 ถ.สามล้าน ต.พระสิงห์ อ.เมือง',
-    time: '05:30–19:30',
-    days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Phra+Singh+Woramahawihan/@18.7885802,98.9814171,18z/data=!3m1!4b1!4m6!3m5!1s0x30da3a9b6e4a246f:0x9656d9e717cd54e9!8m2!3d18.7885265!4d98.9819946!16s%2Fm%2F076w26w',
-  },
-  {
-    cat: 'temple', group: '山上・郊區', name: 'Wat Phra That Doi Kham', zh: '金山寺（多伊坎寺）',
-    rank: 4, area: 'suburbs',
-    lat: 18.759524, lng: 98.918837,
-    fit: ['17 公尺大坐佛', '許願茉莉花環', '城市與機場景觀'], dishes: [],
-    thai: 'วัดพระธาตุดอยคำ',
-    tags: ['傳說 7 世紀'],
-    desc: '機場旁小山上的金山寺，17 公尺大坐佛和許願茉莉花環是在地人最愛。',
-    history: '傳說可追溯到哈里奔猜王國時期，山上兩個食人巨人聽聞佛法後皈依並發願守護寺院。相傳佛舍利引來三天三夜的雨化為金流流入山洞，Doi Kham 意即「金山」。1966 年主塔因大雨倒塌，修復時在塔內發現許多古佛像。',
-    taboos: [],
-    tips: ['向 Luang Por Tan Jai 許願要說出姓名和願望，承諾還願的茉莉花環數量，願望實現後要回來還', '山頂少遮蔭，平日早上去較舒服', '可順遊附近的 Royal Park Rajapruek'],
-    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
-    dress: '需遮肩過膝',
-    location: 'ต.แม่เหียะ อ.เมือง',
-    time: '06:00–18:00',
-    days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Phra+That+Doi+Kham/@18.7595235,98.9188375,17z/data=!3m1!4b1!4m6!3m5!1s0x30da37360a1597d9:0xd71cc5202ab6547b!8m2!3d18.7595235!4d98.9188375!16s%2Fg%2F120z72jm',
-  },
-  {
-    cat: 'temple', group: '城外', name: 'Wat Umong Suan Phutthatham', zh: '悟孟寺（隧道寺）',
-    rank: 5, area: 'suthep',
-    lat: 18.782726, lng: 98.95211,
-    fit: ['隧道', '森林', '殘塔'], dishes: [],
-    thai: 'วัดอุโมงค์ สวนพุทธธรรม',
-    tags: ['13 世紀末（隧道 14 世紀）'],
-    desc: '藏在森林裡的隧道寺，磚造隧道和林間小路很有禪意。',
-    history: '由蘭納開國君主孟萊王建立，供來自斯里蘭卡的僧團居住，原名 Wat Weluwanaram。Kue Na 王時期修塔並開鑿四方向的修行隧道，改名為悟孟寺；緬甸統治時期一度荒廢，1949 年後重新復興，如今是森林禪修寺。',
-    taboos: [{text: '隧道內是禪修空間，請放低音量，不要打擾修行者', women: false}],
-    tips: ['早上光線從隧道口照入最有氣氛', '林間有「會說話的樹」箴言牌可慢慢看', '離清邁大學近，可和松達寺排同一天'],
-    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
-    dress: '需遮肩過膝',
-    location: 'ต.สุเทพ อ.เมือง',
-    time: '04:00–20:00',
-    days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Umong+Suan+Putthatham/@18.7827263,98.9521099,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a706f40689d:0xedef9aa39d595059!8m2!3d18.7827263!4d98.9521099!16s%2Fm%2F02x5m4h',
-  },
-  {
-    cat: 'temple', group: '城外', name: 'Wat Lok Moli', zh: '洛克摩利寺',
-    rank: 6, area: 'north',
-    lat: 18.796024, lng: 98.982568,
-    fit: ['紅磚佛塔', '柚木大殿'], dishes: [],
-    thai: 'วัดโลกโมฬี',
-    tags: ['1367 年前（首見記載）'],
-    desc: '古城北邊的紅磚大佛塔，沒有刷白貼金，傍晚夕陽下特別好看。',
-    history: '建寺年代不詳，最早見於 1367 年的文獻，Kue Na 王曾邀緬甸僧人駐錫於此。1527 年 Ket 王建造大佛塔，之後成為孟萊王朝王室的骨灰安葬地；佛塔保留裸露的紅磚，和其他刷白貼金的佛塔很不一樣。',
-    taboos: [],
-    tips: ['傍晚夕陽打在紅磚塔上最好拍', '就在古城北側護城河外，可和清曼寺串連步行'],
-    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
-    dress: '進大殿需遮肩過膝',
-    location: '298/1 ถ.มณีนพรัตน์ ต.ศรีภูมิ อ.เมือง',
-    time: '06:00–18:00',
-    days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Lok+Moli/@18.7960243,98.9825675,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a9100c30075:0x37241441d3264a00!8m2!3d18.7960243!4d98.9825675!16s%2Fm%2F080dl_9',
-  },
-  {
-    cat: 'temple', group: '山上・郊區', name: 'Wat Pha Lat', zh: '帕拉寺（叢林寺）',
-    rank: 7, area: 'suthep',
-    lat: 18.799397, lng: 98.934147,
-    fit: ['森林瀑布', '岩石佛寺', 'Monk’s Trail'], dishes: [],
-    thai: 'วัดผาลาด',
-    tags: ['1355 年'],
-    desc: '素帖山半山腰的森林小寺，岩石、瀑布和佛寺混在一起，可以走步道上去。',
-    history: '傳說 Kue Na 王時期，馱著佛舍利的白象上山途中曾在此處岩石歇腳，國王便在此建寺。20 世紀初由緬甸柚木商人修建，公路開通後一度沉寂，1991 年起復興，是藏在森林瀑布旁的小寺。',
-    taboos: [],
-    tips: ['從清邁大學後方走 Monk’s Trail 約 30–60 分鐘可到', '寺內有禪修區，保持安靜', '可續行上山到雙龍寺'],
-    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: '走 Monk’s Trail 步道：2025/10 起國家公園對外國成人收 ฿100（開車走主幹道參拜則不收）',
-    dress: '需遮肩過膝',
-    location: 'ต.สุเทพ อ.เมือง',
-    time: '06:00–17:30',
-    days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Pha+Lad/@18.7993968,98.9341468,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a1a20f4a0eb:0x5def9b5b34bb6888!8m2!3d18.7993968!4d98.9341468!16s%2Fg%2F1td8p45q',
-  },
-  {
     cat: 'temple', group: '古城內', name: 'Wat Chiang Man', zh: '清曼寺',
-    rank: 8, area: 'oldcity',
+    rank: 1, area: 'oldcity',
     lat: 18.793813, lng: 98.98927,
     fit: ['大象佛塔', '古佛像', '蘭納柚木殿'], dishes: [],
     thai: 'วัดเชียงมั่น',
     tags: ['1297 年'],
-    desc: '清邁第一座寺廟，15 隻大象撐起的佛塔是招牌。',
-    history: '孟萊王於 1297 年建立，是清邁第一座寺廟，所在地原是孟萊王建城時駐紮的營地。最古老的建築是大象佛塔 Chedi Chang Lom，基座有 15 隻大象半身像撐起塔身；寺內另供奉水晶佛等古佛像。',
+    desc: '清邁的第一座寺廟，七百多年前一切從這裡開始。',
+    story: [
+      { title: '一切從這裡開始', text: '1297 年，孟萊王（King Mengrai）在濱河畔紮營，決定在這裡建一座新城。他住過的營地，後來成了清邁的第一座寺廟，寺名 Chiang Man（เชียงมั่น）意思是「穩固的城」。' },
+      { title: '十五頭大象撐起的佛塔', text: '繞到大殿後方，15 頭大象從塔基探出半個身子，穩穩扛起整座大象佛塔（Chedi Chang Lom）。這是全寺最古老的建築，也是蘭納人心中力量與守護的象徵。' },
+      { title: '走進殿內，讀一段建城故事', text: '殿內紅柱排列，牆上的紅金壁畫在 1996 年完成，紀念清邁建城 700 年，從孟萊王出征、選地到建城，一幕幕畫成連環圖；寺裡也供奉著古老的水晶佛。看完故事，往西南穿過古城，下一站是帕辛寺。' },
+    ],
+    sights: [
+      { title: '金色山牆正殿', img: TT_IMG + 'd61b78f5.webp', text: '孟萊王把清曼寺蓋在自己住所的位置，代表佛教在蘭納的崇高地位。寺內有兩座主殿、一間佛廳、藏經閣和大象佛塔。' },
+      { title: '紅柱大殿', img: TT_IMG + '14d1e1cd.webp', text: '殿內整排紅底金紋的柚木柱一路排到佛像前，抬頭看天花板也滿是金色花紋。' },
+      { title: '孟萊王壁畫', img: TT_IMG + '9af43a48.webp', text: '紅、金兩色的版印壁畫 1996 年完成，紀念清邁建城 700 年，一幕幕畫出孟萊王的一生。' },
+    ],
+    nearby: [{ name: 'Wat Duang Di', tip: '往南走約 7 分鐘，三王紀念碑旁的端迪寺小小一間，很容易直接走過去。它的金色木雕山牆非常精緻，我們可以一同去看看！' }],
     taboos: [],
     tips: ['遊客比契迪龍寺少，可悠閒拍大象佛塔', '在古城東北角，可和洛克摩利寺、塔佩門串連'],
     fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
@@ -2449,32 +2411,118 @@ const PLACES = [
     map: 'https://www.google.com/maps/place/Wat+Chiang+Man/@18.7938126,98.9892703,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a97936133d7:0x6e33b1cdc659f2dd!8m2!3d18.7938126!4d98.9892703!16s%2Fm%2F076z4nx',
   },
   {
-    cat: 'temple', group: '山上・郊區', name: 'Wat Den Sali Si Mueang Kaen (Wat Ban Den)', zh: '班登寺',
-    rank: 9, area: 'suburbs',
-    lat: 19.157736, lng: 98.978484,
-    fit: ['十二生肖佛塔', '蘭納金飾殿堂'], dishes: [],
-    thai: 'วัดเด่นสะหลีศรีเมืองแกน (วัดบ้านเด่น)',
-    tags: ['500 多年前（現貌為近代重建）'],
-    desc: '郊區湄登的金碧輝煌寺院群，十二生肖佛塔一次看齊。',
-    history: '原是湄登鄉間一座有 500 多年歷史的小寺，在高僧 Kruba Thueang 主持下靠各地信眾捐款大規模擴建，1988 年後陸續重建成今天的華麗寺院群。寺內有十二生肖佛塔與大量蘭納風格木雕金飾。',
-    taboos: [],
-    tips: ['距清邁市區約 1 小時車程，大眾運輸不便，建議包車', '可和湄登大象營、黏黏瀑布排同一天'],
-    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
-    dress: '需遮肩，穿長褲或長裙',
-    location: 'ต.อินทขิล อ.แม่แตง',
-    time: '07:00–18:00',
+    cat: 'temple', group: '古城內', name: 'Wat Phra Singh Woramahawihan', zh: '帕辛寺',
+    rank: 2, area: 'oldcity',
+    lat: 18.788526, lng: 98.981995,
+    fit: ['Viharn Lai Kham 古壁畫', '金色佛塔', '蘭納木雕藏經閣'], dishes: [],
+    thai: 'วัดพระสิงห์วรมหาวิหาร',
+    tags: ['1345 年'],
+    desc: '清邁地位最高的皇家寺院，帕辛佛就住在這裡。',
+    story: [
+      { title: '為父親蓋的寺', text: '1345 年，蘭納國王帕于（King Phayu）為了安葬父王的骨灰建了這座寺，原名 Wat Lee Chiang Phra。1400 年迎來帕辛佛（Phra Buddha Sihing），寺名從此改成帕辛寺，也成為清邁地位最高的皇家寺院之一。' },
+      { title: '金塔旁的小殿才是主角', text: '大殿氣派、金色佛塔閃亮，但真正的精華在佛塔旁的萊卡佛堂（Viharn Lai Kham）。帕辛佛就供在這裡，牆上的蘭納壁畫除了佛陀的故事，也畫了當年泰北人怎麼穿衣、梳頭、過日子。' },
+      { title: '一年一次的出巡', text: '每年 4 月潑水節（Songkran），帕辛佛會被請出寺外遊街，讓信眾灑水祈福。平常建議近黃昏來，金塔在夕陽下最好看；出門沿著 Ratchadamnoen 路往東走，就能接到潘道寺和契迪龍寺。' },
+    ],
+    sights: [
+      { title: '寺院正門', img: TT_IMG + 'f2604f9a.webp', text: '1345 年帕于王為安葬父王骨灰而建，請來當時清邁最頂尖的建築師和中國壁畫師一起設計。' },
+      { title: '金色佛塔與萊卡佛堂', img: TT_IMG + 'cdf9b786.webp', text: '金色大佛塔左邊的小殿就是萊卡佛堂（Viharn Lai Kham），帕辛佛就供奉在這裡，是全寺最精華的建築。' },
+      { title: '萊卡佛堂內部', img: TT_IMG + 'c2b58d71.webp', text: '殿內的灰泥裝飾和壁畫相傳出自藝術家 Jek Seng 之手，蘭納時期的木雕、建築和繪畫都集中在這。' },
+      { title: '泰北生活壁畫', img: TT_IMG + 'fde93d9a.webp', text: '壁畫除了佛陀的故事，也畫了當年泰北人的日常生活，服裝、髮型都看得很清楚。牆上有告示，請不要觸摸。' },
+    ],
+    nearby: [{ name: 'Wat Prasat', tip: '巴善寺就在帕辛寺北側隔壁，走路 2 分鐘。很多人逛完帕辛寺就離開，錯過了這座清邁寺廟的「原型」，我們可以一同去看看！' }],
+    taboos: [{text: '女性不可直接把東西遞給僧侶，應放在地上或布上讓僧侶自取', women: true}],
+    tips: ['潑水節（4 月）帕辛佛會出巡遊街', 'Viharn Lai Kham 的蘭納壁畫值得細看', '下午近黃昏光線最美'],
+    fee: '外國人 ฿40–50，寺院範圍免費', feeShort: '฿40–50', feeNote: null,
+    dress: '需遮肩過膝，進殿脫鞋；Lai Kham 入口有沙龍可借（有來源寫押金約 ฿100）',
+    location: '2 ถ.สามล้าน ต.พระสิงห์ อ.เมือง',
+    time: '05:30–19:30',
     days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Den+Sali+Sri+Muang+Kaen+(Wat+Ban+Den)/@19.1577357,98.9784843,17z/data=!3m1!4b1!4m6!3m5!1s0x30da1028229e1e93:0xf4ddaafe98cc4d0f!8m2!3d19.1577357!4d98.9784843!16s%2Fg%2F1hd_8z15y',
+    map: 'https://www.google.com/maps/place/Wat+Phra+Singh+Woramahawihan/@18.7885802,98.9814171,18z/data=!3m1!4b1!4m6!3m5!1s0x30da3a9b6e4a246f:0x9656d9e717cd54e9!8m2!3d18.7885265!4d98.9819946!16s%2Fm%2F076w26w',
+  },
+  {
+    cat: 'temple', group: '古城內', name: 'Wat Chedi Luang', zh: '契迪龍寺（大佛塔寺）',
+    rank: 3, area: 'oldcity',
+    lat: 18.786969, lng: 98.98658,
+    fit: ['殘塔', '城柱殿', '那伽階梯'], dishes: [],
+    thai: 'วัดเจดีย์หลวงวรวิหาร',
+    tags: ['14 世紀（15 世紀完工）'],
+    desc: '古城正中央的巨大殘塔，倒了一半，卻更讓人屏息。',
+    story: [
+      { title: '蘭納最高的建築', text: '14 世紀末，Saenmueangma 王為了安葬父王開始興建這座大佛塔，直到 15 世紀蒂洛卡拉王時才完工。塔高約 82 公尺，是當時蘭納最高的建築；1468 年起，玉佛也曾供奉在這裡。' },
+      { title: '一場地震留下的殘塔', text: '1545 年的地震震垮了塔頂，留下今天這座頂部殘缺的大塔。基座四周有大象雕像環繞，四面各有一道那伽蛇神守護的階梯，殘缺反而讓它更有氣勢，晚上打燈後尤其壯觀。' },
+      { title: '守護城市的柱子', text: '寺內還有供奉清邁城柱（Sao Inthakhin）的小殿，每年 5–6 月會舉行城柱祭；不過城柱殿禁止女性進入，女生在外面看就好。離開前別忘了隔壁的潘道寺。' },
+    ],
+    sights: [
+      { title: '寺院入口', img: TT_IMG + '3b52db67.webp', text: '大塔寺是蘭納文化最有代表性的古寺之一，從入口就能看到後方的大殿。' },
+      { title: '蘭納最高的佛塔', img: TT_IMG + '51d1c185.webp', text: '大殿後方的大塔曾是蘭納最高的建築，歷經戰亂和 1545 年地震塔頂崩塌，只剩一半高度，卻更顯雄偉。' },
+      { title: '大象與蛇神階梯', img: TT_IMG + '32edf397.webp', text: '方形基座四周有大象雕像環繞，四面各有一道由那伽蛇神守護的階梯。' },
+    ],
+    taboos: [{text: '供奉城柱的 Sao Inthakhin 殿禁止女性進入，門口告示寫明理由與月經禁忌有關；女性可參觀寺內其他建築', women: true}, {text: '衣著不得體的男性同樣不能進入城柱殿', women: false}],
+    tips: ['7–9 點最清靜', '城柱殿每年 5–6 月有 Inthakhin 城柱祭', '晚上點燈後的殘塔也很好拍'],
+    fee: '外國人 ฿40–50', feeShort: '฿40–50', feeNote: '城柱殿（Sao Inthakhin）本身不另收費',
+    dress: '需遮肩過膝；門口可租／買沙龍（偏貴）',
+    location: '103 ถ.พระปกเกล้า ต.พระสิงห์ อ.เมือง',
+    time: '05:00–22:30',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Chedi+Luang/@18.7869693,98.9865804,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a9933111415:0x5cf7709a044ba8ba!8m2!3d18.7869693!4d98.9865804!16zL20vMDNyd2Zn',
+  },
+  {
+    cat: 'temple', group: '古城內', name: 'Three Kings Monument', zh: '三王紀念碑',
+    rank: 4, area: 'oldcity',
+    lat: 18.79036, lng: 98.98714,
+    fit: ['孟萊王銅像', '城市藝術文化中心', '在地人祭拜'], dishes: [],
+    thai: 'อนุสาวรีย์สามกษัตริย์',
+    tags: ['紀念 1296 年建城'],
+    desc: '古城正中央的三尊銅像，清邁的故事就從這三個人開始。',
+    story: [
+      { title: '三位國王的約定', text: '銅像中間是蘭納的開國君主孟萊王（King Mengrai），兩旁是素可泰的蘭甘亨王（King Ramkhamhaeng）和帕堯的南蒙王（King Ngam Muang）。相傳 1296 年，三位國王一起選定了清邁建城的位置，這座紀念碑紀念的就是這個約定。' },
+      { title: '清邁人的守護祖先', text: '對清邁人來說，孟萊王是建城的祖先，雕像前總有人獻花、點香、擺上供品祈求平安。經過時放輕聲音，也別爬上基座拍照。' },
+      { title: '從這裡開始認識清邁', text: '銅像後方的白色建築是清邁城市藝術文化中心（Chiang Mai City Arts & Cultural Centre），以前是府政廳，現在展示清邁從建城到今天的故事，很適合當逛古城的第一站。往旁邊走幾步就是端迪寺。' },
+    ],
+    taboos: [{text: '這裡是在地人祭拜孟萊王的地方，請勿攀爬基座或擺出不敬的姿勢拍照', women: false}],
+    tips: ['早上或傍晚來比較不曬', '可以和端迪寺、清曼寺排成同一條散步路線'],
+    fee: '免費', feeShort: '免費', feeNote: '後方的清邁城市藝術文化中心需另外購票',
+    dress: '無特別規定，祭拜時穿著得體即可',
+    location: 'ถ.พระปกเกล้า ต.ศรีภูมิ อ.เมือง',
+    time: '00:00–24:00（全天開放）',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Three+Kings+Monument+Chiang+Mai',
+  },
+  {
+    cat: 'temple', group: '古城內', name: 'Tha Phae Gate', zh: '塔佩門',
+    rank: 5, area: 'thaphae',
+    lat: 18.78769, lng: 98.99335,
+    fit: ['紅磚城門', '週日步行街', '節慶主場'], dishes: [],
+    thai: 'ประตูท่าแพ',
+    tags: ['1296 年建城（1980 年代重建）'],
+    desc: '古城東邊的紅磚城門，清邁最經典的地標，也是週日步行街的起點。',
+    story: [
+      { title: '通往河邊的那道門', text: '塔佩門（Tha Phae Gate）是古城的東門，ท่าแพ 的意思是「竹筏碼頭」。以前從這裡出城往東，一路就能走到濱河邊的碼頭，商人和貨物都從這道門進出。' },
+      { title: '照著舊址重建的城門', text: '古城牆在幾百年間陸續毀損，現在看到的塔佩門和兩側城牆，是 1980 年代照著舊址重建的。紅磚城牆配上護城河，是清邁最常出現在明信片上的畫面。' },
+      { title: '鴿子、步行街與節慶', text: '白天廣場上滿是鴿子和拍照的遊客；週日傍晚，城門往西的 Ratchadamnoen 路會變成週日步行街，水燈節和潑水節時這裡更是活動主場。出了城門往東走，就是熱鬧的塔佩路和 Warorot 市場。' },
+    ],
+    taboos: [],
+    tips: ['早上光線柔和、人少，最好拍', '週日下午 4 點後步行街開始擺攤', '水燈節（Yi Peng）、潑水節時人潮非常多，注意隨身物品'],
+    fee: '免費', feeShort: '免費', feeNote: null,
+    dress: '無特別規定',
+    location: 'ถ.มูลเมือง ต.ศรีภูมิ อ.เมือง',
+    time: '00:00–24:00（全天開放）',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Tha+Phae+Gate+Chiang+Mai',
   },
   {
     cat: 'temple', group: '城外', name: 'Wat Sri Suphan (Silver Temple)', zh: '銀廟（蘇攀寺）',
-    rank: 10, area: 'oldcity',
+    rank: 6, area: 'oldcity',
     lat: 18.778723, lng: 98.983652,
     fit: ['銀殿', '銀雕工藝', '週六夜市'], dishes: [],
     thai: 'วัดศรีสุพรรณ',
     tags: ['約 1500 年'],
-    desc: '整座戒堂用銀雕打造的銀廟，晚上點燈最美，但女性不能進入銀殿。',
-    history: '約 1500 年 Mueang Kaeo 王時期建立，位於傳統銀匠聚落 Wualai 區。現今的戒堂由在地銀匠以銀、鎳、鋁板打造，滿布浮雕，因此被稱為「銀廟」。',
+    desc: '整座戒堂用銀打造，夜晚點燈時閃閃發亮的銀廟。',
+    story: [
+      { title: '銀匠村裡的寺', text: '銀廟約在 1500 年建立，位在傳統銀匠聚落 Wualai 區。幾百年來，這條街上一直都是叮叮噹噹的敲銀聲。' },
+      { title: '用銀包起來的戒堂', text: '現在的戒堂由在地銀匠用銀、鎳、鋁板一片片打造，外牆滿是浮雕，從佛像、神獸到各種圖騰都有，晚上點燈後整座閃閃發亮。' },
+      { title: '女生只能在外面看', text: '要提醒的是，銀色戒堂只限男性進入，女性只能在外圍繞行、從門外看裡面。週六傍晚門口就是 Wualai 週六夜市，可以一起逛。' },
+    ],
     taboos: [{text: '銀色戒堂（Silver Ubosot）只限男性進入，女性只能在外圍繞行、從門外看內部；入口有「Man Only」告示（2025 年仍有此告示）', women: true}],
     tips: ['週六傍晚 Wualai 週六夜市就在門口，可順逛', '晚上點燈的銀殿最好看', '女性購票前先知道進不了銀殿'],
     fee: '外國人 ฿50', feeShort: '฿50', feeNote: '男女同價，但女性不能進入銀殿',
@@ -2485,40 +2533,133 @@ const PLACES = [
     map: 'https://www.google.com/maps/place/Wat+Sri+Suphan+-+Silver+Temple/@18.7787227,98.9836524,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3076509e5cf3:0x196337361614f763!8m2!3d18.7787227!4d98.9836524!16s%2Fg%2F11c2kbvph9',
   },
   {
-    cat: 'temple', group: '城外', name: 'Wat Suan Dok', zh: '松達寺（花園寺）',
-    rank: 11, area: 'suthep',
-    lat: 18.788239, lng: 98.967762,
-    fit: ['白色王室骨灰塔群', '鐘形大佛塔', 'Monk Chat'], dishes: [],
-    thai: 'วัดสวนดอก',
-    tags: ['1370 年'],
-    desc: '國王花園改建的寺廟，白色王室骨灰塔群是招牌，還能參加 Monk Chat。',
-    history: '1370 年 Kue Na 王為斯里蘭卡系高僧 Sumana Thera 所建，原址是國王的花園，因此得名「花園寺」。寺內有斯里蘭卡式白色大佛塔與蘭納王室的白色骨灰塔群，也是摩訶朱拉隆功佛教大學清邁校區所在地。',
-    taboos: [{text: '王室骨灰塔群（Royal Cemetery）安葬蘭納王族，2019 年曾有遊客在內擺拍、走上 Ku Chao Luang 圍牆引發王族後裔抗議，勿攀爬或擺拍', women: false}],
-    tips: ['Monk Chat 由佛教大學的沙彌主持，免費，可用英文和僧侶聊天', '夕陽時白塔群映著素帖山最好拍'],
-    fee: '免費', feeShort: '免費', feeNote: null,
-    dress: '需遮肩過膝；寺方僧人表示男性穿長褲較佳',
-    location: '139 ถ.สุเทพ ต.สุเทพ อ.เมือง',
-    time: '06:00–18:00',
+    cat: 'temple', group: '清萊', name: 'Wat Rong Khun (White Temple)', zh: '白廟（白龍寺）',
+    rank: 7,
+    fit: ['輪迴橋', '白色主殿', '金色建築'], dishes: [],
+    thai: 'วัดร่องขุ่น',
+    tags: ['1997 年'],
+    desc: '清萊藝術家打造的純白寺廟，全身鑲著鏡片，在陽光下閃閃發亮。',
+    story: [
+      { title: '一位藝術家的終身作品', text: '清萊藝術家查倫猜（Chalermchai Kositpipat）自費重建這座破舊老寺，1997 年對外開放，到現在都還在施工，預計 2070 年才會全部完工。' },
+      { title: '走過輪迴橋', text: '進主殿前要先走過一座橋，橋下伸出無數雙手，象徵人的慾望與痛苦；過了橋，才進入純白的主殿。白色代表佛陀的純淨，鏡片象徵佛法照耀世界，殿內壁畫還藏著不少流行文化角色，不過殿內禁止拍照。' },
+      { title: '金色的對比', text: '園區裡唯一的金色建築其實是廁所，象徵肉身與世俗慾望，和白色主殿形成強烈對比。白色反光很強，記得帶太陽眼鏡。' },
+    ],
+    taboos: [{text: '主殿內禁止拍照', women: false}],
+    tips: ['開門時間到，可以避開旅行團', '白色反光很強，記得帶太陽眼鏡', '約需 1–1.5 小時', '從清邁出發車程約 3 小時，建議包車'],
+    fee: '外國人 ฿200', feeShort: '฿200', feeNote: '2026/1/1 起由 ฿100 調漲，含藝術洞窟 Cave of Art',
+    dress: '需遮肩過膝',
+    location: 'ถ.พหลโยธิน ต.ป่าอ้อดอนชัย อ.เมือง เชียงราย',
+    time: '08:00–17:00',
     days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Suan+Dok/@18.7882387,98.9677619,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a7de79258eb:0xc3ba2271c3e95576!8m2!3d18.7882387!4d98.9677619!16s%2Fm%2F0472j9f',
+    map: 'https://www.google.com/maps/search/?api=1&query=Wat+Rong+Khun+Chiang+Rai',
   },
   {
-    cat: 'temple', group: '城外', name: 'Wat Chet Yot (Wat Photharam Maha Wihan)', zh: '七峰寺',
-    rank: 12, area: 'nimman',
-    lat: 18.809019, lng: 98.971733,
-    fit: ['七座尖塔', '天人浮雕', '菩提樹'], dishes: [],
-    thai: 'วัดเจ็ดยอด (วัดโพธารามมหาวิหาร)',
-    tags: ['1455 年'],
-    desc: '仿印度菩提伽耶建造的七峰寺，七座尖塔和天人浮雕很少見。',
-    history: '1455 年 Tilokarat 王派僧人到緬甸蒲甘考察，仿印度菩提伽耶大菩提寺建造，大殿頂上有七座尖塔因而得名。1477 年在此舉行第八次世界佛教結集，是屬蛇者的朝聖寺。',
+    cat: 'temple', group: '清萊', name: 'Wat Rong Suea Ten (Blue Temple)', zh: '藍廟（老虎跳寺）',
+    rank: 8,
+    fit: ['寶藍主殿', '珍珠白大佛', '雙那迦'], dishes: [],
+    thai: 'วัดร่องเสือเต้น',
+    tags: ['2016 年完工'],
+    desc: '寶藍色配金色的主殿，裡面坐著一尊珍珠白大佛。',
+    story: [
+      { title: '老虎跳躍的地方', text: '寺名 Rong Suea Ten（ร่องเสือเต้น）意思是「老虎跳躍的地方」。這裡原本是一座荒廢的古寺，2005 年動工重建，2016 年主殿完工。' },
+      { title: '白廟的師承', text: '設計者 Phuttha Kabkaew 是白廟藝術家查倫猜的弟子，一樣繁複華麗，只是把白色換成深邃的寶藍，門前還有兩條那伽守著入口。' },
+      { title: '藍色裡的一尊白佛', text: '走進殿內，四周藍色壁畫包圍著一尊 6.5 公尺高的珍珠白坐佛，是整座寺最震撼的畫面。殿後還有一座白色大佛塔，看完可以往北接著去黑屋。' },
+    ],
     taboos: [],
-    tips: ['屬蛇的人可來參拜', '離寧曼路、Maya 百貨很近，遊客少，適合慢慢看灰泥浮雕'],
+    tips: ['在清萊市區，離鐘塔約 10 分鐘車程', '傍晚光線柔和、人比較少', '可以和黑屋排同一條路線'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '需遮膝，進殿脫鞋',
+    location: 'ต.ริมกก อ.เมือง เชียงราย',
+    time: '07:00–20:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Wat+Rong+Suea+Ten+Chiang+Rai',
+  },
+  {
+    cat: 'temple', group: '清萊', name: 'Baan Dam Museum (Black House)', zh: '黑屋（黑廟）',
+    rank: 9,
+    fit: ['黑色主館', '獸骨裝置', '蘭納建築群'], dishes: [],
+    thai: 'พิพิธภัณฑ์บ้านดำ',
+    tags: ['1975 年起'],
+    desc: '常被叫做黑廟，其實是一位藝術家的黑色美術館。',
+    story: [
+      { title: '不是寺廟的黑廟', text: '黑屋（Baan Dam）常和白廟並稱，但它不是寺廟，而是泰國國寶級藝術家塔萬·達差尼（Thawan Duchanee）的私人創作園區，1975 年起陸續蓋起 40 多棟黑色建築。' },
+      { title: '黑色裡的生與死', text: '主館是一座高聳的黑色木造大殿，裡面擺著長桌、獸角椅和大量獸骨獸皮，氣氛神秘又有點懾人。如果說白廟講的是天堂，黑屋常被形容是在探討死亡與人性的黑暗面。' },
+      { title: '慢慢逛建築群', text: '園區很大，每棟建築風格都不同，蘭納傳統混著當代設計。部分建築不能進入或觸碰展品；有消息說 12:00–13:00 午休，中午前後去要先確認。' },
+    ],
+    taboos: [{text: '部分建築禁止進入或觸碰展品', women: false}, {text: '展品有很多動物骨頭和皮，介意的人要有心理準備', women: false}],
+    tips: ['在清萊市區北邊約 13 km', '有消息說 12:00–13:00 午休，中午前後去要先確認'],
+    fee: '฿80', feeShort: '฿80', feeNote: null,
+    dress: '不是寺廟，沒有嚴格服裝規定',
+    location: 'ต.นางแล อ.เมือง เชียงราย',
+    time: '09:00–17:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Baan+Dam+Museum+Chiang+Rai',
+  },
+  {
+    cat: 'temple', group: '山上・郊區', name: 'Wat Phra That Doi Suthep', zh: '雙龍寺（素帖寺）',
+    rank: 10, area: 'suthep',
+    lat: 18.804989, lng: 98.921634,
+    fit: ['金色佛塔', '那伽龍階梯', '城市夜景'], dishes: [],
+    thai: 'วัดพระธาตุดอยสุเทพราชวรวิหาร',
+    tags: ['1383 年'],
+    desc: '素帖山上的金色佛塔，清邁最神聖的地方，也是看城市夜景的最佳位置。',
+    story: [
+      { title: '白象選的地方', text: '傳說 14 世紀高僧 Sumana Thera 帶來佛舍利，Kue Na 王讓白象馱著舍利上山。白象一路走到山頂，停下來倒地不起，國王便在這裡建塔供奉，也就是今天的雙龍寺。' },
+      { title: '三百多階的那伽龍階梯', text: '寺院在海拔約 1,073 公尺，1935 年才有公路通上來。山腳下兩條那伽龍沿著三百多階的階梯一路爬到寺門，體力好可以走上去，下山再搭纜車。' },
+      { title: '金塔與整座清邁', text: '上層寺區中央是閃閃發亮的金色佛塔，順時針繞塔一圈後，走到觀景台，整座清邁就在腳下。一早 6 點前後最清靜，傍晚則能看夕陽慢慢轉成夜景。' },
+    ],
+    taboos: [{text: '佛塔方形基座外圍有欄杆，欄杆內的繞塔步道女性不可進入（僅限男性；網路上的說法，未找到近期告示照片）', women: true}, {text: '女性不可觸碰僧侶，也不要直接把東西遞給僧侶', women: true}, {text: '背心、短褲、短裙會被入口僧侶拒絕進入上層寺區', women: false}],
+    tips: ['一早 6 點前後抵達避開人潮與旅行團', '體力好可爬 300 多階那伽龍階梯，下山再搭纜車', '可從清邁大學後方走 Monk’s Trail 經帕拉寺上山'],
+    fee: '外國人 ฿30', feeShort: '฿30', feeNote: '上山纜車（funicular）約 ฿20 單程；另有來源寫外國人來回 ฿50。2025/10 起國家公園門票不適用於走主幹道參拜本寺',
+    dress: '需遮肩過膝、進上層寺區須脫鞋；入口可借／租沙龍',
+    location: 'ต.สุเทพ อ.เมือง',
+    time: '05:00–21:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Phra+That+Doi+Suthep/@18.8049889,98.9216337,17z/data=!3m1!4b1!4m6!3m5!1s0x30da39b5dff1ddb5:0x9d864c5caec57e21!8m2!3d18.8049889!4d98.9216337!16zL20vMGNmd3M2',
+  },
+  {
+    cat: 'temple', group: '山上・郊區', name: 'Wat Phra That Doi Kham', zh: '金山寺（多伊坎寺）',
+    rank: 11, area: 'suburbs',
+    lat: 18.759524, lng: 98.918837,
+    fit: ['17 公尺大坐佛', '許願茉莉花環', '城市與機場景觀'], dishes: [],
+    thai: 'วัดพระธาตุดอยคำ',
+    tags: ['傳說 7 世紀'],
+    desc: '機場旁小山上的大坐佛，在地人都來這裡許願。',
+    story: [
+      { title: '金雨落下的山', text: '傳說可以追溯到哈里奔猜王國（Hariphunchai）時期：山上兩個食人巨人聽了佛法後皈依，發願守護寺院。相傳佛舍利引來三天三夜的大雨，化成金流流進山洞，Doi Kham 就是「金山」的意思。' },
+      { title: '17 公尺的大坐佛', text: '山頂上一尊 17 公尺高的大坐佛面向城市，天氣好時連機場都看得到。1966 年主塔被大雨沖倒，修復時還在塔裡發現許多古佛像。' },
+      { title: '用茉莉花環還願', text: '在地人來這裡多半是為了向 Luang Por Tan Jai 許願：說出姓名和願望，再承諾還幾串茉莉花環，願望實現後要回來還。所以寺裡永遠堆滿了花環。' },
+    ],
+    taboos: [],
+    tips: ['向 Luang Por Tan Jai 許願要說出姓名和願望，承諾還願的茉莉花環數量，願望實現後要回來還', '山頂少遮蔭，平日早上去較舒服', '可順遊附近的 Royal Park Rajapruek'],
     fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
     dress: '需遮肩過膝',
-    location: 'ถ.ซุปเปอร์ไฮเวย์ ต.ช้างเผือก อ.เมือง',
+    location: 'ต.แม่เหียะ อ.เมือง',
     time: '06:00–18:00',
     days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Jedyod+Royal+Temple+Wat+Chet+Yod+Phra+Aram+Luang/@18.8090186,98.9717327,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a603f33f959:0x3dfa48bd78887e51!8m2!3d18.8090186!4d98.9717327!16s%2Fm%2F0472hfl',
+    map: 'https://www.google.com/maps/place/Wat+Phra+That+Doi+Kham/@18.7595235,98.9188375,17z/data=!3m1!4b1!4m6!3m5!1s0x30da37360a1597d9:0xd71cc5202ab6547b!8m2!3d18.7595235!4d98.9188375!16s%2Fg%2F120z72jm',
+  },
+  {
+    cat: 'temple', group: '山上・郊區', name: 'Wat Den Sali Si Mueang Kaen (Wat Ban Den)', zh: '班登寺',
+    rank: 12, area: 'suburbs',
+    lat: 19.157736, lng: 98.978484,
+    fit: ['十二生肖佛塔', '蘭納金飾殿堂'], dishes: [],
+    thai: 'วัดเด่นสะหลีศรีเมืองแกน (วัดบ้านเด่น)',
+    tags: ['500 多年前（現貌為近代重建）'],
+    desc: '開車一小時的郊區秘境，金碧輝煌的十二生肖佛塔一次看齊。',
+    story: [
+      { title: '鄉間小寺的變身', text: '班登寺原是湄登（Mae Taeng）鄉間一座 500 多年的小寺，在高僧 Kruba Thueang 主持下，靠各地信眾捐款大規模擴建，1988 年後陸續蓋成今天的寺院群。' },
+      { title: '十二生肖一次拜齊', text: '寺裡最特別的是十二生肖佛塔，每座塔代表一個生肖，找到自己的那一座拜一拜。殿堂裡滿是蘭納風格的木雕和金飾，華麗得完全不像郊區小寺。' },
+      { title: '排成一日遊', text: '距離市區約 1 小時車程，大眾運輸不方便，建議包車，順便把湄登大象營、黏黏瀑布排在同一天。' },
+    ],
+    taboos: [],
+    tips: ['距清邁市區約 1 小時車程，大眾運輸不便，建議包車', '可和湄登大象營、黏黏瀑布排同一天'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '需遮肩，穿長褲或長裙',
+    location: 'ต.อินทขิล อ.แม่แตง',
+    time: '07:00–18:00',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/place/Wat+Den+Sali+Sri+Muang+Kaen+(Wat+Ban+Den)/@19.1577357,98.9784843,17z/data=!3m1!4b1!4m6!3m5!1s0x30da1028229e1e93:0xf4ddaafe98cc4d0f!8m2!3d19.1577357!4d98.9784843!16s%2Fg%2F1hd_8z15y',
   },
   {
     cat: 'temple', group: '古城內', name: 'Wat Phan Tao', zh: '潘道寺',
@@ -2527,8 +2668,16 @@ const PLACES = [
     fit: ['柚木大殿', '孔雀木雕', '燈籠'], dishes: [],
     thai: 'วัดพันเตา',
     tags: ['15 世紀（柚木殿 19 世紀）'],
-    desc: '整座柚木蓋的大殿原是王宮，就在契迪龍寺隔壁。',
-    history: '原屬隔壁契迪龍寺的一部分，寺名意為「千座熔爐」，昔日在此鑄造佛像。現在的柚木大殿原是 19 世紀清邁第五代統治者的宮殿，1876 年才遷到這裡，是少見的蘭納王室木造建築。',
+    desc: '整座柚木打造的宮殿，就藏在契迪龍寺隔壁。',
+    story: [
+      { title: '千座熔爐的寺名', text: 'Phan Tao（พันเตา）的意思是「千座熔爐」。這裡原本屬於隔壁的契迪龍寺，相傳是當年鑄造佛像的地方。' },
+      { title: '從王宮搬來的大殿', text: '現在的大殿原是 19 世紀清邁統治者的宮殿，1876 年才整座移到這裡。牆壁、柱子、屋頂全是深色柚木，正門上方的鍍金孔雀泥塑是最醒目的招牌，也是少見的蘭納王室木造建築。' },
+      { title: '點燈的夜晚', text: '平常早上 8–10 點光線好、人又少；遇上三寶佛節、水燈節等佛教節日，院子會點滿燈籠，是一年裡最美的時候。看完往南走到古城南端，就是下一站鳳歲寺。' },
+    ],
+    sights: [
+      { title: '柚木大殿', img: TT_IMG + 'c4cd9db4.webp', text: '牆壁、柱子、屋頂全用柚木蓋成，門窗上是精美的鍍金泥塑，大殿原本是蘭納王室的王座廳。' },
+      { title: '殿內佛像', img: TT_IMG + '7da48f43.webp', text: '走進殿內是一整排深色柚木柱，盡頭供奉金色佛像，光線從側窗灑進來很有氣氛。' },
+    ],
     taboos: [],
     tips: ['就在契迪龍寺隔壁，順路一起參觀', '佛教節日（如三寶佛節、水燈節）夜晚會點滿燈籠', '早上 8–10 點光線好、人少'],
     fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
@@ -2539,22 +2688,187 @@ const PLACES = [
     map: 'https://www.google.com/maps/place/Wat+Phantao/@18.7877757,98.9878621,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3a99281639cd:0x8663582207f7bcfa!8m2!3d18.7877757!4d98.9878621!16s%2Fg%2F11b67rmbhv',
   },
   {
-    cat: 'temple', group: '城外', name: 'Wat Ket Karam', zh: '瓦凱寺（凱卡蘭寺）',
-    rank: 14, area: 'watket',
-    lat: 18.792438, lng: 99.0029,
-    fit: ['社區博物館', '河岸老街', '老照片'], dishes: [],
-    thai: 'วัดเกตการาม',
-    tags: ['1428 年'],
-    desc: '濱河東岸的老寺，寺裡的社區博物館記錄清邁舊河岸生活。',
-    history: '1428 年 Sam Fang Kaen 王時期建於濱河東岸，周邊是早年華人商圈與老市場。寺內有社區博物館，展示老照片與古董，記錄清邁舊時的河岸生活。',
+    cat: 'temple', group: '古城內', name: 'Wat Fon Soi', zh: '鳳歲寺',
+    rank: 14, area: 'oldcity',
+    lat: 18.782566, lng: 98.988629,
+    fit: ['城堡式佛塔', '兩層藏經閣', '孔雀雕飾'], dishes: [],
+    thai: 'วัดฟ่อนสร้อย',
+    tags: ['1488 年'],
+    desc: '清邁門旁 500 多年的老寺，城堡般的白塔四面都有佛龕。',
+    story: [
+      { title: '搬了家的老寺', text: '鳳歲寺（วัดฟ่อนสร้อย）約建於 1488 年，已有 500 多年歷史。不過現在的寺院並不在原址，舊址在南邊清邁門市場後方，那裡只剩下一座蘭納磚塔。' },
+      { title: '城堡式的白塔', text: '寺裡的白色佛塔像一座小城堡，四面佛龕各坐著一尊佛像，入口有白色錫蘭獅子守著；殿內還有華麗的金色孔雀雕飾。' },
+      { title: '順路逛市場', text: '寺很小，15 分鐘就能逛完。出門就是清邁門市場（Chiang Mai Gate Market），週六傍晚還能接著逛 Wualai 週六夜市和銀廟。' },
+    ],
+    sights: [
+      { title: '孔雀雕飾', img: TT_IMG + 'bcbea03a.webp', text: '寺內的金色孔雀雕飾非常華麗，孔雀在蘭納是王室的象徵；旁邊還有木造的藏經閣。' },
+      { title: '白塔與佛像', img: TT_IMG + '3ce71a2a.webp', text: '白色的城堡式佛塔四面都有佛龕，佛像造型各不相同，入口有白色錫蘭獅子守護。' },
+      { title: '寺院大門', img: TT_IMG + '360cb9b4.webp', text: '白色寺門兩側立著獅子，就在 Phra Pokklao 路南段，離清邁門很近。' },
+    ],
     taboos: [],
-    tips: ['博物館沒人時可按鈴請人開門', '可和 Wat Ket 老街、河岸咖啡廳一起逛'],
-    fee: '免費（博物館歡迎樂捐）', feeShort: '免費', feeNote: '博物館約 09:00–16:00，佛教節日可能休館',
-    dress: '需遮肩過膝',
-    location: '96 ถ.เจริญราษฎร์ ต.วัดเกต อ.เมือง',
-    time: '06:00–21:00',
+    tips: ['可以和清邁門市場、週六 Wualai 步行街排在一起', '規模小，約 15 分鐘'],
+    fee: '免費', feeShort: '免費', feeNote: null,
+    dress: '需遮肩過膝，進殿脫鞋',
+    location: 'ถ.พระปกเกล้า ต.พระสิงห์ อ.เมือง',
+    time: '約 06:00–18:00（白天開放）',
     days: [0, 1, 2, 3, 4, 5, 6],
-    map: 'https://www.google.com/maps/place/Wat+Ket+Karam/@18.792438,99.0029003,17z/data=!3m1!4b1!4m6!3m5!1s0x30da3ab01f15d56b:0xc16971a37769795f!8m2!3d18.792438!4d99.0029003!16s%2Fg%2F122fvjbn',
+    map: 'https://www.google.com/maps/search/?api=1&query=Wat+Fon+Soi+Chiang+Mai',
+  },
+  {
+    cat: 'temple', group: '古城內', name: 'Wat Duang Di', zh: '端迪寺（好運寺）',
+    rank: 15, area: 'oldcity',
+    lat: 18.78945, lng: 98.98862,
+    fit: ['金色木雕山牆', '灰泥花紋藏經閣', '八角佛塔'], dishes: [],
+    thai: 'วัดดวงดี',
+    tags: ['16 世紀初'],
+    desc: '名字就叫「好運」，三王紀念碑旁最容易錯過的小寶石。',
+    story: [
+      { title: '一座叫做好運的寺', text: '泰文 Duang Di（ดวงดี）就是「好運」的意思。它在 16 世紀初就已經存在，舊名 Wat Ton Mak Nua；1761 年，這裡的住持還曾還俗、短暫當上清邁的統治者，小寺也有大故事。' },
+      { title: '把目光留給山牆', text: '寺很小，穿過兩根白色門柱，視線馬上會被大殿的山牆吸走：滿滿的金色木雕花紋，是 19 世紀重建時留下的蘭納工藝。旁邊 1829 年的藏經閣，外牆也爬滿灰泥花紋。' },
+      { title: '討個好彩頭再出發', text: '殿內佛壇掛滿彩色幡旗，進去拜一拜討個好運，再回到清曼寺往帕辛寺的散步路線上。' },
+    ],
+    sights: [
+      { title: '小巧主殿', img: TT_IMG + '2e6e63c1.webp', text: '穿過兩根白色門柱就是主殿，山牆上的金色木雕是蘭納寺廟建築裡的經典，從正面拍最好看。' },
+      { title: '佛壇與幡旗', img: TT_IMG + '4fe919a3.webp', text: '殿內佛壇掛滿彩色長形幡旗和金色裝飾，佛前供滿鮮花，節慶時特別熱鬧。' },
+    ],
+    taboos: [],
+    tips: ['規模小，約 15 分鐘就能逛完', '離三王紀念碑和清曼寺都只要走 1 分鐘，可以串在一起', '1829 年的藏經閣外牆有灰泥花紋，別錯過'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '需遮肩過膝，進殿脫鞋',
+    location: 'ถ.พระปกเกล้า ต.ศรีภูมิ อ.เมือง',
+    time: '約 06:00–18:00（白天開放）',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Wat+Duang+Di+Chiang+Mai',
+  },
+  {
+    cat: 'temple', group: '古城內', name: 'Wat Prasat', zh: '巴善寺',
+    rank: 16, area: 'oldcity',
+    lat: 18.78959, lng: 98.98138,
+    fit: ['柚木大殿', '殿後佛龕連佛塔', '紅金壁畫'], dishes: [],
+    thai: 'วัดปราสาท',
+    tags: ['15 世紀'],
+    desc: '清邁寺廟的「原型」，就藏在帕辛寺隔壁。',
+    story: [
+      { title: '被大寺遮住的老前輩', text: '很多人逛完帕辛寺就走，沒發現隔壁還有一座更低調的老寺。巴善寺（วัดปราสาท）的名字最早出現在 15 世紀末的石碑上，現在的柚木大殿則是 1823 年蓋的。' },
+      { title: '一條直線的秘密', text: '大殿和佛塔排在同一條直線上，殿後的佛龕直接穿過牆、連到外面的佛塔，這種格局在清邁非常少見，後來許多寺院都照著它的樣子蓋。記得繞到殿後，看看牆是怎麼接上佛塔的。' },
+      { title: '紅與金的低調華麗', text: '殿內是一整排深色柚木柱，壁畫只用紅、金兩色，以金葉技法畫出蓮花、菩提樹等吉祥圖案。看過這裡的「原型」，再走進隔壁的帕辛寺，更能看懂那些華麗從何而來。' },
+    ],
+    sights: [
+      { title: '佛塔與大殿', img: TT_IMG + 'd541e338.webp', text: '白色佛塔就接在大殿後方，大殿和佛塔排成一直線，入口樓梯由納迦蛇神守護。' },
+      { title: '柚木大殿', img: TT_IMG + '6b80ba66.webp', text: '殿內是深色柚木柱和木造屋頂，設計上也融入了中國傳統建築的元素。' },
+      { title: '佛龕與金葉壁畫', img: TT_IMG + '9d3d973b.webp', text: '殿後雕花拱門裡供著佛像，壁畫只用紅、金兩色，用金葉技法畫出佛塔、蓮花、菩提樹等吉祥圖案。' },
+    ],
+    taboos: [],
+    tips: ['就在帕辛寺旁邊，可以一起參觀', '留意大殿後牆，看佛龕怎麼接到外面的佛塔', '人少，適合慢慢拍照'],
+    fee: '免費（歡迎樂捐）', feeShort: '免費', feeNote: null,
+    dress: '需遮肩過膝，進殿脫鞋',
+    location: 'ซ.อินทวโรรส 3 ถ.อินทวโรรส ต.ศรีภูมิ อ.เมือง',
+    time: '約 06:00–18:00（白天開放）',
+    days: [0, 1, 2, 3, 4, 5, 6],
+    map: 'https://www.google.com/maps/search/?api=1&query=Wat+Prasat+Chiang+Mai',
+  },
+  {
+    cat: 'activity', group: '節慶', name: 'CAD Khomloy Sky Lantern Festival', zh: 'CAD 天燈節', thai: 'โคมลอย',
+    fit: ['萬盞天燈齊放', '蘭納文化表演', '要先買票'], dishes: [],
+    tags: ['2026/11/24–25', '需購票'],
+    desc: '上千人在同一刻鬆開手，天燈一盞接一盞飄上夜空，整片天空被點亮，是清邁一年裡最夢幻的一晚。活動在湄安（Mae On）的 CAD 蘭納文化中心舉辦，門票含市區接駁、蘭納自助晚餐、文化表演和兩盞天燈。清邁市區禁止自行施放天燈，想放天燈一定要到這類合法場地。',
+    price: 'Standard 約 ฿4,900 起，VIP、Premium 等級更貴；各通路價格不同，以官方售票為準，售出不退',
+    location: 'CAD Cultural Center Lanna, อ.แม่ออน',
+    time: '2026/11/24、11/25 傍晚從市區接駁出發，實際時間以票券為準',
+    days: [2, 3],
+    map: 'https://www.google.com/maps/search/?api=1&query=CAD+Khomloy+Sky+Lantern+Festival+Mae+On',
+  },
+  {
+    cat: 'activity', group: '節慶', name: 'Loy Krathong & Yi Peng', zh: '水燈節（Yi Peng 燈節）', thai: 'ลอยกระทง・ยี่เป็ง',
+    fit: ['放水燈', '古城掛滿燈籠', '花車遊行'], dishes: [],
+    tags: ['2026/11/23–25', '免費'],
+    desc: '泰曆十二月的月圓夜，全泰國的人都把水燈（krathong）放進河裡，感謝河神、也把厄運一起送走。清邁在同一時間過蘭納的 Yi Peng 燈節，塔佩門、古城和寺廟掛滿燈籠，濱河上漂著一盞盞水燈，還有花車遊行，整座城都亮了起來。',
+    story: [
+      { title: '到河邊放一盞水燈', text: '放水燈集中在濱河（Ping River）沿岸。最有名的是 Nawarat 橋，也是人最多的地方，沿著河岸往兩邊多走幾步就寬敞很多，一樣看得到滿河的燈火；南邊的鐵橋（Iron Bridge）則是熱門拍照點，可以從橋上往下拍漂在河面的水燈。橋邊和河岸都有攤販在賣水燈，挑一盞用麵包或香蕉樹幹做的環保款，許個願再輕輕放進河裡。' },
+      { title: '塔佩門是節慶主場', text: '塔佩門一帶有蘭納花燈展、花燈比賽和舞台活動，往年的花車遊行也從這裡出發，沿著塔佩路一路走到河邊。整條塔佩路都是攤販和燈籠，邊逛邊走就到了 Nawarat 橋；想看遊行，可以在 Loi Kroh 路附近的河岸等。' },
+      { title: '放完水燈再逛市集', text: '過了 Nawarat 橋就是每晚都開的清邁夜市（Chang Klan 路），放完水燈可以順路去吃宵夜。古城裡的潘道寺這幾天會點滿燈籠，是拍燈籠最美的寺廟之一。2026 年的月圓夜是週二，前一個週末剛好先逛週六 Wualai 夜市（11/21）和週日步行街夜市（11/22）暖身。' },
+    ],
+    taboos: [{text: '清邁市區禁止自行施放天燈（2015 年起），想放天燈要到 CAD 這類合法場地', women: false}],
+    tips: ['18:00 以後開始熱鬧，月圓夜 11/24 人最多', '塔佩門、Nawarat 橋人潮非常多，想佔好位子要早點到，也要注意隨身物品', '少數網站寫 11/5–6 或 11/22，多數來源是 11/23–25，出發前再確認官方公告'],
+    price: '免費參加；河邊就買得到水燈',
+    location: '塔佩門、濱河 Nawarat 橋一帶、古城各寺廟',
+    time: '2026/11/23–25 晚上最熱鬧，主要月圓夜是 11/24',
+    days: [1, 2, 3],
+    map: 'https://www.google.com/maps/search/?api=1&query=Nawarat+Bridge+Chiang+Mai',
+  },
+  {
+    cat: 'activity', group: '體驗', name: 'Elephant Nature Park', zh: '大象自然公園（大象保護營）', thai: '',
+    fit: ['不騎乘不表演', '陪大象散步', '看大象洗澡'], dishes: [],
+    tags: ['一日遊', '需預約'],
+    desc: '湄登（Mae Taeng）山谷裡的大象救援中心，收容從伐木、表演和騎乘產業救出來的大象。這裡不騎大象、也沒有表演，只陪牠們散步、餵食，看牠們在河裡洗澡玩水，是清邁最受推崇的友善大象營。',
+    price: '一日遊約 ฿2,500–3,500，通常含接送和午餐；價格以官網為準，旺季要提早預約',
+    location: 'อ.แม่แตง (Mae Taeng)，市區北邊約 60 km',
+    time: '一日遊早上從飯店接送出發，傍晚回到市區',
+    days: EVERYDAY,
+    map: 'https://www.google.com/maps/search/?api=1&query=Elephant+Nature+Park+Chiang+Mai',
+  },
+  {
+    cat: 'activity', group: '體驗', name: 'Chiang Mai Night Safari', zh: '清邁夜間動物園', thai: 'เชียงใหม่ไนท์ซาฟารี',
+    fit: ['夜間遊園車', '近距離看動物', '親子同遊'], dishes: [],
+    tags: ['適合晚上', '親子'],
+    desc: '天黑之後才是這裡的主場。搭上遊園車穿過草原區，長頸鹿、斑馬、老虎就在車旁走來走去；園區另外有步行路線和噴泉燈光秀，大人小孩都玩得開心。',
+    price: '門票含遊園車；各通路價格差很多，建議先在官網或訂票平台比價',
+    location: 'ต.หนองควาย อ.หางดง（素帖山腳南邊）',
+    time: '11:00–22:00（也有資料寫 21:00 閉園），夜間遊園車傍晚後才開',
+    days: EVERYDAY,
+    map: 'https://www.google.com/maps/search/?api=1&query=Chiang+Mai+Night+Safari',
+  },
+  {
+    cat: 'activity', group: '體驗', name: 'Muay Thai Class', zh: '泰拳體驗課', thai: 'มวยไทย',
+    fit: ['初學者也能上', '跟教練打靶', '流一身汗'], dishes: [],
+    tags: ['約 90 分鐘', '需預約'],
+    desc: '看完比賽手癢的話，就親自上一堂吧！清邁的泰拳營比曼谷、普吉便宜，氣氛也沒那麼商業化，很多道館都開放觀光客單堂體驗。從暖身跳繩、基本站姿開始，學出拳、踢腿和膝擊，最後戴上拳套跟教練打靶，90 分鐘下來保證全身濕透。',
+    story: [
+      { title: '可以去哪裡上課', text: 'Hongthong Muay Thai Gym 有開給觀光客的單次團體課，教練用泰文和英文教學，器材和淋浴間都包含在內。Chiang Mai Muay Thai Gym 一天開 6 堂課，每堂 90–120 分鐘，也有一對一私人教練。也可以直接在訂票平台買初學者體驗課，通常會含接送。' },
+    ],
+    tips: ['穿好活動的運動服，帶毛巾和水', '手綁帶、拳套多半由道館提供，報名時先確認', '清邁白天很熱，選早上或傍晚的時段比較舒服', '部分課程限 15 歲以上'],
+    price: '初學者團體課約 US$21–23（訂票平台 90 分鐘課程）；直接到道館上課價格以道館公告為準',
+    location: '清邁各泰拳道館，依預約的課程而定',
+    time: '依道館課表，多數早上、傍晚各有一堂',
+    days: EVERYDAY,
+    map: 'https://www.google.com/maps/search/?api=1&query=Muay+Thai+gym+Chiang+Mai',
+  },
+  {
+    cat: 'activity', group: '體驗', name: 'Thai Costume Rental', zh: '泰服租借', thai: 'ชุดไทย',
+    fit: ['換上泰服拍照', '妝髮攝影', '銀廟、寺廟取景'], dishes: [],
+    tags: ['3 間店家', '฿390 起'],
+    desc: '換上泰服，在塔佩門、契迪龍寺和銀廟前拍一組照片，是很多人來清邁的必做清單。下面整理了三間店：想省錢選銀廟旁的 Absolute Thai，想講中文選寧曼的 Thai Heritage，想連妝髮攝影一次搞定選 Baan Orjao。',
+    shops: [
+      {
+        name: 'Absolute Thai',
+        desc: '就在銀廟（Wat Sri Suphan）旁邊，走路一分鐘。換好泰服直接走進銀廟拍照，週六傍晚還能接著逛 Wualai 週六夜市。換裝大約 15–20 分鐘，是這三間裡價格最親民的。',
+        price: '約 US$12 起（各訂票平台價格不同，以現場為準）',
+        location: 'ถ.วัวลาย ซ.3 ต.หายยา อ.เมือง（銀廟旁）',
+        time: '09:00–18:00',
+        map: 'https://maps.app.goo.gl/JwyQKACTyWaBnWKF9',
+      },
+      {
+        name: 'Thai Heritage',
+        desc: '寧曼區的泰服店，店員會說中文，可以用微信預約。租借時間分半日、全日和隔日歸還，也有跟照片同款的 VIP 特製禮服，妝髮和攝影另外加購。店家搬到原址對面的巷子，找路時別走錯。',
+        price: '半日 4 小時 ฿390；全日 8 小時 ฿680；24 小時 ฿1,180；VIP 特製禮服 ฿1,500（只含禮服，妝髮攝影另計）',
+        location: '25/9 Nimmanhaemin Soi 17（寧曼 17 巷）',
+        time: '08:00–18:00',
+        map: 'https://www.google.com/maps/search/?api=1&query=Thai+Heritage+25%2F9+Nimmanhaemin+Soi+17+Chiang+Mai',
+      },
+      {
+        name: 'Baan Orjao',
+        desc: '在中國旅客間很紅的泰服店（บ้านออจ้าว），除了單租泰服，也有含妝髮和攝影的套餐，適合想一次拍好一組照片的人。熱門時段容易滿，建議提早 48 小時預約。',
+        price: '4 小時租借約 US$11 起；含妝髮攝影的套餐約 US$55 起（訂票平台價格）',
+        location: '130/1 อ.เมือง เชียงใหม่',
+        time: '營業時間請先向店家確認',
+        map: 'https://maps.app.goo.gl/2q5Az6VjeeiEkTJW9',
+      },
+    ],
+    price: '約 ฿390 起，依店家和方案不同',
+    location: '銀廟旁、寧曼、古城',
+    time: '約 08:00–18:00，依店家而定',
+    days: EVERYDAY,
+    map: 'https://www.google.com/maps/search/?api=1&query=Thai+costume+rental+Chiang+Mai',
   },
 ];
 
@@ -2661,8 +2975,7 @@ function priceLevel(place) {
 }
 
 function badgeHtml(place) {
-  if (place.cat === 'temple' && place.rank <= 3) return `<span class="badge rank">#${place.rank} 熱門</span>`;
-  if (place.cat === 'temple' && place.rank <= 7) return `<span class="badge rank">#${place.rank}</span>`;
+  if (place.cat === 'temple' && place.rank <= 3) return `<span class="badge rank">#${place.rank}</span>`;
   if (place.cat === 'temple') return '';
   if (place.bib) return '<span class="badge bib">必比登</span>';
   if (place.group === '米其林推薦') return '<span class="badge selected">米其林推薦</span>';
@@ -2845,10 +3158,13 @@ function renderPlace(place) {
     ? `<div class="friend-note"><div class="script">from a friend</div><p>${place.note}</p></div>`
     : '';
 
-  const templeBlocks = isTemple ? `
-      ${place.history ? `<div class="block"><div class="block-title caps">歷史 · History</div><p class="block-text">${place.history}</p></div>` : ''}
+  const detailBlocks = `
+      ${place.story && place.story.length ? `<div class="block story">${place.story.map((part) => `<h3>${part.title}</h3><p class="block-text">${part.text}</p>`).join('')}</div>` : ''}
+      ${place.sights && place.sights.length ? `<div class="block"><div class="block-title caps">寺內看點 · Inside</div><div class="sights">${place.sights.map((sight) => `<figure class="sight"><img src="${sight.img}" alt="${sight.title}" loading="lazy" onerror="this.remove()"><b>${sight.title}</b><p>${sight.text}</p></figure>`).join('')}</div><p class="sights-source">圖片來源：<a href="${TEMPLE_SOURCE.url}" target="_blank" rel="noopener">${TEMPLE_SOURCE.title}</a></p></div>` : ''}
+      ${place.nearby && place.nearby.length ? `<div class="block"><div class="block-title caps">順路一起看 · Nearby</div>${place.nearby.map(nearbyHtml).join('')}</div>` : ''}
+      ${place.shops && place.shops.length ? `<div class="block"><div class="block-title caps">店家 · Shops</div>${place.shops.map(shopHtml).join('')}</div>` : ''}
       ${place.taboos && place.taboos.length ? `<div class="block taboo-block"><div class="block-title caps">禁忌與注意 · Before you go</div><ul class="taboos">${place.taboos.map((taboo) => `<li class="${taboo.women ? 'women' : ''}">${taboo.women ? '<span class="taboo-tag">女性注意</span>' : ''}${taboo.text}</li>`).join('')}</ul></div>` : ''}
-      ${place.tips && place.tips.length ? `<div class="block"><div class="block-title caps">小提示 · Tips</div><ul class="photo-spots">${place.tips.map((tip) => `<li>${tip}</li>`).join('')}</ul></div>` : ''}` : '';
+      ${place.tips && place.tips.length ? `<div class="block"><div class="block-title caps">小提示 · Tips</div><ul class="photo-spots">${place.tips.map((tip) => `<li>${tip}</li>`).join('')}</ul></div>` : ''}`;
 
   const infoRows = [
     ['地址', place.location],
@@ -2879,7 +3195,7 @@ function renderPlace(place) {
       <p class="desc">${place.desc}</p>
       ${fit}
       ${dishes}
-      ${templeBlocks}
+      ${detailBlocks}
       ${note}
       <div class="block"><div class="block-title caps">${isTemple ? '參觀資訊 · Visit' : '營業資訊 · Visit'}</div><div class="info">${infoRows}</div></div>
       <div class="btns">
@@ -3003,16 +3319,46 @@ function renderAreas(focusKey) {
 let returnToAreas = false;
 let homeScrollTarget = null;
 
+function shopHtml(shop) {
+  const rows = [['價格', shop.price], ['地址', shop.location], ['時間', shop.time]]
+    .map(([label, value]) => `<div class="info-row"><span class="caps">${label}</span><span>${value}</span></div>`)
+    .join('');
+  return `
+    <div class="shop">
+      <h3>${shop.name}</h3>
+      <p>${shop.desc}</p>
+      <div class="info">${rows}</div>
+      <a class="shop-map" href="${shop.map}" target="_blank" rel="noopener">GOOGLE MAPS ↗</a>
+    </div>`;
+}
+
+function nearbyHtml(item) {
+  const index = PLACES.findIndex((place) => place.name === item.name);
+  const place = PLACES[index];
+  if (!place) return '';
+  const image = imageOf(place);
+  return `
+    <a class="nearby-card" href="#place-${index}">
+      ${image ? `<img src="${image.url}" alt="${place.zh}" loading="lazy" onerror="this.remove()">` : ''}
+      <span class="nearby-text"><b>${place.zh} →</b><span>${item.tip}</span></span>
+    </a>`;
+}
+
 function renderTimeline() {
   $('#timeline').innerHTML = HISTORY.map((era) => {
-    const image = era.image.url ? era.image : areaImage({ image: era.image });
-    const credit = image && image.credit ? `<span class="hero-credit">${image.credit}</span>` : '';
+    const sections = era.sections || [{ image: era.image, text: era.text }];
+    const body = sections.map((section) => {
+      const image = section.image.url ? section.image : areaImage({ image: section.image });
+      const credit = image && image.credit ? `<span class="hero-credit">${image.credit}</span>` : '';
+      return `
+        <div class="era-img" data-tone="dark" style="${bgStyle(image ? image.url : '')}">${credit}</div>
+        <p>${section.text}</p>`;
+    }).join('');
     return `
       <div class="era reveal">
         <div class="era-year">${era.year}</div>
         <h3>${era.title}</h3>
-        <div class="era-img" data-tone="dark" style="${bgStyle(image ? image.url : '')}">${credit}</div>
-        <p>${era.text}</p>
+        ${body}
       </div>`;
   }).join('');
 }
@@ -3187,6 +3533,43 @@ $('#legend-btn').addEventListener('click', () => $('#legend-dialog').showModal()
 $('#legend-close').addEventListener('click', () => $('#legend-dialog').close());
 $('#legend-dialog').addEventListener('click', (event) => {
   if (event.target === $('#legend-dialog')) $('#legend-dialog').close();
+});
+
+function thaiVoice() {
+  return speechSynthesis.getVoices().find((voice) => voice.lang.replace('_', '-').startsWith('th'));
+}
+
+function checkThaiVoice() {
+  const voices = speechSynthesis.getVoices();
+  if (voices.length) document.documentElement.classList.toggle('no-thai-voice', !thaiVoice());
+}
+
+if ('speechSynthesis' in window) {
+  checkThaiVoice();
+  speechSynthesis.addEventListener('voiceschanged', checkThaiVoice);
+} else {
+  document.documentElement.classList.add('no-thai-voice');
+}
+
+let currentUtterance = null;
+
+document.addEventListener('click', (event) => {
+  const button = event.target.closest('.say');
+  if (!button) return;
+  if (speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel();
+  speechSynthesis.resume();
+  const utterance = new SpeechSynthesisUtterance(button.dataset.say);
+  currentUtterance = utterance;
+  utterance.lang = 'th-TH';
+  utterance.voice = thaiVoice() || null;
+  utterance.rate = 0.85;
+  utterance.onstart = () => button.classList.add('speaking');
+  utterance.onend = () => button.classList.remove('speaking');
+  utterance.onerror = (error) => {
+    button.classList.remove('speaking');
+    console.warn('泰文發音失敗', error.error);
+  };
+  speechSynthesis.speak(utterance);
 });
 
 window.addEventListener('hashchange', () => {
